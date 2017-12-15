@@ -62,7 +62,11 @@ end
 
 # background job
 begin
-  # todo
+  gem 'redis-namespace'
+  gem "redis-rails"
+  gem 'sidekiq'
+  # for sidekiq web
+  # gem 'sidekiq_status'
 end
 
 # library
@@ -74,6 +78,13 @@ begin
 
   gem 'whenever', require: false
 end
+
+# for scheduler
+begin
+  gem 'cronex'
+  gem 'parse-cron'
+end
+
 
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
@@ -115,6 +126,3 @@ group :development do
   # gem 'spring'
   # gem 'spring-watcher-listen', '~> 2.0.0'
 end
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
