@@ -18,7 +18,7 @@ end
 
 # stylesheet
 begin
-  gem 'twitter-bootstrap-rails'
+  gem 'bootstrap-sass', '~> 3.3.7'
   gem 'bootstrap-datepicker-rails'
   gem "font-awesome-rails"
 end
