@@ -6,6 +6,11 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+class Settings < Settingslogic
+  source File.join(File.dirname(__FILE__), "../config/application.yml")
+  namespace ENV['RAILS_ENV'] || 'development'
+end
+
 module Scheduler
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.

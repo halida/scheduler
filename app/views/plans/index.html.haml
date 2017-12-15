@@ -1,0 +1,15 @@
+= will_paginate @items
+
+%table.table.table-bordered.table-condensed
+  %tr
+    %th ID
+    %th Title
+    %th
+
+  - @items.each do |item|
+    %tr
+      %td= item.id
+      %td
+        .p= item.title
+        .p= item.description
+      %td

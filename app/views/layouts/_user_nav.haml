@@ -1,0 +1,9 @@
+%ul.nav.navbar-nav.pull-right
+  %li.dropdown
+    %a(href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false")
+      %span{data: {email: current_user.email}}
+        = current_user.username.presence || current_user.email
+      %b.caret
+    %ul.dropdown-menu
+      %li= link_to 'logout', destroy_user_session_path, method: :delete
+
