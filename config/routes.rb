@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     post :op
     post :notify
     get :sidekiq
+    get :info
   end
 
   namespace :api do

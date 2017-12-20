@@ -1,5 +1,7 @@
 console:
-	bundle exec rails c
+	TZ=/usr/share/zoneinfo/UTC bundle exec rails c
+worker:
+	bundle exec sidekiq -e development -C ./config/sidekiq.yml
 
 .PHONY: test
 test:

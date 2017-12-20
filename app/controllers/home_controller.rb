@@ -17,4 +17,26 @@ class HomeController < ApplicationController
     set_tab :sidekiq, :nav
   end
 
+  def info
+    @info = {
+      environment: {
+        rails: Rails.env,
+      },
+      version: {
+        ruby: RUBY_VERSION,
+        rails: Rails::VERSION::STRING,
+      },
+      time: {
+        system: {
+          time: Time.now.to_s,
+          zone: Time.now.zone,
+        },
+        rails: {
+          time: Time.zone.now,
+          zone: Time.zone.to_s,
+        },
+      },
+    }
+  end
+
 end

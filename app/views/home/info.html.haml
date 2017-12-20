@@ -1,0 +1,9 @@
+%table.table.table-bordered.table-condensed
+  - @info.each do |category, h|
+    %tr
+      %th= category
+      %td
+    - h.each do |k, v|
+      %tr
+        %td= k
+        %td= v
