@@ -1,8 +1,8 @@
 = bootstrap_tabs_tag namespace: :nav, open_tabs: {class: 'dropdown-menu'} do |tab|
   = tab.dashboard "Dashboard", :root
   %li.divider{role: "separator"}
-  = tab.plans "Plans", :plans
   = tab.execution_methods "Execution Methods", :execution_methods
+  = tab.plans "Plans", :plans
   = tab.executions "Executions", :executions
   %li.divider{role: "separator"}
   = tab.sidekiq "Sidekiq", "/home/sidekiq"

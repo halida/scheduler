@@ -21,8 +21,8 @@ class Scheduler::Runner
     end
 
     def expend_executions(now)
-      Routine.enabled.map do |routine|
-        Scheduler::Lib.routine_expend_executions(routine, now)
+      Plan.enabled.map do |plan|
+        Scheduler::Lib.plan_expend_executions(plan, now)
       end.flatten.compact.sort_by(&:scheduled_at)
     end
 

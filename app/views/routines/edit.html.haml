@@ -1,6 +1,6 @@
 .form-block
   = simple_form_for @item, as: :item do |f|
-    = f.input :plan_id, collection: Plan.where(enabled: true).pluck(:title, :id)
+    = f.input :plan_id, collection: Plan.enabled.pluck(:title, :id)
     = f.input :config
     = f.input :timezone
     = f.input :enabled

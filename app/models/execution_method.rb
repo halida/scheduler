@@ -1,8 +1,8 @@
 class ExecutionMethod < ActiveRecord::Base
-  extend Enumerize
-  enumerize :execution_type, in: [:none, :ruby, :sidekiq, :http]
-
   include HasParameters
+  include HasEnabled
+  include Enumerize
+  enumerize :execution_type, in: [:none, :ruby, :sidekiq, :http]
 
   has_many :plans
 

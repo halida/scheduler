@@ -1,7 +1,7 @@
 %tr
   %td
     = link_to "##{item.id}", item
-    .pull-right= render_enabled(item)
+    .pull-right= render_enabled(item.enabled)
   %td
     .p
       %strong= item.title

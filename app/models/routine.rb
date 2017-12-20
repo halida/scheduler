@@ -1,5 +1,6 @@
 class Routine < ActiveRecord::Base
   extend Enumerize
+  include HasEnabled
 
   belongs_to :plan
   has_many :executions
@@ -13,12 +14,16 @@ class Routine < ActiveRecord::Base
 
   validate :validate_data
 
+  after_save :update_executions
+
   def title
-    self.config
+    Scheduler::Lib.schedule_description(self.config)
   end
 
-  def self.enabled(v=true)
-    where(enabled: v)
+  def update_executions
+    if self.config_changed? or self.enabled == false
+      self.executions.where(status: :initialize).delete_all
+    end
   end
 
   def validate_data
@@ -37,15 +42,5 @@ class Routine < ActiveRecord::Base
       end
     end
   end
-
-  def description
-    Scheduler::Lib.schedule_description(self.config)
-  end
-
-  # def get_schedules_with_execution_during(from, to)
-  #   executions = self.executions.scheduled_during(from, to)
-  #   schedules = Job.get_schedules_during(self.schedule, from, to)
-  #   Job.put_executions_to_schedules_gap(executions, schedules)
-  # end
 
 end
