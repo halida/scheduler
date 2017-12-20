@@ -13,4 +13,8 @@ class HomeController < ApplicationController
     end
   end
 
+  def sidekiq
+    set_tab :sidekiq, :nav
+  end
+
 end

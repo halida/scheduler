@@ -16,4 +16,9 @@ class User < ApplicationRecord
     end
   end
 
+  def admin?
+    # todo
+    true
+  end
+
 end

@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resource :home, controller: "home" do
     post :op
     post :notify
+    get :sidekiq
   end
 
   namespace :api do
@@ -32,4 +33,10 @@ Rails.application.routes.draw do
   end
 
   resources :users
+
+  require 'sidekiq/web'
+  require 'sidekiq_status/web'
+  authenticate :user, lambda { |u| u.admin? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
 end

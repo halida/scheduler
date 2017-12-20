@@ -67,7 +67,10 @@ begin
   gem "redis-rails"
   gem 'sidekiq'
   # for sidekiq web
-  # gem 'sidekiq_status'
+  gem 'sidekiq_status'
+  # for sidekiq deployment
+  # todo
+  # gem 'sidekiq-client-cli', git: "https://github.com/halida/sidekiq-client-cli.git", branch: 'support-passing-job-arguments-per-job', require: false
 end
 
 # library
