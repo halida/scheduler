@@ -27,8 +27,8 @@ class Routine < ActiveRecord::Base
       
       f = parser.next(DateTime.now)
       n = parser.next(f)
-      if (n - f) < 3.hours
-        errors.add :config, "interval should not smaller than 3 hours."
+      if (n - f) < 1.hours
+        errors.add :config, "interval should not smaller than 1 hour."
         return
       end
     end

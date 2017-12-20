@@ -24,9 +24,8 @@ class PlansController < SimpleController
       e.perform
       redirect_to e, notice: "Executing: ##{e.id}"
     when "expand"
-      @item.routines.each do |routine|
-        routine.routine_expend_executions(routine, now)
-      end
+      Scheduler::Lib.plan_expend_executions(@item)
+      redirect_to @item, notice: "Expanded"
     end
   end
 

@@ -6,11 +6,10 @@ class HomeController < ApplicationController
 
   def op
     case params[:type]
-    when "run_executions", "expend_executions", "verify_executions"
-      executions = Scheduler::Runner.send(params[:type], Time.now)
-      executions = executions.paginate(per_page: 1000, page: 1)
-      flash[:notice] = "Finished."
-      render "executions/_list", locals: {items: executions}
+    when "check", "run_executions", "expend_executions", "verify_executions"
+      @now = Time.now
+      @result = Scheduler::Runner.send(params[:type], @now)
+      render "check_result"
     end
   end
 

@@ -1,0 +1,9 @@
+.p
+  Runs at #{@now}
+
+- unless params[:type] == 'check'
+  - @result = {params[:type].to_sym => @result}
+- @result.each do |type, executions|
+  %h3= type.to_s.humanize
+  - executions = executions.paginate(per_page: 1000, page: 1)
+  = render partial: "executions/list", locals: {items: executions}

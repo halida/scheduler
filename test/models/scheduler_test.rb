@@ -9,9 +9,7 @@ class SchedulerTest < ActiveSupport::TestCase
     opt[:execution_method_id] = opt.delete(:em).id
     plan.update_attributes!(opt)
 
-    routine = plan.routines.find_or_create_by(config: schedule, timezone: timezone)
-    Scheduler::Lib.routine_expend_executions(routine, Time.now)
-
+    routine = plan.routines.find_or_create_by!(config: schedule, timezone: timezone)
     plan
   end
 
@@ -22,7 +20,9 @@ class SchedulerTest < ActiveSupport::TestCase
   end
 
   def execute_plan(plan)
-    e = plan.routines.first.executions.first
+    Scheduler::Lib.plan_expend_executions(plan, Time.now)
+
+    e = plan.executions.first
     e.perform
     e
   end
@@ -69,6 +69,15 @@ class SchedulerTest < ActiveSupport::TestCase
       title: "TransguardPremiumFtpWorker.daily_job",
       description: "wrike task <a href='https://www.wrike.com/open.htm?id=110144285'>here</a>.",
       em: em_cron, schedule: "0 5 * * *", timezone: "Central Time (US & Canada)",
+    )
+    e = execute_plan(plan)
+    assert_equal e.status, "calling"
+
+    # mapping to faster crontab
+    plan = create_plan(
+      title: "heart beat crontab",
+      description: "for testing fast running",
+      em: em_cron, schedule: "12 * * * *",
     )
     e = execute_plan(plan)
     assert_equal e.status, "calling"

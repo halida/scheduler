@@ -26,6 +26,12 @@ class Scheduler::Lib
       end
     end
 
+    def plan_expend_executions(plan, now)
+      plan.routines.where(enabled: true).map do |routine|
+        self.routine_expend_executions(routine, now)
+      end.flatten
+    end
+
     def get_schedules_during(schedule, from, to)
       cron_parser = self.parse_schedule(schedule)
       out = []

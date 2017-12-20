@@ -3,5 +3,5 @@
 .p
   Controls
   .btn-group
-    - ["run_executions", "expend_executions", "verify_executions"].each do |name|
+    - ["check", "run_executions", "expend_executions", "verify_executions"].each do |name|
       = link_to name.humanize, [:op, :home, type: name], method: :post, data: {confirm: "#{name.humanize}?"}, class: 'btn btn-default'
