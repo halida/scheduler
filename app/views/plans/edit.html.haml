@@ -1,0 +1,15 @@
+%h2
+  - if @item.new_record?
+    Create Plan
+  - else
+    Edit Plan
+
+= simple_form_for @item, as: :item do |f|
+  = f.input :title
+  = f.input :description
+
+  .p{style: 'margin-top: 20px'}
+    = f.submit "Submit", class: 'btn btn-success'
+    = link_to "Cancel", :plans, class: 'btn btn-default'
+
+

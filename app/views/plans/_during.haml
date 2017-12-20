@@ -1,0 +1,7 @@
+.p{style: 'margin-bottom: 10px'}
+  = form_for url_for, method: :get do |f|
+    = render partial: "shared/during"
+    - if defined?(include_initialize)
+      = check_box_tag :include_initialize, '1', params[:include_initialize]
+      Include Initialize
+    = submit_tag "Search", class: 'btn btn-default'

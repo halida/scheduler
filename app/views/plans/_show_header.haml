@@ -1,0 +1,8 @@
+%table.table.table-bordered.table-condensed.plan-list
+  = render partial: "list_header"
+  = render partial: "item", locals: {item: @item}
+
+= bootstrap_tabs_tag namespace: :plan, open_tabs: {class: "nav nav-tabs"} do |tab|
+  = tab.schedules "Schedules", @item
+  = tab.executions "Executions", [:executions, @item]
+.p{style: "margin: 10px"}

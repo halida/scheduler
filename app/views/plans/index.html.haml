@@ -1,15 +1,12 @@
-= will_paginate @items
+%h3 Plans
 
-%table.table.table-bordered.table-condensed
-  %tr
-    %th ID
-    %th Title
-    %th
+.p{style: "margin-bottom: 10px"}
+  = link_to "New", [:new, :plan], class: 'btn btn-default'
 
-  - @items.each do |item|
-    %tr
-      %td= item.id
-      %td
-        .p= item.title
-        .p= item.description
-      %td
+= bootstrap_will_paginate @items
+
+%table.table.table-bordered.table-condensed.plan-list
+  = render partial: "list_header"
+  = render partial: "item", collection: @items
+
+= bootstrap_will_paginate @items

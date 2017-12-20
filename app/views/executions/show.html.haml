@@ -1,0 +1,12 @@
+%h3 Plan
+
+%table.table.table-bordered.table-condensed.plan-list
+  = render partial: "plans/list_header"
+  = render partial: "plans/item", locals: {item: @item.plan}
+
+%h3 Execution
+
+%table.table.table-bordered.table-condensed
+  = render partial: "executions/list_header"
+  = render partial: "executions/item", collection: [@item]
+  

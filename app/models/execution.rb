@@ -1,12 +1,12 @@
 class Execution < ActiveRecord::Base
-  extend Enumerize
-  extend Reportable
+  include Enumerize
+  include Reportable
 
   enumerize :status, in: Reportable::STATUSES + [:calling, :timeout]
 
   ERROR_STATUS = [:timeout, :error]
 
-  belongs_to :routine
+  belongs_to :routine, optional: :true
   belongs_to :plan
 
   def self.scheduled_during(from, to)
@@ -15,11 +15,22 @@ class Execution < ActiveRecord::Base
       where_if(to, "scheduled_at <= ?", to)
   end
 
-  def run
+  def self.runs_during(from, to)
+    self.
+      where_if(from, "started_at >= ?", from).
+      where_if(to, "started_at <= ?", to)
+  end
+
+  def self.during(from, to)
+    self.scheduled_during(from, to).or(
+      self.runs_during(from, to))
+  end
+
+  def self.run
     self.run_at(Time.now)
   end
 
-  def run_at(t)
+  def self.run_at(t)
     self.where.not(status: ['succeeded', 'error']).each do |e|
       e.perform
     end
@@ -27,6 +38,10 @@ class Execution < ActiveRecord::Base
 
   def perform
     Scheduler::Executor.perform(self)
+  end
+
+  def close
+    self.update_attributes(status: :succeeded, finished_at: Time.now)
   end
 
 end

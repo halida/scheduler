@@ -12,30 +12,23 @@ class Scheduler::Runner
     protected
 
     def run_executions(now)
-      Execution.where(status: :initialize).
-        where("scheduled_at <= ?", now).
-        map(&:perform)
+      executions = Execution.where(status: :initialize).
+                    where("scheduled_at <= ?", now)
+      executions.map(&:perform)
+      executions
     end
 
     def expend_executions(now)
-      Routine.enabled.each do |routine|
-        Lib.routine_expend_executions(routine, now)
-      end
+      Routine.enabled.map do |routine|
+        Scheduler::Lib.routine_expend_executions(routine, now)
+      end.flatten.compact.sort_by(&:scheduled_at)
     end
 
     public def verify_executions(now)
-      Execution.where(status: :calling).
-        where("timeout_at <= ?", now).
-        update_all(status: :timeout)
-    end
-
-    def close_calling_executions(now)
-      Execution.where(status: :calling).each do |e|
-        if e.started_at + e.scheduler.waiting.seconds < now
-          e.status = :timeout
-          e.save!
-        end
-      end
+      executions = Execution.where(status: :calling).
+                     where("timeout_at <= ?", now)
+      executions.update_all(status: :timeout, finished_at: now)
+      executions
     end
 
   end

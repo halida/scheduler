@@ -1,0 +1,32 @@
+%tr
+  %td= link_to "##{item.id}", item
+  %td= link_to item.plan.title, item.plan
+  %td
+    - if item.routine
+      = Scheduler::Lib.schedule_description(item.routine.config)
+  %td= item.scheduled_at
+  %td
+    = item.started_at
+    %br
+    = "Spend #{(item.finished_at - item.started_at).round(2) }s" if item.done? and item.finished_at.present?
+  %td= execution_status(item)
+  %td
+    = link_to "Perform", [:op, item, type: :perform], method: :post, data: {confirm: "Are you sure to perform this?"}
+    \/
+    = link_to "Close", [:op, item, type: :close], method: :post, data: {confirm: "Are you sure to close this?"}
+    \/
+    - if item.result.present?
+      = link_to "Result", "#result-#{item.id}", class: "fancybox"
+      .hide
+        .p{id: "result-#{item.id}"}
+          %pre= item.result
+    - else
+      %span.muted Result
+    \/
+    - if item.log.present?
+      = link_to "Log", "#log-#{item.id}", class: "fancybox"
+      .hide
+        .p{id: "log-#{item.id}"}
+          %pre= item.log
+    - else
+      %span.muted Log

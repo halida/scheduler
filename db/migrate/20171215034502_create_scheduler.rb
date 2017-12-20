@@ -2,7 +2,7 @@ class CreateScheduler < ActiveRecord::Migration[5.1]
   def change
     create_table :plans do |t|
       t.string :title
-      t.string :description
+      t.text :description
 
       t.integer :execution_method_id
       t.string :parameters
@@ -42,7 +42,7 @@ class CreateScheduler < ActiveRecord::Migration[5.1]
 
       t.timestamps null: false
     end
-    add_index :executions, :routine_id
+    add_index :executions, :plan_id
     add_index :executions, :scheduled_at
   end
 end

@@ -28,7 +28,7 @@ begin
   gem 'uglifier', '>= 1.3.0'
   gem 'jquery-rails'
   gem 'jquery-ui-rails'
-  # gem 'fancybox2-rails'
+  gem 'fancybox2-rails'
   gem "select2-rails"
 end
 
@@ -36,6 +36,7 @@ end
 begin
   gem 'tabs_on_rails'
   gem 'will_paginate'
+  gem 'will_paginate-bootstrap'
   gem 'acts_as_list'
   gem 'nestive'
 end
@@ -77,6 +78,8 @@ begin
   gem 'airbrake'
 
   gem 'whenever', require: false
+  # version
+  gem 'paper_trail'
 end
 
 # for scheduler

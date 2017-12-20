@@ -14,4 +14,10 @@
 //= require bootstrap-sprockets
 //= require rails-ujs
 //= require turbolinks
+
+//= require fancybox
+//= require select2
+//= require bootstrap-datepicker/core
+//= require bootstrap-datepicker/locales/bootstrap-datepicker.es.js
+
 //= require_tree .

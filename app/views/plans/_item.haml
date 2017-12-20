@@ -1,0 +1,32 @@
+%tr
+  %td= link_to "##{item.id}", item
+  %td
+    .p
+      %strong= item.title
+    .p= simple_format item.description
+  %td
+    - em = item.execution_method
+    = render partial: "execution_methods/show", locals: {em: em}
+
+    - if item.parameters.present?
+      .p= link_to "Plan Parameters", "#parameters-#{item.id}", class: "fancybox"
+      .hide
+        .p{id: "parameters-#{item.id}"}
+          = hash_as_table item.parameters
+  %td
+    %ul.list-unstyled
+      - item.routines.each do |routine|
+        %li
+          - if routine.enabled
+            %span.label.label-success Enabled
+          - else
+            %span.label.disabled Disabled
+          = routine.timezone
+          %span{title: routine.config}
+            = Scheduler::Lib.schedule_description(routine.config)
+          
+  %td
+    .p= link_to "Execute", [:op, item, type: :execute], method: :post, data: {confirm: "Are you sure to execute now?"}
+    .p= link_to "Expand", [:op, item, type: :expand], method: :post, data: {confirm: "Are you sure to expend executions?"}
+    .p= link_to "Edit", [:edit, item]
+    .p= link_to "Delete", item, method: :delete, data: {confirm: "Are you sure to delete ##{item.title}?"}

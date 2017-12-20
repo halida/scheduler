@@ -17,7 +17,7 @@ class Scheduler::Lib
       to = last + 14.days
 
       schedules = self.get_schedules_during(routine.config, last, to)
-      schedules.each do |schedule|
+      schedules.map do |schedule|
         routine.executions.find_or_create_by!(
           plan_id: routine.plan.id,
           scheduled_at: schedule,
@@ -39,12 +39,21 @@ class Scheduler::Lib
       out
     end
 
+    def get_schedules_with_execution_during(plan, from, to)
+      executions = plan.executions.during(from, to)
+      schedules = \
+      plan.routines.map do |routine|
+        self.get_schedules_during(routine.config, from, to)
+      end.flatten.sort
+      self.put_executions_to_schedules_gap(executions, schedules)
+    end
+
     def put_executions_to_schedules_gap(executions, schedules)
       out = []
       schedules.each_with_index do |s, i|
         s_next = schedules[i+1]
         es = executions.select do |e|
-          t = e.started_at || e.scheduled_at
+          t = e.scheduled_at || e.started_at
           ((!s or t >= s) and
            (!s_next or t < s_next))
         end

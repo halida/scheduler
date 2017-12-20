@@ -1,0 +1,13 @@
+- if e.present?
+  %td= link_to e.id, e
+  %td= e.scheduled_at.strftime("%m/%d/%Y %H:%M %z") if e.scheduled_at
+  %td
+    = e.started_at.strftime("%m/%d/%Y %H:%M %z") if e.started_at
+    %br
+    = "Spend #{(e.finished_at - e.started_at).round(2) }s" if e.done? and e.finished_at.present?
+  %td= execution_status(e)
+- else
+  %td
+  %td
+  %td
+  %td

@@ -5,10 +5,11 @@ class SchedulerTest < ActiveSupport::TestCase
   def create_plan(opt)
     plan = Plan.find_or_create_by(title: opt[:title])
     schedule = opt.delete(:schedule)
+    timezone = opt.delete(:timezone)
     opt[:execution_method_id] = opt.delete(:em).id
     plan.update_attributes!(opt)
 
-    routine = plan.routines.find_or_create_by(config: schedule)
+    routine = plan.routines.find_or_create_by(config: schedule, timezone: timezone)
     Scheduler::Lib.routine_expend_executions(routine, Time.now)
 
     plan
@@ -29,22 +30,48 @@ class SchedulerTest < ActiveSupport::TestCase
   test "all" do
     # test ruby ok
     em_ruby_ok = create_em(
-      title: "ruby test ok", execution_type: :ruby,
+      title: "ruby test ok",
+      execution_type: :ruby,
       parameters: {code: "1+1"},
     )
-    plan = create_plan(title: "ruby test ok", em: em_ruby_ok, schedule: "31 2 * * *")
+    plan = create_plan(
+      title: "ruby test ok",
+      description: "test if ruby code runs OK",
+      em: em_ruby_ok, schedule: "31 2 * * *")
+    # create another routine
+    routine = plan.routines.find_or_create_by(config: "24 8 * * *")
+    Scheduler::Lib.routine_expend_executions(routine, Time.now)
+    
     e = execute_plan(plan)
     assert_equal e.status, 'succeeded'
     assert_equal e.result, '2'
 
     # test ruby error
     em_ruby_error = create_em(
-      title: "ruby test error", execution_type: :ruby,
+      title: "ruby test error",
+      execution_type: :ruby,
       parameters: {code: "1/0"},
     )
-    plan = create_plan(title: "ruby test error", em: em_ruby_error, schedule: "31 2 * * *")
+    plan = create_plan(
+      title: "ruby test error",
+      description: "test if ruby code runs not OK\n\n should show errors in the log",
+      em: em_ruby_error, schedule: "31 2 * * *"
+    )
     e = execute_plan(plan)
     assert_equal e.status, "error"
+
+    # mapping to crontab
+    em_cron = create_em(
+      title: "mapping for crontab",
+      execution_type: :none,
+    )
+    plan = create_plan(
+      title: "TransguardPremiumFtpWorker.daily_job",
+      description: "wrike task <a href='https://www.wrike.com/open.htm?id=110144285'>here</a>.",
+      em: em_cron, schedule: "0 5 * * *", timezone: "Central Time (US & Canada)",
+    )
+    e = execute_plan(plan)
+    assert_equal e.status, "calling"
 
     # test call api
     em_api = create_em(
@@ -66,7 +93,7 @@ class SchedulerTest < ActiveSupport::TestCase
       parameters: {host: 'localhost', port: 6379, db: 14, queue: "default"},
     )
     plan = create_plan(
-      title: "ruby api", em: em_sidekiq, schedule: "31 2 * * *",
+      title: "worker", em: em_sidekiq, schedule: "31 2 * * *",
       parameters: {class: "TestWorker", args: ['error']},
     )
     e = execute_plan(plan)

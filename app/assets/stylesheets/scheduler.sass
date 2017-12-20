@@ -1,0 +1,19 @@
+table.plan-list
+  tr
+    td:nth-child(2), td:nth-child(3), td:nth-child(4)
+      max-width: 240px
+      word-wrap: break-word
+
+.execution-status
+  &.status-initialize
+    color: #aaa
+  &.status-succeeded
+    color: #4a4
+  &.status-running
+    color: #00a
+  &.status-calling
+    color: #aaa
+  &.status-error, &.status-timeout
+    color: #a00
+  &.status-timeout
+    color: #a00

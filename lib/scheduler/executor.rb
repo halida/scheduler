@@ -2,32 +2,37 @@ class Scheduler::Executor
   class << self
 
     def perform(execution)
-      self.send("execute_#{execution.routine.plan.execution_method.execution_type}", execution)
+      self.send("execute_#{execution.plan.execution_method.execution_type}", execution)
     end
 
-    def monitor_error(execution, after_status)
-      result = ""
+    def running(execution, after_status)
       begin
-        result = yield
+        execution.started_at = Time.now
+        execution.result = yield
+        execution.status = after_status
       rescue Exception, RestClient::Exception, Errno::ECONNREFUSED => e
-        after_status = :error
-        result = ([e.message, ""] + e.backtrace).join("\n")
+        execution.status = :error
+        execution.log = ([e.message, ""] + e.backtrace).join("\n")
       end
-      execution.update_attributes!(status: after_status, result: result)
+      execution.save!
+    end
+
+    def execute_none(execution)
+      self.running(execution, :calling){}
     end
 
     def execute_ruby(execution)
-      method = execution.routine.plan.execution_method
-      self.monitor_error(execution, :succeeded) do
+      method = execution.plan.execution_method
+      self.running(execution, :succeeded) do
         eval method.parameters[:code]
       end
     end
 
     def execute_http(execution)
-      plan = execution.routine.plan
+      plan = execution.plan
       method = plan.execution_method
 
-      self.monitor_error(execution, :calling) do
+      self.running(execution, :calling) do
         site = method.parameters[:site]
         path = plan.parameters[:path]
         RestClient.get("#{site}/#{path}")
@@ -35,10 +40,10 @@ class Scheduler::Executor
     end
 
     def execute_sidekiq(execution)
-      plan = execution.routine.plan
+      plan = execution.plan
       method = plan.execution_method
 
-      self.monitor_error(execution, :calling) do
+      self.running(execution, :calling) do
         hash = plan.parameters.slice(:class, :args)
         opt = hash[:args].extract_options!
         opt[:execution_id] = execution.id
