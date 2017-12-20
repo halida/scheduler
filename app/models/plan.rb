@@ -1,5 +1,5 @@
 class Plan < ActiveRecord::Base
-  serialize :parameters, Hash
+  include HasParameters
 
   belongs_to :execution_method
   has_many :routines, dependent: :destroy

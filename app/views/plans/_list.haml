@@ -1,0 +1,7 @@
+= bootstrap_will_paginate items
+
+%table.table.table-bordered.table-condensed.plan-list
+  = render partial: "plans/list_header"
+  = render partial: "plans/item", collection: items
+
+= bootstrap_will_paginate items

@@ -1,0 +1,10 @@
+.p.margin-bottom
+  = link_to "New", [:new, :execution_method], class: 'btn btn-default'
+
+= bootstrap_will_paginate @items
+
+%table.table.table-bordered.table-condensed
+  = render partial: "list_header"
+  = render partial: "item", collection: @items
+
+= bootstrap_will_paginate @items

@@ -1,0 +1,12 @@
+.p
+  - case em.execution_type
+  - when "ruby"
+    %span{title: "Code", style: "background: #ddd"}= em.parameters[:code]
+  - when "http"
+    %span{title: "Site"}= em.parameters[:site]
+  - else
+    - if em.parameters.present?
+      = link_to "Parameters", "#em-parameters-#{em.id}", class: "fancybox"
+      .hide
+        .p{id: "em-parameters-#{em.id}"}
+          = hash_as_table em.parameters

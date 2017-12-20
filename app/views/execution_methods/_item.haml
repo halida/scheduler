@@ -1,0 +1,11 @@
+%tr
+  %td
+    = link_to "##{item.id}", item
+    .pull-right= render_enabled(item)
+  %td
+    %strong= item.title
+  %td= item.execution_type
+  %td= render partial: "execution_methods/detail", locals: {em: item}
+  %td
+    .p= link_to "Edit", [:edit, item]
+    .p= link_to "Delete", item, method: :delete, data: {confirm: "Are you sure to delete ##{item.title}?"}

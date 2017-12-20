@@ -13,6 +13,10 @@ class Routine < ActiveRecord::Base
 
   validate :validate_data
 
+  def title
+    self.config
+  end
+
   def self.enabled(v=true)
     where(enabled: v)
   end

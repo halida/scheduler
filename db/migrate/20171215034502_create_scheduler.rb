@@ -10,6 +10,7 @@ class CreateScheduler < ActiveRecord::Migration[5.1]
 
       t.string :token
 
+      t.boolean :enabled, default: true
       t.timestamps null: false
     end
 
@@ -18,6 +19,9 @@ class CreateScheduler < ActiveRecord::Migration[5.1]
       t.string :execution_type
       # redis, api, 
       t.text :parameters
+
+      t.boolean :enabled, default: true
+      t.timestamps null: false
     end
 
     create_table :routines do |t|

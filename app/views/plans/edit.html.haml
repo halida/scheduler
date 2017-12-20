@@ -1,15 +1,12 @@
-%h2
-  - if @item.new_record?
-    Create Plan
-  - else
-    Edit Plan
-
-= simple_form_for @item, as: :item do |f|
-  = f.input :title
-  = f.input :description
-
-  .p{style: 'margin-top: 20px'}
-    = f.submit "Submit", class: 'btn btn-success'
-    = link_to "Cancel", :plans, class: 'btn btn-default'
-
-
+.form-block
+  = simple_form_for @item, as: :item do |f|
+    = f.input :title
+    = f.input :description
+    = f.input :execution_method_id, collection: ExecutionMethod.where(enabled: true).pluck(:title, :id)
+    = f.input :parameters_text, as: :text
+    = f.input :waiting, label: "Waiting in seconds"
+    = f.input :enabled
+  
+    .margin-bottom
+      = f.submit "Submit", class: 'btn btn-success'
+      = link_to "Cancel", :plans, class: 'btn btn-default'

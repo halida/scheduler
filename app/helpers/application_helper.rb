@@ -67,4 +67,21 @@ module ApplicationHelper
     end.flatten.join(" ").html_safe
   end
 
+  def render_breadcrumbs
+    return if @breadcrumbs.blank?
+    sep = "<span class='sep'> / </span>"
+    list = [nil]
+    @breadcrumbs.each do |breadcrumb|
+      list << link_to(breadcrumb[:name], breadcrumb[:url], breadcrumb[:options])
+    end
+    content_tag(:div, list.join(sep).html_safe, class: 'breadcrumbs')
+  end
+
+  def render_enabled(enabled)
+    if enabled
+      content_tag(:span, "Enabled", class: "label label-success")
+    else
+      content_tag(:span, "Disabled", class: "label label-disabled")
+    end
+  end
 end
