@@ -73,6 +73,13 @@ class SchedulerTest < ActiveSupport::TestCase
     e = execute_plan(plan)
     assert_equal e.status, "calling"
 
+    # test crontab
+    plan = create_plan(
+      title: "InvalidChecker::Runner.recheck_changes_on_invalid_records",
+      description: "",
+      em: em_cron, schedule: "0,30 * * * *", timezone: "Central Time (US & Canada)",
+    )
+
     # mapping to faster crontab
     plan = create_plan(
       title: "heart beat crontab",
@@ -102,8 +109,8 @@ class SchedulerTest < ActiveSupport::TestCase
       parameters: {host: 'localhost', port: 6379, db: 14, queue: "default"},
     )
     plan = create_plan(
-      title: "worker", em: em_sidekiq, schedule: "31 2 * * *",
-      parameters: {class: "TestWorker", args: ['error']},
+      title: "test scheduler worker", em: em_sidekiq, schedule: "31 2 * * *",
+      parameters: {class: "TestSchedulerWorker", args: []},
     )
     e = execute_plan(plan)
     Scheduler::Runner.verify_executions(Time.now)

@@ -46,7 +46,8 @@ class Scheduler::Executor
       self.running(execution, :calling) do
         hash = plan.parameters.slice(:class, :args)
         opt = hash[:args].extract_options!
-        opt[:execution_id] = execution.id
+        execution.token = Scheduler::Lib.get_token
+        opt[:token] = execution.token
         hash[:args] << opt
         hash = hash.stringify_keys
         

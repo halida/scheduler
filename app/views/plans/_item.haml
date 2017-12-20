@@ -13,6 +13,9 @@
       .hide
         .p{id: "parameters-#{item.id}"}
           = hash_as_table item.parameters
+    - if item.token.present?
+      .p
+        API Token: #{item.token}
   %td
     %ul.list-unstyled
       - item.routines.each do |routine|
@@ -26,7 +29,7 @@
             = Scheduler::Lib.schedule_description(routine.config)
           
   %td
-    .p= link_to "Execute", [:op, item, type: :execute], method: :post, data: {confirm: "Are you sure to execute now?"}
-    .p= link_to "Expand", [:op, item, type: :expand], method: :post, data: {confirm: "Are you sure to expend executions?"}
+    - [:execute, :expand, :assign_token].each do |name|
+      .p= link_to name.to_s.humanize, [:op, item, type: name], method: :post, data: {confirm: "Are you sure to #{name.to_s.humanize}?"}
     .p= link_to "Edit", [:edit, item]
     .p= link_to "Delete", item, method: :delete, data: {confirm: "Are you sure to delete ##{item.title}?"}

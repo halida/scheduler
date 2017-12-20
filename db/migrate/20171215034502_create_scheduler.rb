@@ -8,6 +8,8 @@ class CreateScheduler < ActiveRecord::Migration[5.1]
       t.string :parameters
       t.integer :waiting, default: 60*3
 
+      t.string :token
+
       t.timestamps null: false
     end
 
@@ -29,6 +31,8 @@ class CreateScheduler < ActiveRecord::Migration[5.1]
     create_table :executions do |t|
       t.integer :plan_id
       t.integer :routine_id
+
+      t.string :token
 
       t.string :status, default: :initialize
       t.text :log, limit: 262143

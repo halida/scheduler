@@ -68,5 +68,9 @@ class Scheduler::Lib
       out
     end
 
+    def get_token
+      SecureRandom.uuid.gsub("-", "")
+    end
+
   end
 end

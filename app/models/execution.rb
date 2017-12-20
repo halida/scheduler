@@ -40,8 +40,8 @@ class Execution < ActiveRecord::Base
     Scheduler::Executor.perform(self)
   end
 
-  def close
-    self.update_attributes(status: :succeeded, finished_at: Time.now)
+  def close(status=:succeeded, result=nil)
+    self.update_attributes!(status: status, result: result, finished_at: Time.now)
   end
 
 end
