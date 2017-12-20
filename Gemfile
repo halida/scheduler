@@ -69,8 +69,7 @@ begin
   # for sidekiq web
   gem 'sidekiq_status'
   # for sidekiq deployment
-  # todo
-  # gem 'sidekiq-client-cli', git: "https://github.com/halida/sidekiq-client-cli.git", branch: 'support-passing-job-arguments-per-job', require: false
+  gem 'sidekiq-client-cli', git: "https://github.com/halida/sidekiq-client-cli.git", branch: 'support-passing-job-arguments-per-job', require: false
 end
 
 # library
@@ -100,9 +99,6 @@ gem 'turbolinks', '~> 5'
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
