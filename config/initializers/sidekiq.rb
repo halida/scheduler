@@ -1,5 +1,10 @@
 require "sidekiq"
 
+# for whenever sidekiq-client-cli
+unless defined?(Settings)
+  require 'settingslogic'
+  load File.join(File.dirname(__FILE__), './settings.rb')
+end
 sidekiq_config = Settings.sidekiq
 
 Sidekiq.configure_server do |config|
