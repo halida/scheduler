@@ -36,7 +36,12 @@
             = link_to "Del", routine, method: :delete, data: {confirm: "Are you sure to delete this?"}
 
   %td
-    - [:execute, :expand, :assign_token].each do |name|
-      .p= link_to name.to_s.humanize, [:op, item, type: name], method: :post, data: {confirm: "Are you sure to #{name.to_s.humanize}?"}
-    .p= link_to "Edit", [:edit, item]
-    .p= link_to "Delete", item, method: :delete, data: {confirm: "Are you sure to delete ##{item.title}?"}
+    .btn-group.pull-right{:role => "group"}
+      %button.btn.btn-default.btn-xs.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+        %span.caret
+      %ul.dropdown-menu
+        - [:execute, :expand, :assign_token].each do |name|
+          %li= link_to name.to_s.humanize, [:op, item, type: name], method: :post, data: {confirm: "Are you sure to #{name.to_s.humanize}?"}
+        %li.divider{:role => "separator"}
+        %li= link_to "Edit", [:edit, item]
+        %li= link_to "Delete", item, method: :delete, data: {confirm: "Are you sure to delete ##{item.title}?"}

@@ -7,5 +7,10 @@
   %td= item.execution_type
   %td= render partial: "execution_methods/detail", locals: {em: item}
   %td
-    .p= link_to "Edit", [:edit, item]
-    .p= link_to "Delete", item, method: :delete, data: {confirm: "Are you sure to delete ##{item.title}?"}
+    .btn-group.pull-right{:role => "group"}
+      %button.btn.btn-default.btn-xs.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+        %span.caret
+      %ul.dropdown-menu
+        %li.divider{:role => "separator"}
+        %li= link_to "Edit", [:edit, item]
+        %li= link_to "Delete", item, method: :delete, data: {confirm: "Are you sure to delete ##{item.title}?"}
