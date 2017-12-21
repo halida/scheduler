@@ -69,7 +69,7 @@ begin
   # for sidekiq web
   gem 'sidekiq_status'
   # for sidekiq deployment
-  gem 'sidekiq-client-cli', git: "https://github.com/halida/sidekiq-client-cli.git", branch: 'support-passing-job-arguments-per-job', require: false
+  gem 'sidekiq-client-cli'
 end
 
 # library
