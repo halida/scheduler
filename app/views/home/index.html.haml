@@ -1,5 +1,13 @@
 %h1 Dashboard
 
+%table.table.table-bordered.table-condensed
+  %tr
+    %th Last checked at
+    %th Next check create executions
+  %tr
+    %td= Rails.cache.read("scheduler_runner_checked_at")
+    %td= Marshal.load(Rails.cache.read("scheduler_runner_create_executions")).to_s rescue nil
+
 .p
   Controls
   .btn-group
