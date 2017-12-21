@@ -10,8 +10,7 @@ class ExecutionsController < SimpleController
     executions.during(begin_date, finish_date).
       preload(:plan, :routine).
       where_if(params[:status].present?, status: params[:status]).
-      where_if(params[:include_initialize] != '1', "status != ?", :initialize).
-      order(scheduled_at: :desc).
+      order(scheduled_at: :asc).
       paginate(page: params[:page])
   end
 

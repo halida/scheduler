@@ -1,7 +1,8 @@
 .p{style: 'margin-bottom: 10px'}
   = form_for url_for, method: :get do |f|
     = render partial: "shared/during"
-    - if defined?(include_initialize)
-      = check_box_tag :include_initialize, '1', params[:include_initialize]
-      Include Initialize
+    Or
+    = link_to "This week", url_for(begin_date: Date.today.beginning_of_week.strftime("%m/%d/%Y"), end_date: Date.today.end_of_week.strftime("%m/%d/%Y"))
+    ,
+    = link_to "Since today", url_for(begin_date: Date.today.strftime("%m/%d/%Y"), end_date: (Date.today + 7.days).strftime("%m/%d/%Y"))
     = submit_tag "Search", class: 'btn btn-default'

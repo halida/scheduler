@@ -20,11 +20,11 @@
         .p{id: "parameters-#{item.id}"}
           = hash_as_table item.parameters
     - if item.token.present?
-      .p
-        API Token: #{item.token}
+      = link_to "API Token", "#plan-#{item.id}-token", class: 'fancybox'
+      .hide
+        .p{id: "plan-#{item.id}-token"}
+          %pre= item.token
   %td
-    = link_to [:new, :routine, {item: {plan_id: item.id}}], title: "New Routine" do
-      = "New"
     %ul.list-unstyled
       - item.routines.each do |routine|
         %li
@@ -33,7 +33,11 @@
           %span{title: routine.config}
             = link_to Scheduler::Lib.schedule_description(routine.config), [:edit, routine]
           .pull-right
-            = link_to "Del", routine, method: :delete, data: {confirm: "Are you sure to delete this?"}
+            = link_to routine, method: :delete, data: {confirm: "Are you sure to delete this?"} do
+              %span.glyphicon.glyphicon-trash.muted
+      %li
+        = link_to [:new, :routine, {item: {plan_id: item.id}}], title: "New Routine" do
+          %span.glyphicon.glyphicon-plus
 
   %td
     .btn-group.pull-right{:role => "group"}
