@@ -21,7 +21,6 @@ class Scheduler::Lib
         routine.executions.find_or_create_by!(
           plan_id: routine.plan.id,
           scheduled_at: schedule,
-          timeout_at: now + routine.plan.waiting.seconds,
         )
       end
     end

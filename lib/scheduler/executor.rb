@@ -6,8 +6,10 @@ class Scheduler::Executor
     end
 
     def running(execution, after_status)
+      now = Time.now
+      execution.started_at = now
+      execution.timeout_at = now + execution.plan.waiting.seconds
       begin
-        execution.started_at = Time.now
         execution.result = yield
         execution.status = after_status
       rescue Exception, RestClient::Exception, Errno::ECONNREFUSED => e
