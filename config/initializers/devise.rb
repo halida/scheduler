@@ -6,6 +6,7 @@ Devise.setup do |config|
   config.cas_enable_single_sign_out = true
   config.cas_destination_url = Settings.cas_destination_url
   config.cas_logout_url_param = "destination"
+  config.cas_create_user = false
 
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
