@@ -36,6 +36,10 @@ class Execution < ActiveRecord::Base
     end
   end
 
+  def time
+    self.scheduled_at || self.started_at
+  end
+
   def perform
     Scheduler::Executor.perform(self)
   end

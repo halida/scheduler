@@ -1,15 +1,46 @@
 %h1 Dashboard
 
-%table.table.table-bordered.table-condensed
-  %tr
-    %th Last checked at
-    %th Next check create executions
-  %tr
-    %td= Rails.cache.read("scheduler_runner_checked_at")
-    %td= Marshal.load(Rails.cache.read("scheduler_runner_create_executions")).to_s rescue nil
+.row
+  .col-md-6
+    .dashboard-day
+      .margin-bottom
+        = form_for url_for, method: :get, html: {id: "dashboard-day"} do |f|
+          = link_to url_for(begin_date: (@begin_date - 1.day).strftime("%m/%d/%Y")), title: "-1 day" do
+            %span.glyphicon.glyphicon-arrow-left
+          = text_field_tag :begin_date, params[:begin_date], data: {"date-format" => "mm/dd/yyyy"}, style: 'width: 75px; margin: 0', class: "date-picker", onchange: "$('form#dashboard-day').submit();"
+          = link_to url_for(begin_date: (@begin_date + 1.day).strftime("%m/%d/%Y")), title: "+1 day" do
+            %span.glyphicon.glyphicon-arrow-right
+      
+      %table.table.table-bordered.table-condensed
+        %tr
+          %th Hour
+          %td Executions
+        - executions = Execution.during(@begin_date, @begin_date+1.day)
+        - (0..23).each do |hour|
+          - hour_executions = executions.select{|e| e.time.hour == hour}.sort_by(&:time)
+          - now_hour = (@begin_date == Date.today and Time.now.hour == hour)
+          - if hour_executions.present? or now_hour
+            %tr
+              %th
+                - if now_hour
+                  .pull-right
+                    %label.label.label-success Now
+                = hour
+              %td
+                - hour_executions.each do |e|
+                  = link_to e, title: e.plan.title do
+                    %span.glyphicon.glyphicon-cog.execution-status{class: "status-#{e.status}"}
 
-.p
-  Controls
-  .btn-group
-    - ["check", "run_executions", "expend_executions", "verify_executions"].each do |name|
-      = link_to name.humanize, [:op, :home, type: name], method: :post, data: {confirm: "#{name.humanize}?"}, class: 'btn btn-default'
+  .col-md-6
+    %table.table.table-bordered.table-condensed
+      %tr
+        %th Last checked at
+        %th Next check create executions
+      %tr
+        %td= Rails.cache.read("scheduler_runner_checked_at")
+        %td= Marshal.load(Rails.cache.read("scheduler_runner_create_executions")).to_s rescue nil
+    .p
+      Controls
+      .btn-group
+        - ["check", "run_executions", "expend_executions", "verify_executions"].each do |name|
+          = link_to name.humanize, [:op, :home, type: name], method: :post, data: {confirm: "#{name.humanize}?"}, class: 'btn btn-default'
