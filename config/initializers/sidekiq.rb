@@ -8,12 +8,12 @@ Sidekiq.configure_server do |config|
     namespace: sidekiq_config.namespace,
   }
 
-  if defined? Airbrake
-    Airbrake.configure do |config|
-      # Airbrake should not ignore any exceptions in sidekiq
-      config.ignore_only = []
-    end
-  end
+  # if defined? Airbrake
+  #   Airbrake.configure do |config|
+  #     # Airbrake should not ignore any exceptions in sidekiq
+  #     config.ignore_only = []
+  #   end
+  # end
 
   config.server_middleware do |chain|
     # Don't need retry, just fail it to Dead queue

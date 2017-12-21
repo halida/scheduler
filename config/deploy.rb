@@ -11,8 +11,8 @@ set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 
 SSHKit.config.command_map[:runner] = "~/.rvm/bin/rvm #{fetch(:rvm_ruby_version)} do bundle exec rails r"
 
-set :sidekiq_config, -> { File.join(current_path, "config/sidekiq.yml") }
-set :sidekiq_default_hooks, -> { fetch(:stage) != :export }
+set :sidekiq_config, -> { File.join(shared_path, "config/sidekiq.yml") }
+set :sidekiq_pid, -> { File.join(shared_path, 'tmp', 'sidekiq.pid') }
 
 current_dir = File.expand_path(File.dirname(__FILE__))
 app_path = File.dirname(current_dir)
@@ -40,9 +40,7 @@ namespace :deploy do
       
       within release_path do
         with rails_env: fetch(:rails_env) do
-          if fetch(:stage) != :export
-            execute :bundle, "exec", "thin", "restart", "-C", "config/thin.yml"
-          end
+          execute :bundle, "exec", "thin", "restart", "-C", "config/thin.yml"
         end
       end
     end
