@@ -33,7 +33,10 @@
           = render_enabled(routine.enabled)
           = routine.timezone
           %span{title: routine.config}
-            = link_to Scheduler::Lib.schedule_description(routine.config), [:edit, routine]
+            = link_to [:edit, routine] do
+              = Scheduler::Lib.schedule_description(routine.config)
+              - if routine.modify != 0
+                #{routine.modify} seconds
           .pull-right
             = link_to routine, method: :delete, data: {confirm: "Are you sure to delete this?"} do
               %span.glyphicon.glyphicon-trash.muted

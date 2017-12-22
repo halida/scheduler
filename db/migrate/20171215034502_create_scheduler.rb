@@ -32,6 +32,7 @@ class CreateScheduler < ActiveRecord::Migration[5.1]
       t.string :config
       t.string :timezone, default: "UTC"
       t.boolean :enabled, default: true
+      t.integer :modify, default: 0
     end
     add_index :routines, :plan_id
 
