@@ -1,0 +1,4 @@
+.p.margin-bottom
+  = link_to "New", [:new, :user], class: 'btn btn-default'
+
+= render partial: "list", locals: {items: @items}

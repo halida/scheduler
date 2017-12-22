@@ -3,7 +3,10 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   #  devise :database_authenticatable
   # :registerable, :recoverable, :rememberable, :trackable, :validatable
-  devise :cas_authenticatable
+  devise :cas_authenticatable, :lockable, :trackable
+
+  extend Enumerize
+  enumerize :timezone, in: Scheduler::Lib::TIMEZONES
 
   def cas_extra_attributes=(extra_attributes)
     extra_attributes.each do |name, value|
@@ -19,6 +22,34 @@ class User < ApplicationRecord
   def admin?
     # todo
     true
+  end
+
+  def title
+    username
+  end
+
+  def status
+    self.locked_at? ? "locked" : "active"
+  end
+
+  def status=(val)
+    if val == "locked"
+      self.locked_at ||= Time.now
+    else
+      self.locked_at = nil
+    end
+  end
+
+  def lock!
+    self.update_without_password(:locked_at => Time.now)
+  end
+  
+  def unlock!
+    self.update_without_password(:locked_at => nil)
+  end
+  
+  def locked?
+    self.locked_at?
   end
 
 end

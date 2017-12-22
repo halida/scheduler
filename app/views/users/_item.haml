@@ -1,0 +1,30 @@
+%tr
+  %td
+    = link_to "##{item.id}", item
+  %td
+    .p= item.username
+    .p.muted= item.email
+  %td
+    .p
+      - if item.status == 'locked'
+        %span.label.label-disabled= item.status
+      - else
+        %span.label.label-success= item.status
+    .p
+      %span{title: "Timezone"}= item.timezone
+      = link_to "Login Detail", "#user-#{item.id}-login", class: "fancybox pull-right"
+      .hide
+        .p{id: "user-#{item.id}-login", style: "width: 400px"}
+          %ul.list-unstyled
+            - [:sign_in_count, :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :last_sign_in_ip].each do |k|
+              %li
+                %strong= k
+                = item.send(k)
+      
+  %td
+    .btn-group.pull-right{:role => "group"}
+      %button.btn.btn-default.btn-xs.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+        %span.caret
+      %ul.dropdown-menu
+        %li= link_to "Edit", [:edit, item]
+        %li= link_to "Delete", item, method: :delete, data: {confirm: "Are you sure to delete ##{item.title}?"}

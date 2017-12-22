@@ -1,16 +1,11 @@
 class Routine < ActiveRecord::Base
-  extend Enumerize
   include HasEnabled
 
   belongs_to :plan
   has_many :executions
 
-  enumerize :timezone, in: [
-              :"UTC",
-              :"Etc/GMT-6",
-              :"Central Time (US & Canada)",
-              :"Asia/Shanghai",
-            ]
+  extend Enumerize
+  enumerize :timezone, in: Scheduler::Lib::TIMEZONES
 
   validate :validate_data
 

@@ -1,4 +1,11 @@
 class Scheduler::Lib
+  TIMEZONES = [
+    :"UTC",
+    :"Etc/GMT-6",
+    :"Central Time (US & Canada)",
+    :"Asia/Shanghai",
+  ]
+  
   class << self
 
     def parse_schedule(schedule)
