@@ -39,6 +39,7 @@ class Execution < ActiveRecord::Base
   def time
     self.scheduled_at || self.started_at
   end
+  alias_method :title, :time
 
   def perform
     Scheduler::Executor.perform(self)
