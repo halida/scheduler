@@ -23,7 +23,7 @@ class Scheduler::Lib
       return if last > now + 7.days
       to = last + 14.days
 
-      schedules = self.get_schedules_during(routine.config, last, to)
+      schedules = self.get_schedules_during(routine.config, routine.timezone, last, to)
       schedules.map do |schedule|
         routine.executions.find_or_create_by!(
           plan_id: routine.plan.id,
@@ -38,15 +38,25 @@ class Scheduler::Lib
       end.flatten
     end
 
-    def get_schedules_during(schedule, from, to)
+    def get_schedules_during(schedule, timezone, from, to)
       cron_parser = self.parse_schedule(schedule)
       out = []
       next_t = from - 1.second
+
+      tz = ActiveSupport::TimeZone.new(timezone)
+      # convert time to timezone format
+      next_t = tz.at(next_t)
+
+      ts = "%m/%d/%Y %H:%M:%S"
       # limit max count
       (1..1000).each do |i|
+        # cron don't care about timezone
         next_t = cron_parser.next(next_t)
-        out << next_t
+        # force convert timezone by value
+        next_t = tz.strptime(next_t.strftime(ts), ts)
+
         break if next_t > to
+        out << next_t
       end
       out
     end
@@ -55,7 +65,7 @@ class Scheduler::Lib
       executions = plan.executions.during(from, to)
       schedules = \
       plan.routines.map do |routine|
-        self.get_schedules_during(routine.config, from, to)
+        self.get_schedules_during(routine.config, routine.timezone, from, to)
       end.flatten.sort
       self.put_executions_to_schedules_gap(executions, schedules)
     end
