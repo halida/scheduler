@@ -4,12 +4,14 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  def check_during(opt={})
-    opt[:default] ||= [Date.today - 1.week, Date.today + 2.week]
-    params[:begin_date] ||= opt[:default][0].strftime("%m/%d/%Y")
-    params[:finish_date] ||= opt[:default][1].strftime("%m/%d/%Y")
-    @begin_date = Date.strptime(params[:begin_date], "%m/%d/%Y") rescue nil
-    @finish_date = Date.strptime(params[:finish_date], "%m/%d/%Y") rescue nil
+  def check_during(default)
+    default.map!{|v| v.in_time_zone(current_user.timezone)}
+
+    @begin_date = (params[:begin_date].present? and (ActiveSupport::TimeZone.new(current_user.timezone).strptime(params[:begin_date], "%m/%d/%Y") rescue nil)) || default[0]
+    @finish_date = (params[:finish_date].present? and (ActiveSupport::TimeZone.new(current_user.timezone).strptime(params[:finish_date], "%m/%d/%Y") rescue nil)) || default[1]
+
+    # @begin_date = params[:begin_date].blank? ? default[0] : ActiveSupport::TimeZone.new(current_user.timezone).strptime(params[:begin_date], "%m/%d/%Y")
+    # @finish_date = params[:finish_date].blank? ? default[1] : ActiveSupport::TimeZone.new(current_user.timezone).strptime(params[:finish_date], "%m/%d/%Y")
   end
 
   def add_breadcrumb(name, url, options={})

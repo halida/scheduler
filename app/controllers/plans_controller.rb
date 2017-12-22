@@ -9,12 +9,12 @@ class PlansController < SimpleController
 
   def show
     set_tab :schedules, :plan
-    self.check_during(default: [Date.today-1.day, Date.today+4.day])
+    self.check_during([Date.today-1.day, Date.today+4.day])
   end
 
   def executions
     set_tab :executions, :plan
-    self.check_during(default: [Date.today-1.day, Date.today+4.day])
+    self.check_during([Date.today-1.day, Date.today+4.day])
     @executions = ExecutionsController.search_executions(params, @item.executions, @begin_date, @finish_date)
   end
 

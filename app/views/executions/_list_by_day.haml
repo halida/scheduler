@@ -1,0 +1,28 @@
+.executions-list-by-day
+  .margin-bottom
+    = form_for url_for, method: :get, html: {id: "dashboard-day"} do |f|
+      = link_to url_for(begin_date: (@begin_date - 1.day).strftime("%m/%d/%Y")), title: "-1 day" do
+        %span.glyphicon.glyphicon-arrow-left
+      = text_field_tag :begin_date, @begin_date.strftime("%m/%d/%Y"), data: {"date-format" => "mm/dd/yyyy"}, style: 'width: 75px; margin: 0', class: "date-picker", onchange: "$('form#dashboard-day').submit();"
+      = link_to url_for(begin_date: (@begin_date + 1.day).strftime("%m/%d/%Y")), title: "+1 day" do
+        %span.glyphicon.glyphicon-arrow-right
+  
+  %table.table.table-bordered.table-condensed
+    %tr
+      %th Hour
+      %td Executions
+    - executions = Execution.during(@begin_date, @begin_date+1.day)
+    - (0..23).each do |hour|
+      - hour_executions = executions.select{|e| e.time.hour == hour}.sort_by(&:time)
+      - now_hour = (@begin_date == Date.today and Time.now.hour == hour)
+      - if hour_executions.present? or now_hour
+        %tr
+          %th
+            - if now_hour
+              .pull-right
+                %label.label.label-success Now
+            = hour
+          %td
+            - hour_executions.each do |e|
+              = link_to e, title: e.plan.title do
+                %span.glyphicon.glyphicon-cog.execution-status{class: "status-#{e.status}"}

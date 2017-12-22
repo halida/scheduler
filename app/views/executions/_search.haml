@@ -7,9 +7,9 @@
 
       = render partial: "shared/during"
       Or
-      = link_to "This week", url_for(begin_date: Date.today.beginning_of_week.strftime("%m/%d/%Y"), end_date: Date.today.end_of_week.strftime("%m/%d/%Y"))
+      = link_to "This week", url_for(begin_date: Date.today.beginning_of_week.strftime("%m/%d/%Y"), finish_date: Date.today.end_of_week.strftime("%m/%d/%Y"))
       ,
-      = link_to "Since today", url_for(begin_date: Date.today.strftime("%m/%d/%Y"), end_date: (Date.today + 7.days).strftime("%m/%d/%Y"))
+      = link_to "Today", url_for(begin_date: Date.today.strftime("%m/%d/%Y"), finish_date: Date.today.strftime("%m/%d/%Y"))
 
     .p
       %span Status

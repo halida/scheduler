@@ -2,7 +2,7 @@ class HomeController < ApplicationController
 
   def index
     set_tab :dashboard, :nav
-    self.check_during(default: [Date.today, Date.today])
+    self.check_during([Date.today, Date.today])
   end
 
   def op

@@ -1,9 +1,9 @@
 %tr
   %td= link_to "##{item.id}", item
-  %td= link_to item.plan.title, item.plan
   %td
+    .p= link_to item.plan.title, item.plan
     - if item.routine
-      = Scheduler::Lib.schedule_description(item.routine.config)
+      .muted= Scheduler::Lib.schedule_description(item.routine.config)
   %td= format_time item.scheduled_at
   %td
     = format_time item.started_at

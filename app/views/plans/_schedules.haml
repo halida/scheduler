@@ -1,6 +1,6 @@
 .p= render partial: "during"
 
-- schedules = Scheduler::Lib.get_schedules_with_execution_during(@item, @begin_date, @finish_date)
+- schedules = Scheduler::Lib.get_schedules_with_execution_during(@item, @begin_date, @finish_date+1.day)
 %table.table.table-bordered.table-condensed
   %tr
     %th Scheduled Time
