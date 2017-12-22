@@ -1,8 +1,8 @@
 - if e.present?
   %td= link_to e.id, e
-  %td= e.scheduled_at if e.scheduled_at
+  %td= format_time e.scheduled_at
   %td
-    = e.started_at if e.started_at
+    = format_time e.started_at
     %br
     = "Spend #{(e.finished_at - e.started_at).round(2) }s" if e.done? and e.finished_at.present?
   %td= execution_status(e)

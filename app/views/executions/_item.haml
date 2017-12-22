@@ -4,9 +4,9 @@
   %td
     - if item.routine
       = Scheduler::Lib.schedule_description(item.routine.config)
-  %td= item.scheduled_at
+  %td= format_time item.scheduled_at
   %td
-    = item.started_at
+    = format_time item.started_at
     %br
     = "Spend #{(item.finished_at - item.started_at).round(2) }s" if item.done? and item.finished_at.present?
   %td

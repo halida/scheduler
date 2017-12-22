@@ -11,7 +11,7 @@
     - schedules.each do |schedule|
       %tr
         %td{rowspan: schedule.executions.count}
-          = schedule.at
+          = format_time schedule.at
           = render partial: "schedule_execution", locals: {e: schedule.executions.first}
       - if schedule.executions.present?
         - schedule.executions[1..-1].each do |e|

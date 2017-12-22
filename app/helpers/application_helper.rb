@@ -84,4 +84,10 @@ module ApplicationHelper
       content_tag(:span, "Disabled", class: "label label-disabled")
     end
   end
+
+  def format_time(t)
+    return unless t
+    t.in_time_zone(current_user.timezone)
+  end
+
 end

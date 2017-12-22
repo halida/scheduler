@@ -7,7 +7,7 @@ class Scheduler::Runner
       result = {}
       result[:run_executions] = self.run_executions(now)
       result[:verify_executions] = self.verify_executions(now)
-      result[:expend_executions] = self.expend_executions(now) # if self.expired(:create_executions, 1.day, now)
+      result[:expend_executions] = self.expend_executions(now) if self.expired(:create_executions, 1.day, now)
       Scheduler::Lib.write_cache(:checked_at, Time.now)
       result
     end

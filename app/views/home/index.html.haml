@@ -37,8 +37,8 @@
         %th Last checked at
         %th Next check create executions
       %tr
-        %td= Rails.cache.read("scheduler_runner_checked_at")
-        %td= Scheduler::Lib.read_cache("expired_create_executions")
+        %td= format_time Scheduler::Lib.read_cache(:checked_at)
+        %td= format_time Scheduler::Lib.read_cache(:expired_create_executions)
     .p
       Controls
       .btn-group
