@@ -13,6 +13,8 @@ class CreateScheduler < ActiveRecord::Migration[5.1]
       t.boolean :enabled, default: true
       t.timestamps null: false
     end
+    add_index :plans, :token
+    add_index :plans, :execution_method_id
 
     create_table :execution_methods do |t|
       t.string :title
@@ -31,6 +33,7 @@ class CreateScheduler < ActiveRecord::Migration[5.1]
       t.string :timezone, default: "UTC"
       t.boolean :enabled, default: true
     end
+    add_index :routines, :plan_id
 
     create_table :executions do |t|
       t.integer :plan_id
@@ -50,6 +53,7 @@ class CreateScheduler < ActiveRecord::Migration[5.1]
 
       t.timestamps null: false
     end
+    add_index :executions, :token
     add_index :executions, :plan_id
     add_index :executions, :scheduled_at
   end
