@@ -38,7 +38,7 @@
         %th Next check create executions
       %tr
         %td= Rails.cache.read("scheduler_runner_checked_at")
-        %td= Marshal.load(Rails.cache.read("scheduler_runner_create_executions")).to_s rescue nil
+        %td= Scheduler::Lib.read_cache("expired_create_executions")
     .p
       Controls
       .btn-group

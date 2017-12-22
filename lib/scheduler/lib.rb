@@ -88,5 +88,14 @@ class Scheduler::Lib
       SecureRandom.uuid.gsub("-", "")
     end
 
+    def write_cache(key, v)
+      Rails.cache.write("scheduler_#{key}", Marshal.dump(v))
+    end
+
+    def read_cache(key)
+      blob = Rails.cache.read("scheduler_#{key}")
+      Marshal.load(blob) rescue nil
+    end
+
   end
 end

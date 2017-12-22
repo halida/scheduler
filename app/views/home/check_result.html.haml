@@ -5,5 +5,4 @@
   - @result = {params[:type].to_sym => @result}
 - @result.each do |type, executions|
   %h3= type.to_s.humanize
-  - executions = executions.to_a.paginate(per_page: 1000, page: 1)
-  = render partial: "executions/list", locals: {items: executions}
+  = render partial: "executions/list", locals: {items: executions, paginate: false}

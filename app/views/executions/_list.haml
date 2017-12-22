@@ -1,12 +1,14 @@
-= bootstrap_will_paginate items
-.clearfix
+- unless defined?(paginate) and paginate == false
+  = bootstrap_will_paginate items
+  .clearfix
 
 - if items.present?
-  %table.table.table-bordered.table-condensed.plan-list
+  %table.table.table-bordered.table-condensed
     = render partial: "executions/list_header"
     = render partial: "executions/item", collection: items
 - else
   .well.align-center
     %h4= "No Items"
 
-= bootstrap_will_paginate items
+- unless defined?(paginate) and paginate == false
+  = bootstrap_will_paginate items

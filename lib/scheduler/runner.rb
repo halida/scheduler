@@ -7,8 +7,8 @@ class Scheduler::Runner
       result = {}
       result[:run_executions] = self.run_executions(now)
       result[:verify_executions] = self.verify_executions(now)
-      result[:expend_executions] = self.expend_executions(now) if self.expired(:create_executions, 1.day, now)
-      Rails.cache.write("scheduler_runner_checked_at", Time.now.to_s)
+      result[:expend_executions] = self.expend_executions(now) # if self.expired(:create_executions, 1.day, now)
+      Scheduler::Lib.write_cache(:checked_at, Time.now)
       result
     end
 
@@ -35,10 +35,11 @@ class Scheduler::Runner
     end
 
     def expired(key, duration, now)
-      key = "scheduler_runner_#{key}"
-      v = Rails.cache.read(key)
-      return false if v and Marshal.load(v) > now
-      Rails.cache.write(key, Marshal.dump(now + duration))
+      key = "expired_#{key}"
+      v = Scheduler::Lib.read_cache(key)
+      return false if v and v > now
+
+      Scheduler::Lib.write_cache(key, now + duration)
       return true
     end
 
