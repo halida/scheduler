@@ -40,4 +40,10 @@ class HomeController < ApplicationController
     }
   end
 
+  def profile
+    if request.post? and current_user.update_attributes(params.require(:item).permit(:timezone))
+      flash[:notice] = "Updated."
+    end
+  end
+
 end

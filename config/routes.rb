@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     post :notify
     get :sidekiq
     get :info
+    match :profile, via: [:get, :post]
   end
 
   namespace :api do
