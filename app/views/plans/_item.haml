@@ -24,6 +24,8 @@
       .hide
         .p{id: "plan-#{item.id}-token"}
           %pre= item.token
+    .muted
+      Waiting for #{item.waiting} seconds
   %td
     %ul.list-unstyled
       - item.routines.each do |routine|

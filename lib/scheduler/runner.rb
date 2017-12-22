@@ -31,6 +31,7 @@ class Scheduler::Runner
       executions = Execution.where(status: :calling).
                      where("timeout_at <= ?", now)
       executions.update_all(status: :timeout, finished_at: now)
+      executions.map(&:reload)
       executions
     end
 

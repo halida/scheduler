@@ -13,6 +13,6 @@
 
     .p
       %span Status
-      = select_tag :status, options_for_select(Execution.status.values - ['initialize'], params[:status]), include_blank: true, style: "width: 300px; margin: 0; vertical-align: top", multiple: true, class: "select2"
+      = select_tag :status, options_for_select(Execution.status.values - ['initialize'], params[:status]), include_blank: true, style: "width: 440px; margin: 0; vertical-align: top", multiple: true, class: "select2"
       = link_to "Exclude Initialize", url_for(params.permit!.merge(status: (params[:status] || Execution.status.values) - ['initialize']))
       = submit_tag "Search", class: 'btn btn-default'
