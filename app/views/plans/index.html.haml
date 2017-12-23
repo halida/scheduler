@@ -2,7 +2,7 @@
   = form_tag url_for, method: :get do
     = link_to "New", [:new, :plan], class: 'btn btn-default'
     %span{style: "padding: 0 20px"}
-    = text_field_tag :keyword, params[:keyword], placeholder: "Title"
+    = text_field_tag :keyword, params[:keyword], placeholder: "Title", class: "form-control", style: "display: inline; width: 200px"
     = submit_tag "Search", class: "btn btn-primary"
 
 = render partial: "list", locals: {items: @items}
