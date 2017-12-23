@@ -27,17 +27,18 @@
 
     .margin-bottom
       - if @display_as == 'list'
-        During
-        = render partial: "shared/during"
-        Or
-        = link_to "This week", url_for(begin_date: Date.today.beginning_of_week.strftime("%Y-%m-%d"), finish_date: Date.today.end_of_week.strftime("%Y-%m-%d"))
-        ,
-        = link_to "Today", url_for(begin_date: Date.today.strftime("%Y-%m-%d"), finish_date: Date.today.strftime("%Y-%m-%d"))
+        = select_tag :during, options_for_select([['During', '1'], ['All', '0']], (@during ? '1' : '0')), class: 'form-control', style: "width: 100px; display: inline", onchange: "$('#during-block').toggle()"
+        %span#during-block{class: ("collapse" unless @during)}
+          = render partial: "shared/during"
+          Or
+          = link_to "Today", url_for(begin_date: Date.today.strftime("%Y-%m-%d"), finish_date: Date.today.strftime("%Y-%m-%d"))
+          ,
+          = link_to "This week", url_for(begin_date: Date.today.beginning_of_week.strftime("%Y-%m-%d"), finish_date: Date.today.end_of_week.strftime("%Y-%m-%d"))
 
       - if @display_as == 'day'
         = link_to url_for(params.merge(begin_date: (@begin_date - 1.day).strftime("%Y-%m-%d"))), title: "-1 day" do
           %span.glyphicon.glyphicon-arrow-left
-        = text_field_tag :begin_date, @begin_date.strftime("%Y-%m-%d"), data: {"date-format" => "yyyy-mm-dd"}, style: 'width: 75px; margin: 0', class: "date-picker"
+        = text_field_tag :begin_date, @begin_date.strftime("%Y-%m-%d"), data: {"date-format" => "yyyy-mm-dd"}, style: 'display: inline; width: 100px; margin: 0', class: "date-picker form-control"
         = link_to url_for(params.merge(begin_date: (@begin_date + 1.day).strftime("%Y-%m-%d"))), title: "+1 day" do
           %span.glyphicon.glyphicon-arrow-right
         \/

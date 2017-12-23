@@ -13,11 +13,12 @@ class ApplicationController < ActionController::Base
   end
 
   def search_executions(executions)
+    @during = (params[:during] != '0')
     @display_as = ExecutionsController::DISPLAY_AS.keys.include?(params[:display_as]) ? params[:display_as] : 'list'
     case @display_as
     when 'list'
-      executions = executions.during(@begin_date, @finish_date+1.day).
-                     paginate(page: params[:page])
+      executions = executions.during(@begin_date, @finish_date+1.day) if @during
+      executions = executions.paginate(page: params[:page])
     when 'day'
       executions = executions.during(@begin_date, @begin_date+1.day)
     end
