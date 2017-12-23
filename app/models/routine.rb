@@ -16,7 +16,9 @@ class Routine < ActiveRecord::Base
   end
 
   def update_executions
-    if self.config_changed? or self.enabled == false
+    if (self.config_changed? or
+        self.timezone_changed? or
+        self.enabled == false)
       self.executions.where(status: :initialize).delete_all
     end
   end
