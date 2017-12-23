@@ -37,7 +37,7 @@
       - if @display_as == 'day'
         = link_to url_for(params.merge(begin_date: (@begin_date - 1.day).strftime("%Y-%m-%d"))), title: "-1 day" do
           %span.glyphicon.glyphicon-arrow-left
-        = text_field_tag :begin_date, @begin_date.strftime("%Y-%m-%d"), data: {"date-format" => "yyyy-dd-mm"}, style: 'width: 75px; margin: 0', class: "date-picker"
+        = text_field_tag :begin_date, @begin_date.strftime("%Y-%m-%d"), data: {"date-format" => "yyyy-mm-dd"}, style: 'width: 75px; margin: 0', class: "date-picker"
         = link_to url_for(params.merge(begin_date: (@begin_date + 1.day).strftime("%Y-%m-%d"))), title: "+1 day" do
           %span.glyphicon.glyphicon-arrow-right
         \/
