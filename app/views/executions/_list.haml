@@ -1,6 +1,5 @@
-- unless defined?(paginate) and paginate == false
-  = bootstrap_will_paginate items
-  .clearfix
+= bootstrap_will_paginate items if items.respond_to?(:total_pages)
+.clearfix
 
 - if items.present?
   %table.table.table-bordered.table-condensed
@@ -10,5 +9,4 @@
   .well.align-center
     %h4= "No Items"
 
-- unless defined?(paginate) and paginate == false
-  = bootstrap_will_paginate items
+= bootstrap_will_paginate items if items.respond_to?(:total_pages)
