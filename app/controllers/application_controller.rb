@@ -8,11 +8,8 @@ class ApplicationController < ActionController::Base
     default.map!{|v| v.in_time_zone(current_user.timezone)}
 
     tz = ActiveSupport::TimeZone.new(current_user.timezone)
-    @begin_date = (params[:begin_date].present? and (tz.strptime(params[:begin_date], "%m/%d/%Y") rescue nil)) || default[0]
-    @finish_date = (params[:finish_date].present? and (tz.strptime(params[:finish_date], "%m/%d/%Y") rescue nil)) || default[1]
-
-    # @begin_date = params[:begin_date].blank? ? default[0] : ActiveSupport::TimeZone.new(current_user.timezone).strptime(params[:begin_date], "%m/%d/%Y")
-    # @finish_date = params[:finish_date].blank? ? default[1] : ActiveSupport::TimeZone.new(current_user.timezone).strptime(params[:finish_date], "%m/%d/%Y")
+    @begin_date = (params[:begin_date].present? and (tz.strptime(params[:begin_date], "%Y-%m-%d") rescue nil)) || default[0]
+    @finish_date = (params[:finish_date].present? and (tz.strptime(params[:finish_date], "%Y-%m-%d") rescue nil)) || default[1]
   end
 
   def search_executions(executions)

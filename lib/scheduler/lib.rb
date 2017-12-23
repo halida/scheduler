@@ -51,7 +51,7 @@ class Scheduler::Lib
       # convert time to timezone format
       next_t = tz.at(next_t)
 
-      ts = "%m/%d/%Y %H:%M:%S"
+      ts = "%Y-%m-%d %H:%M:%S"
       # limit max count
       (1..1000).each do |i|
         # cron don't care about timezone

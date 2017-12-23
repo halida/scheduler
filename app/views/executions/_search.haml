@@ -30,15 +30,15 @@
         During
         = render partial: "shared/during"
         Or
-        = link_to "This week", url_for(begin_date: Date.today.beginning_of_week.strftime("%m/%d/%Y"), finish_date: Date.today.end_of_week.strftime("%m/%d/%Y"))
+        = link_to "This week", url_for(begin_date: Date.today.beginning_of_week.strftime("%Y-%m-%d"), finish_date: Date.today.end_of_week.strftime("%Y-%m-%d"))
         ,
-        = link_to "Today", url_for(begin_date: Date.today.strftime("%m/%d/%Y"), finish_date: Date.today.strftime("%m/%d/%Y"))
+        = link_to "Today", url_for(begin_date: Date.today.strftime("%Y-%m-%d"), finish_date: Date.today.strftime("%Y-%m-%d"))
 
       - if @display_as == 'day'
-        = link_to url_for(params.merge(begin_date: (@begin_date - 1.day).strftime("%m/%d/%Y"))), title: "-1 day" do
+        = link_to url_for(params.merge(begin_date: (@begin_date - 1.day).strftime("%Y-%m-%d"))), title: "-1 day" do
           %span.glyphicon.glyphicon-arrow-left
-        = text_field_tag :begin_date, @begin_date.strftime("%m/%d/%Y"), data: {"date-format" => "mm/dd/yyyy"}, style: 'width: 75px; margin: 0', class: "date-picker"
-        = link_to url_for(params.merge(begin_date: (@begin_date + 1.day).strftime("%m/%d/%Y"))), title: "+1 day" do
+        = text_field_tag :begin_date, @begin_date.strftime("%Y-%m-%d"), data: {"date-format" => "yyyy-dd-mm"}, style: 'width: 75px; margin: 0', class: "date-picker"
+        = link_to url_for(params.merge(begin_date: (@begin_date + 1.day).strftime("%Y-%m-%d"))), title: "+1 day" do
           %span.glyphicon.glyphicon-arrow-right
         \/
-        = link_to "Detail", [:executions, {begin_date: @begin_date.strftime("%m/%d/%Y"), finish_date: @begin_date.strftime("%m/%d/%Y")}]
+        = link_to "Detail", [:executions, {begin_date: @begin_date.strftime("%Y-%m-%d"), finish_date: @begin_date.strftime("%Y-%m-%d")}]

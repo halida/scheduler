@@ -1,7 +1,7 @@
-Time::DATE_FORMATS[:date] = "%m/%d/%Y"
-Date::DATE_FORMATS[:date] = "%m/%d/%Y"
+Time::DATE_FORMATS[:date] = "%Y-%m-%d"
+Date::DATE_FORMATS[:date] = "%Y-%m-%d"
 
-Time::DATE_FORMATS[:default] = "%m/%d/%Y %H:%M"
+Time::DATE_FORMATS[:default] = "%Y-%m-%d %H:%M"
 Time::DATE_FORMATS[:sign] = "%h %d, %Y %I:%M%p"
 
 Time::DATE_FORMATS[:short] = "%m/%d/%y"
@@ -9,7 +9,7 @@ Date::DATE_FORMATS[:short] = "%m/%d/%y"
 
 #in email list
 Time::DATE_FORMATS[:short_in_day] = "%H:%M"
-Time::DATE_FORMATS[:short_in_date] = "%m/%d/%Y"
+Time::DATE_FORMATS[:short_in_date] = "%Y-%m-%d"
 
 
 
