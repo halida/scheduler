@@ -29,7 +29,7 @@ class PlansController < SimpleController
       Scheduler::Lib.plan_expend_executions(@item, Time.now)
       redirect_to @item, notice: "Expanded."
     when "assign_token"
-      @item.update_attributes!(token: Scheduler::Lib.get_token)
+      @item.assign_token
       redirect_to @item, notice: "Token assigned."
     end
   end

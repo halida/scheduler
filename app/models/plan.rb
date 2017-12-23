@@ -13,4 +13,7 @@ class Plan < ActiveRecord::Base
     self.executions.where(status: :initialize).delete_all
   end
 
+  def assign_token
+    update_attributes!(token: Scheduler::Lib.get_token)
+  end
 end
