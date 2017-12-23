@@ -15,6 +15,23 @@ class ApplicationController < ActionController::Base
     # @finish_date = params[:finish_date].blank? ? default[1] : ActiveSupport::TimeZone.new(current_user.timezone).strptime(params[:finish_date], "%m/%d/%Y")
   end
 
+  def search_executions(executions)
+    @display_as = ExecutionsController::DISPLAY_AS.keys.include?(params[:display_as]) ? params[:display_as] : 'list'
+    case @display_as
+    when 'list'
+      executions = executions.during(@begin_date, @finish_date+1.day)
+    when 'day'
+      executions = executions.during(@begin_date, @begin_date+1.day)
+    end
+
+    executions = executions.joins(:plan).where("plans.title like ?", "%#{params[:keyword]}%") if params[:keyword]
+
+    executions.preload(:plan, :routine).
+      where_if(params[:status].present?, status: params[:status]).
+      order(scheduled_at: :asc).
+      paginate(page: params[:page])
+  end
+
   def add_breadcrumb(name, url, options={})
     @breadcrumbs ||= []
     @breadcrumbs << {name: name, url: url, options: options}

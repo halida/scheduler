@@ -1,0 +1,19 @@
+.executions-list-by-day
+  %table.table.table-bordered.table-condensed
+    %tr
+      %th Hour
+      %td Executions
+    - (0..23).each do |hour|
+      - hour_executions = items.select{|e| e.time.in_time_zone(current_user.timezone).hour == hour}.sort_by(&:time)
+      - now_hour = (@begin_date == Date.today and Time.now.in_time_zone(current_user.timezone).hour == hour)
+      - if hour_executions.present? or now_hour
+        %tr
+          %th
+            - if now_hour
+              .pull-right
+                %label.label.label-success Now
+            = hour
+          %td
+            - hour_executions.each do |e|
+              = link_to e, title: "#{format_time e.scheduled_at}      #{e.plan.title}" do
+                %span.glyphicon.glyphicon-cog.execution-status{class: "status-#{e.status}"}

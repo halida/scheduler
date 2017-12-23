@@ -1,18 +1,44 @@
 .p{style: "float: left; margin-bottom: 10px"}
   = form_for url_for, method: :get do |f|
+    
+    .margin-bottom
+      Display as
+      .btn-group{:role => "group"}
+        %button.btn.btn-default.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+          = ExecutionsController::DISPLAY_AS[@display_as]
+          %span.caret
+        %ul.dropdown-menu
+          - ExecutionsController::DISPLAY_AS.each do |name, title|
+            - next if name == @display_as
+            %li= link_to title, url_for(params.permit!.merge(display_as: name))
+      
+      Search
+      = text_field_tag :keyword, params[:keyword], placeholder: "Plan Title", class: "form-control", style: "display: inline; width: 200px"
+
+      = submit_tag "Reload", class: 'btn btn-default'
     .margin-bottom
       Errors:
       - error_count = items.where(status: Execution::ERROR_STATUS).count
       = link_to (error_count > 0 ? error_count : "None"), url_for(status: Execution::ERROR_STATUS), style: 'margin-right: 10px', class: ('btn btn-danger' if error_count > 0)
 
-      = render partial: "shared/during"
-      Or
-      = link_to "This week", url_for(begin_date: Date.today.beginning_of_week.strftime("%m/%d/%Y"), finish_date: Date.today.end_of_week.strftime("%m/%d/%Y"))
-      ,
-      = link_to "Today", url_for(begin_date: Date.today.strftime("%m/%d/%Y"), finish_date: Date.today.strftime("%m/%d/%Y"))
-
-    .p
       %span Status
       = select_tag :status, options_for_select(Execution.status.values - ['initialize'], params[:status]), include_blank: true, style: "width: 440px; margin: 0; vertical-align: top", multiple: true, class: "select2"
       = link_to "Exclude Initialize", url_for(params.permit!.merge(status: (params[:status] || Execution.status.values) - ['initialize']))
-      = submit_tag "Search", class: 'btn btn-default'
+
+    .margin-bottom
+      - if @display_as == 'list'
+        During
+        = render partial: "shared/during"
+        Or
+        = link_to "This week", url_for(begin_date: Date.today.beginning_of_week.strftime("%m/%d/%Y"), finish_date: Date.today.end_of_week.strftime("%m/%d/%Y"))
+        ,
+        = link_to "Today", url_for(begin_date: Date.today.strftime("%m/%d/%Y"), finish_date: Date.today.strftime("%m/%d/%Y"))
+
+      - if @display_as == 'day'
+        = link_to url_for(params.merge(begin_date: (@begin_date - 1.day).strftime("%m/%d/%Y"))), title: "-1 day" do
+          %span.glyphicon.glyphicon-arrow-left
+        = text_field_tag :begin_date, @begin_date.strftime("%m/%d/%Y"), data: {"date-format" => "mm/dd/yyyy"}, style: 'width: 75px; margin: 0', class: "date-picker"
+        = link_to url_for(params.merge(begin_date: (@begin_date + 1.day).strftime("%m/%d/%Y"))), title: "+1 day" do
+          %span.glyphicon.glyphicon-arrow-right
+        \/
+        = link_to "Detail", [:executions, {begin_date: @begin_date.strftime("%m/%d/%Y"), finish_date: @begin_date.strftime("%m/%d/%Y")}]

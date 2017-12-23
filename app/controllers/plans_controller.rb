@@ -16,7 +16,7 @@ class PlansController < SimpleController
   def executions
     set_tab :executions, :plan
     self.check_during([Date.today-1.day, Date.today+4.day])
-    @executions = ExecutionsController.search_executions(params, @item.executions, @begin_date, @finish_date)
+    @executions = search_executions(@item.executions)
   end
 
   def op

@@ -5,4 +5,4 @@
   - @result = {params[:type].to_sym => @result}
 - @result.each do |type, executions|
   %h3= type.to_s.humanize
-  = render partial: "executions/list", locals: {items: executions, paginate: false}
+  = render partial: "executions/list_as_list", locals: {items: executions}

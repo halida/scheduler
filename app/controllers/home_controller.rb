@@ -3,6 +3,8 @@ class HomeController < ApplicationController
   def index
     set_tab :dashboard, :nav
     self.check_during([Date.today, Date.today])
+    params[:display_as] ||= 'day'
+    @executions = self.search_executions(Execution.all)
   end
 
   def op

@@ -1,10 +1,11 @@
 %h1 Dashboard
 
 .row
-  .col-md-6
-    = render partial: "executions/list_by_day"
+  .col-md-8
+    = render partial: "executions/search", locals: {items: @executions}
+    = render partial: "executions/list", locals: {items: @executions}
 
-  .col-md-6
+  .col-md-4
     %table.table.table-bordered.table-condensed
       %tr
         %th Last checked at

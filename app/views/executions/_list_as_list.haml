@@ -1,0 +1,12 @@
+= bootstrap_will_paginate items if items.respond_to?(:total_pages)
+.clearfix
+
+- if items.present?
+  %table.table.table-bordered.table-condensed
+    = render partial: "executions/list_header"
+    = render partial: "executions/item", collection: items
+- else
+  .well.align-center
+    %h4= "No Items"
+
+= bootstrap_will_paginate items if items.respond_to?(:total_pages)
