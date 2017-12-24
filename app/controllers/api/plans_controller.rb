@@ -7,8 +7,7 @@ class Api::PlansController < ApiController
     return render json: {status: :error, message: "no current execution"} unless @execution
 
     @execution.close(params[:status], params[:result])
-
-    render json: {status: :succeeded, id: @item.id}
+    render json: {status: :succeeded, id: @item.id, execution_id: @execution.id}
   end
 
 end
