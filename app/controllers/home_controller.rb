@@ -13,6 +13,15 @@ class HomeController < ApplicationController
       @now = Time.now
       @result = Scheduler::Runner.send(params[:type], @now)
       render "check_result"
+    when "export"
+      data = Plan.all.preload(:routines).map do |plan|
+        d = plan.as_json
+        d.delete('execution_method_id')
+        d[:execution_method] = plan.execution_method.as_json
+        d[:routines] = plan.routines.map(&:as_json)
+        d
+      end
+      render json: JSON.pretty_generate(data)
     end
   end
 

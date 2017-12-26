@@ -13,8 +13,12 @@
       %tr
         %td= format_time Scheduler::Lib.read_cache(:checked_at)
         %td= format_time Scheduler::Lib.read_cache(:expired_create_executions)
-    .p
-      Controls
-      .btn-group
-        - ["check", "run_executions", "expend_executions", "verify_executions"].each do |name|
-          = link_to name.humanize, [:op, :home, type: name], method: :post, data: {confirm: "#{name.humanize}?"}, class: 'btn btn-default'
+    %table.table.table-bordered.table-condensed
+      %tr
+        %th Controls
+        %td
+          %ul.list-unstyled
+            - ["check", "run_executions", "expend_executions", "verify_executions", "export"].each do |name|
+              %li.margin-bottom
+                = link_to name.humanize, [:op, :home, type: name], method: :post, data: {confirm: "#{name.humanize}?"}, class: 'btn btn-default'
+
