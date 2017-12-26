@@ -2,7 +2,7 @@
   %table.table.table-bordered.table-condensed
     %tr
       %th Hour
-      %td Executions
+      %td{style: 'width: 100%'} Executions
     - (0..23).each do |hour|
       - hour_executions = items.select{|e| e.time.in_time_zone(current_user.timezone).hour == hour}.sort_by(&:time)
       - now_hour = (@begin_date == Date.today and Time.now.in_time_zone(current_user.timezone).hour == hour)
@@ -14,6 +14,10 @@
                 %label.label.label-success Now
             = hour
           %td
-            - hour_executions.each do |e|
-              = link_to e, title: "#{format_time e.scheduled_at}      #{e.plan.title}" do
-                %span.glyphicon.glyphicon-cog.execution-status{class: "status-#{e.status}"}
+            %ul.list-unstyled
+              - hour_executions.each do |e|
+                %li
+                  = link_to e, title: e.status do
+                    %span.glyphicon.glyphicon-cog.execution-status{class: "status-#{e.status}"}
+                  %span.muted{title: "Scheduled at #{format_time e.time}"}= format_time(e.time).strftime("%H:%M")
+                  = e.plan.title

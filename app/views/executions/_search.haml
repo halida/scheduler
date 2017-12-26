@@ -1,5 +1,5 @@
 .p{style: "float: left; margin-bottom: 10px"}
-  = form_for url_for, method: :get do |f|
+  = form_for url_for, method: :get, html: {id: "search-executions"} do |f|
     
     .margin-bottom
       Display as
@@ -38,7 +38,7 @@
       - if @display_as == 'day'
         = link_to url_for(params.merge(begin_date: (@begin_date - 1.day).strftime("%Y-%m-%d"))), title: "-1 day" do
           %span.glyphicon.glyphicon-arrow-left
-        = text_field_tag :begin_date, @begin_date.strftime("%Y-%m-%d"), data: {"date-format" => "yyyy-mm-dd"}, style: 'display: inline; width: 100px; margin: 0', class: "date-picker form-control"
+        = text_field_tag :begin_date, @begin_date.strftime("%Y-%m-%d"), data: {"date-format" => "yyyy-mm-dd"}, style: 'display: inline; width: 100px; margin: 0', class: "date-picker form-control", onchange: "$('form#search-executions').submit();"
         = link_to url_for(params.merge(begin_date: (@begin_date + 1.day).strftime("%Y-%m-%d"))), title: "+1 day" do
           %span.glyphicon.glyphicon-arrow-right
         \/
