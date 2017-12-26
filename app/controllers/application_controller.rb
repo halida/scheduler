@@ -23,6 +23,12 @@ class ApplicationController < ActionController::Base
       executions = executions.during(@begin_date, @begin_date+1.day)
     end
 
+    if params[:exclude]
+      executions = executions.joins(:plan)
+      params[:exclude].split(",").each do |e|
+        executions = executions.where.not("plans.title like ?", "%#{e}%")
+      end
+    end
     executions = executions.joins(:plan).where("plans.title like ?", "%#{params[:keyword]}%") if params[:keyword]
 
     executions.preload(:plan, :routine).

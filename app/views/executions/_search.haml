@@ -13,7 +13,11 @@
             %li= link_to title, url_for(params.permit!.merge(display_as: name))
       
       Search
-      = text_field_tag :keyword, params[:keyword], placeholder: "Plan Title", class: "form-control", style: "display: inline; width: 200px"
+      = text_field_tag :keyword, params[:keyword], placeholder: "Plan Title", class: "form-control", style: "display: inline; width: 190px"
+      Exclude
+      %icon.glyphicon.glyphicon-question-sign.cursor-pointer{title: "Seperate by ','"}
+
+      = text_field_tag :exclude, params[:exclude], placeholder: "Plan Title", class: "form-control", style: "display: inline; width: 190px"
 
       = submit_tag "Reload", class: 'btn btn-default'
     .margin-bottom
