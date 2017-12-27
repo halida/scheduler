@@ -30,8 +30,11 @@ class Scheduler::Runner
     public def verify_executions(now)
       executions = Execution.where(status: :calling).
                      where("timeout_at <= ?", now)
+      return [] if executions.blank?
+
       executions.update_all(status: :timeout, finished_at: now)
       executions.map(&:reload)
+      UserMailer.timeout(User.where(email_notify: true), executions).deliver_now
       executions
     end
 

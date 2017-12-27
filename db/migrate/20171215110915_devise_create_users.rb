@@ -32,7 +32,8 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       t.datetime :locked_at
 
       # Sceduler
-      t.string timezone, default: "UTC"
+      t.string :timezone, default: "UTC"
+      t.boolean :email_notify, default: false
 
       t.timestamps null: false
     end

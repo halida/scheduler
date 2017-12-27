@@ -1,0 +1,7 @@
+%h1= @title
+
+%table
+  - @executions.each do |e|
+    %tr
+      %td= link_to e.scheduled_at, e
+      %td= e.plan.title

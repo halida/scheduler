@@ -7,7 +7,7 @@ class UsersController < SimpleController
   private
   def resource_params
     params.require(:item).permit(
-      :username, :email, :timezone, :status,
+      :username, :email, :timezone, :status, :email_notify,
     )
   end
 

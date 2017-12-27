@@ -2,6 +2,7 @@
 .form-block
   = simple_form_for current_user, url: url_for, method: :post, as: :item do |f|
     = f.input :timezone
+    = f.input :email_notify
 
     .margin-bottom
       = f.submit "Submit", class: 'btn btn-success'
