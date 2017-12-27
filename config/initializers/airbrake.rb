@@ -1,12 +1,13 @@
-if Settings[:airbrake]
-  c = Settings.airbrake
-  Airbrake.configure do |config|
+Airbrake.configure do |config|
+  if Settings[:airbrake]
+    c = Settings.airbrake
     config.project_id = c.project_id
     config.project_key = c.project_key
     config.host    = c.host
-
-    config.environment = Rails.env
-    # for testing development raise error
-    # config.ignore_environments = %w(test)
   end
+
+  config.environment = Rails.env
+  # for testing development raise error
+  # config.ignore_environments = %w(test)
+  config.ignore_environments = %w(development test)
 end
