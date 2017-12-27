@@ -17,6 +17,7 @@ class ExecutionsController < SimpleController
       @item.perform
       redirect_to @item, notice: "Finished."
     when "close"
+      @item.started_at = Time.now
       @item.close
       redirect_to @item, notice: "Closed."
     end
