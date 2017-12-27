@@ -61,6 +61,13 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "scheduler_#{Rails.env}"
   config.action_mailer.perform_caching = false
+  config.action_mailer.delivery_method = :smtp
+  if smtp_config = Settings[:smtp_settings]
+    config.action_mailer.smtp_settings = smtp_config.symbolize_keys
+    # can disable email delivery in config, like:
+    #   send_email: false
+    config.action_mailer.perform_deliveries = smtp_config[:send_email] if smtp_config[:send_email]
+  end
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.

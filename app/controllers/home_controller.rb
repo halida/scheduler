@@ -22,6 +22,9 @@ class HomeController < ApplicationController
         d
       end
       render json: JSON.pretty_generate(data)
+    when "test_email"
+      UserMailer.test_email(current_user).deliver_now
+      redirect_to :root, notice: "Email sent."
     end
   end
 
@@ -47,6 +50,10 @@ class HomeController < ApplicationController
           time: Time.zone.now,
           zone: Time.zone.to_s,
         },
+        user: {
+          time: Time.now.in_time_zone(current_user.timezone),
+          zone: current_user.timezone,
+        }
       },
     }
   end

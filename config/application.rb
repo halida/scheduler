@@ -21,5 +21,8 @@ module Scheduler
     config.cache_store = :redis_store,
       "redis://#{ Settings.redis.host }:#{ Settings.redis.port }/#{ Settings.redis.cache_db }/cache",
       { expires_in: 1.day }
+
+    config.action_controller.asset_host = Settings.host
+    config.action_mailer.default_url_options = { protocol: Settings.protocol, host: Settings.host }
   end
 end
