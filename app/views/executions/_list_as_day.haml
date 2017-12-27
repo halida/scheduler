@@ -2,7 +2,11 @@
   %table.table.table-bordered.table-condensed
     %tr
       %th Hour
-      %td{style: 'width: 100%'} Executions
+      %th{style: 'width: 100%'}
+        Executions
+        .pull-right
+          = link_to "Toggle All Detail", ".hour-executions", data: {toggle: "collapse"}
+
     - (0..23).each do |hour|
       - hour_executions = items.select{|e| e.time.in_time_zone(current_user.timezone).hour == hour}.sort_by(&:time)
       - now_hour = (@begin_date == Date.today and Time.now.in_time_zone(current_user.timezone).hour == hour)
@@ -14,7 +18,12 @@
                 %label.label.label-success Now
             = hour
           %td
-            %ul.list-unstyled
+            .p
+              - hour_executions.each do |e|
+                = link_to "#hour-executions-#{hour}", data: {toggle: "collapse"} do
+                  %span.glyphicon.glyphicon-cog.execution-status{class: "status-#{e.status}", title: e.status }
+
+            %ul.list-unstyled.collapse.hour-executions{id: "hour-executions-#{hour}"}
               - hour_executions.each do |e|
                 %li
                   %span.glyphicon.glyphicon-cog.execution-status{class: "status-#{e.status}", title: e.status }
