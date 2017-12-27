@@ -22,6 +22,8 @@ class HomeController < ApplicationController
         d
       end
       render json: JSON.pretty_generate(data)
+    when "error"
+      raise "test raising error"
     when "test_email"
       UserMailer.test_email(current_user).deliver_now
       redirect_to :root, notice: "Email sent."

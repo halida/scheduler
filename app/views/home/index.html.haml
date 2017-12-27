@@ -18,7 +18,7 @@
         %th Controls
         %td
           %ul.list-unstyled
-            - ["check", "run_executions", "expend_executions", "verify_executions", "export", "test_email"].each do |name|
+            - ["check", "run_executions", "expend_executions", "verify_executions", "export", "test_email", "error"].each do |name|
               %li.margin-bottom
                 = link_to name.humanize, [:op, :home, type: name], method: :post, data: {confirm: "#{name.humanize}?"}, class: 'btn btn-default'
 

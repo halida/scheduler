@@ -77,7 +77,7 @@ begin
   gem "settingslogic"
   gem "rest-client"
 
-  gem 'airbrake'
+  gem 'airbrake', '~> 5.0'
 
   gem 'whenever', require: false
   # version
