@@ -1,8 +1,6 @@
 class SchedulerCheckWorker
   include Sidekiq::Worker
-
-  # for override the issue
-  attr_accessor :jid
+  sidekiq_options retry: false
 
   def perform
     Scheduler::Runner.check
