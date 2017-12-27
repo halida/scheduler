@@ -21,3 +21,4 @@
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.es.js
 
 //= require_tree .
+//= require_tree ./modules/

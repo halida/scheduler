@@ -5,7 +5,8 @@
       %th{style: 'width: 100%'}
         Executions
         .pull-right
-          = link_to "Toggle All Detail", ".hour-executions", data: {toggle: "collapse"}
+          %a.cursor-pointer{onclick: "toggle_list_by_day();"}
+            Toggle Detail
 
     - (0..23).each do |hour|
       - hour_executions = items.select{|e| e.time.in_time_zone(current_user.timezone).hour == hour}.sort_by(&:time)
@@ -18,16 +19,19 @@
                 %label.label.label-success Now
             = hour
           %td
-            .p
+            .hour-executions-header{id: "hour-executions-header-#{hour}"}
+              %a.pull-right.muted.cursor-pointer{onclick: "toggle_list_by_day(#{hour});"} Detail
               - hour_executions.each do |e|
-                = link_to "#hour-executions-#{hour}", data: {toggle: "collapse"} do
-                  %span.glyphicon.glyphicon-cog.execution-status{class: "status-#{e.status}", title: e.status }
+                %span.glyphicon.glyphicon-cog.execution-status{class: "status-#{e.status}", title: e.plan.title }
 
-            %ul.list-unstyled.collapse.hour-executions{id: "hour-executions-#{hour}"}
-              - hour_executions.each do |e|
-                %li
-                  %span.glyphicon.glyphicon-cog.execution-status{class: "status-#{e.status}", title: e.status }
-                  = link_to e do
-                    - t = e.scheduled_at ? "Scheduled" : "Started"
-                    %span{class: ("muted" if t == 'Scheduled'), title: "#{t} at #{format_time e.time}"}= format_time(e.time).strftime("%H:%M")
-                  = e.plan.title
+            .collapse.hour-executions{id: "hour-executions-#{hour}"}
+              %a.pull-right.muted.cursor-pointer{onclick: "toggle_list_by_day(#{hour});"} Hide
+              %ul.list-unstyled
+                - hour_executions.each do |e|
+                  %li
+                    %span.glyphicon.glyphicon-cog.execution-status{class: "status-#{e.status}", title: e.status }
+                    = link_to e do
+                      - t = e.scheduled_at ? "Scheduled" : "Started"
+                      %span{class: ("muted" if t == 'Scheduled'), title: "#{t} at #{format_time e.time}"}= format_time(e.time).strftime("%H:%M")
+                    = e.plan.title
+
