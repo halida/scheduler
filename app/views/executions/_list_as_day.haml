@@ -22,7 +22,8 @@
             .hour-executions-header{id: "hour-executions-header-#{hour}"}
               %a.pull-right.muted.cursor-pointer{onclick: "toggle_list_by_day(#{hour});"} Detail
               - hour_executions.each do |e|
-                %span.glyphicon.glyphicon-cog.execution-status{class: "status-#{e.status}", title: e.plan.title }
+                %a.cursor-pointer{onclick: "toggle_list_by_day(#{hour});"}
+                  %span.glyphicon.glyphicon-cog.execution-status{class: "status-#{e.status}", title: e.plan.title }
 
             .collapse.hour-executions{id: "hour-executions-#{hour}"}
               %a.pull-right.muted.cursor-pointer{onclick: "toggle_list_by_day(#{hour});"} Hide
