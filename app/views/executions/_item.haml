@@ -16,25 +16,25 @@
     = execution_status(item)
   %td
     - if item.token.present?
-      = link_to "Token", "#token-#{item.id}", class: "fancybox"
+      = link_to "Token", "#token-#{item.id}", class: "toggle-popup"
       .hide
-        .p{id: "token-#{item.id}"}
+        .popup{id: "token-#{item.id}"}
           %pre= item.token
     - else
       %span.muted Token
     \/
     - if item.result.present?
-      = link_to "Result", "#result-#{item.id}", class: "fancybox"
+      = link_to "Result", "#result-#{item.id}", class: "toggle-popup"
       .hide
-        .p{id: "result-#{item.id}"}
+        .popup{id: "result-#{item.id}"}
           %pre= item.result
     - else
       %span.muted Result
     \/
     - if item.log.present?
-      = link_to "Log", "#log-#{item.id}", class: "fancybox"
+      = link_to "Log", "#log-#{item.id}", class: "toggle-popup"
       .hide
-        .p{id: "log-#{item.id}"}
+        .popup{id: "log-#{item.id}"}
           %pre= item.log
     - else
       %span.muted Log

@@ -6,7 +6,7 @@
     %span{title: "Site"}= em.parameters[:site]
   - else
     - if em.parameters.present?
-      = link_to "Parameters", "#em-parameters-#{em.id}", class: "fancybox"
+      = link_to "Parameters", "#em-parameters-#{em.id}", class: "toggle-popup"
       .hide
-        .p{id: "em-parameters-#{em.id}"}
+        .popup{id: "em-parameters-#{em.id}"}
           = hash_as_table em.parameters

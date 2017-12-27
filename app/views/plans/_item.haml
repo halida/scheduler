@@ -15,14 +15,14 @@
     = render partial: "execution_methods/detail", locals: {em: em}
 
     - if item.parameters.present?
-      .p= link_to "Plan Parameters", "#parameters-#{item.id}", class: "fancybox"
+      .p= link_to "Plan Parameters", "#parameters-#{item.id}", class: "toggle-popup"
       .hide
-        .p{id: "parameters-#{item.id}"}
+        .popup{id: "parameters-#{item.id}"}
           = hash_as_table item.parameters
     - if item.token.present?
-      = link_to "API Token", "#plan-#{item.id}-token", class: 'fancybox'
+      = link_to "API Token", "#plan-#{item.id}-token", class: 'toggle-popup'
       .hide
-        .p{id: "plan-#{item.id}-token"}
+        .popup{id: "plan-#{item.id}-token"}
           %pre= item.token
     .muted
       Waiting for #{item.waiting} seconds

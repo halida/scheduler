@@ -28,7 +28,7 @@ begin
   gem 'uglifier', '>= 1.3.0'
   gem 'jquery-rails'
   gem 'jquery-ui-rails'
-  gem 'fancybox2-rails'
+  gem 'magnific-popup-rails'
   gem "select2-rails"
 end
 

@@ -12,9 +12,9 @@
         %span.label.label-success= item.status
     .p
       %span{title: "Timezone"}= item.timezone
-      = link_to "Login Detail", "#user-#{item.id}-login", class: "fancybox pull-right"
+      = link_to "Login Detail", "#user-#{item.id}-login", class: "toggle-popup pull-right"
       .hide
-        .p{id: "user-#{item.id}-login", style: "width: 400px"}
+        .popup{id: "user-#{item.id}-login", style: "width: 400px"}
           %ul.list-unstyled
             - [:sign_in_count, :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :last_sign_in_ip].each do |k|
               %li
