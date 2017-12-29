@@ -50,4 +50,8 @@ class Execution < ActiveRecord::Base
     self.update_attributes!(status: status, result: result, finished_at: now)
   end
 
+  def result_data
+    JSON.load(self.result) rescue self.result
+  end
+
 end

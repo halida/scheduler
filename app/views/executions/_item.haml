@@ -27,7 +27,7 @@
       = link_to "Result", "#result-#{item.id}", class: "toggle-popup"
       .hide
         .popup{id: "result-#{item.id}"}
-          %pre= item.result
+          %pre= JSON.pretty_generate(item.result_data)
     - else
       %span.muted Result
     \/
