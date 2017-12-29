@@ -131,6 +131,7 @@ GEM
       addressable (~> 2.3)
     letter_opener (1.4.1)
       launchy (~> 2.2)
+    liquid (4.0.0)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -327,6 +328,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   letter_opener
+  liquid
   listen (>= 3.0.5, < 3.2)
   magnific-popup-rails
   mysql2

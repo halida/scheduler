@@ -20,10 +20,20 @@
         .popup{id: "parameters-#{item.id}"}
           = hash_as_table item.parameters
     - if item.token.present?
-      = link_to "API Token", "#plan-#{item.id}-token", class: 'toggle-popup'
+      = link_to "API Token", "#plan-#{item.id}-token", class: 'toggle-popup', style: "margin-right: 10px"
       .hide
         .popup{id: "plan-#{item.id}-token"}
           %pre= item.token
+    - if item.result_template.present?
+      = link_to "Result Template", "#plan-#{item.id}-result-template", class: 'toggle-popup'
+      .hide
+        .popup{id: "plan-#{item.id}-result-template"}
+          %pre= item.result_template
+          .p
+            Use
+            = link_to "liquid", "https://github.com/Shopify/liquid", target: :_blank
+            as template engine
+
     .muted
       Waiting for #{item.waiting} seconds
   %td

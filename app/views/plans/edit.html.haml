@@ -6,6 +6,11 @@
     = f.input :parameters_text, as: :text
     = f.input :waiting, label: "Waiting in seconds"
     = f.input :enabled
+    - hint = capture do
+      Use
+      = link_to "liquid", "https://github.com/Shopify/liquid", target: :_blank
+      as template engine
+    = f.input :result_template, as: :text, hint: hint
   
     .margin-bottom
       = f.submit "Submit", class: 'btn btn-success'

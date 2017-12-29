@@ -14,6 +14,7 @@ begin
   gem 'sass-rails', '~> 5.0'
   gem 'coffee-rails', '~> 4.2'
   gem 'hamlit'
+  gem 'liquid'
 end
 
 # stylesheet

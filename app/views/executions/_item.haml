@@ -27,7 +27,15 @@
       = link_to "Result", "#result-#{item.id}", class: "toggle-popup"
       .hide
         .popup{id: "result-#{item.id}"}
-          %pre= JSON.pretty_generate(item.result_data)
+          - if item.result_text.present?
+            .pull-left.muted{style: "position: relative; top: -25px;"} Template
+            .well= item.result_text.html_safe
+            .margin-bottom
+              = link_to "Raw result data", "#result-raw-#{item.id}", data: {toggle: "collapse"}
+            .collapse{id: "result-raw-#{item.id}"}
+              %pre= JSON.pretty_generate(item.result_data)
+          - else
+            %pre= JSON.pretty_generate(item.result_data)
     - else
       %span.muted Result
     \/
