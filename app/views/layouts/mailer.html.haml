@@ -9,5 +9,20 @@
         border: 1px solid #aaa
       table td, table th
         padding: 4px
+
+      .execution-status
+        &.status-initialize
+          color: #aaa
+        &.status-succeeded
+          color: #4a4
+        &.status-running
+          color: #00a
+        &.status-calling
+          color: #444
+        &.status-error
+          color: #a00
+        &.status-timeout
+          color: #ea9102
+
   %body
     = yield
