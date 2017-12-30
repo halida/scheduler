@@ -1,0 +1,15 @@
+%h1= @title
+
+- if @data.executions.present?
+  %table
+    %tr
+      %th Scheduled at
+      %th Runs at
+      %th Status
+      %th Title
+    - @data.executions.each do |e|
+      %tr
+        %td= link_to format_time(e.scheduled_at, @user) || 'None', e
+        %td= format_time(e.started_at, @user)
+        %td= e.status
+        %td= e.plan.title

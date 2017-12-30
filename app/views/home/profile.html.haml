@@ -1,8 +1,7 @@
 %h3 User Profile
 .form-block
   = simple_form_for current_user, url: url_for, method: :post, as: :item do |f|
-    = f.input :timezone
-    = f.input :email_notify
+    = render partial: "users/profile", locals: {f: f}
 
     .margin-bottom
       = f.submit "Submit", class: 'btn btn-success'

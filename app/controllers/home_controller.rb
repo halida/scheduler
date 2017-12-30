@@ -61,8 +61,12 @@ class HomeController < ApplicationController
   end
 
   def profile
-    if request.post? and current_user.update_attributes(
-                           params.require(:item).permit(:timezone, :email_notify))
+    if (request.post? and
+        current_user.update_attributes(
+          params.require(:item).permit(
+            :timezone, :email_notify,
+            :email_daily_report, :email_daily_report_time,
+          )))
       flash[:notice] = "Updated."
     end
   end

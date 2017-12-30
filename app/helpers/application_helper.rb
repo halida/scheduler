@@ -85,9 +85,10 @@ module ApplicationHelper
     end
   end
 
-  def format_time(t)
+  def format_time(t, user=nil)
     return unless t
-    t.in_time_zone(current_user.timezone)
+    user ||= current_user
+    t.in_time_zone(user.timezone)
   end
 
 end

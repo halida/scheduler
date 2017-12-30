@@ -22,5 +22,6 @@
 /yarn-error.log
 
 .byebug_history
+.sass-cache
 
 /config/*.yml

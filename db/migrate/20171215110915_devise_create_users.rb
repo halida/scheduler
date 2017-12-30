@@ -34,6 +34,9 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       # Sceduler
       t.string :timezone, default: "UTC"
       t.boolean :email_notify, default: false
+      t.boolean :email_daily_report, default: false
+      t.integer :email_daily_report_time, default: 8
+      t.datetime :email_daily_report_checked_at
 
       t.timestamps null: false
     end

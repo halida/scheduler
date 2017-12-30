@@ -1,0 +1,13 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
+    :sass
+      table
+        border-collapse: collapse
+      table, table td, table th
+        border: 1px solid #aaa
+      table td, table th
+        padding: 4px
+  %body
+    = yield

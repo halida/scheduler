@@ -38,6 +38,10 @@ class Execution < ActiveRecord::Base
     end
   end
 
+  def self.errors
+    self.where(status: [:timeout, :error])
+  end
+
   def time
     self.scheduled_at || self.started_at
   end

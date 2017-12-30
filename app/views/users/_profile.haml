@@ -1,0 +1,5 @@
+= f.input :timezone
+= f.input :email_notify
+= f.input :email_daily_report
+= f.input :email_daily_report_time, collection: (0..23).to_a, hint: "Last checked at: #{f.object.email_daily_report_checked_at || 'None'}", label: "Report at (hour)"
+

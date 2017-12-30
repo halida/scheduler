@@ -3,5 +3,4 @@
 %table
   - @executions.each do |e|
     %tr
-      %td= link_to e.scheduled_at, e
-      %td= e.plan.title
+      %td= link_to e.plan.title, e

@@ -2,8 +2,7 @@
   = simple_form_for @item, as: :item do |f|
     = f.input :username
     = f.input :email
-    = f.input :timezone
-    = f.input :email_notify
+    = render partial: "profile", locals: {f: f}
     = f.input :status, collection: ['active', 'locked']
     -# %hr
     -# = f.input :password

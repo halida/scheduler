@@ -81,6 +81,8 @@ begin
   gem 'whenever', require: false
   # version
   gem 'paper_trail'
+
+  gem 'premailer-rails'
 end
 
 # for scheduler
