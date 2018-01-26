@@ -1,5 +1,7 @@
 # Scheduler
 
+**WARNING** this project is at alpha phase, if you want to use it, please let me know.
+
 A tool for monitor and trigger routine tasks.
 
 Usally we create routine task by using `crontab`, but there are more things we could do:
