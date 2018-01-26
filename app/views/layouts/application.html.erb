@@ -7,6 +7,7 @@
     <title><%= content_for?(:title) ? yield(:title) : "Scheduler" %></title>
     <%= csrf_meta_tags %>
 
+    <%= favicon_link_tag 'icon.png', type: 'image/png' %>
     <%= stylesheet_link_tag "application", :media => "all" %>
 
     <!-- For all other devices -->
@@ -29,7 +30,9 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/">Scheduler</a>
+        <a class="navbar-brand" href="/">
+          Scheduler
+        </a>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
             <li class="dropdown">
@@ -48,6 +51,10 @@
       <%= bootstrap_flash %>
       <%= yield %>
       <footer>
+        <hr/>
+        <%= link_to "Scheduler", "https://github.com/halida/scheduler", target: :_blank %>
+        developed by
+        <%= link_to "linjunhalida", "http://blog.linjunhalida.com/", target: :_blank %>
       </footer>
 
     </div> <!-- /container -->

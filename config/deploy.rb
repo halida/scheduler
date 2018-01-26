@@ -20,7 +20,7 @@ settings = YAML.load_file(File.join(app_path, "config/deploy.yml"))[fetch(:stage
 
 role [:app, :web, :db], [settings['hostname']]
 ssh_options = { forward_agent: true }
-ssh_options[:proxy] = Net::SSH::Proxy::Command.new("ssh #{settings['ssh_proxy']} nc %h %p") if settings['ssh_proxy']
+ssh_options[:proxy] = Net::SSH::Proxy::Command.new("ssh #{settings['ssh_proxy']} nc %h %p") if settings['ssh_proxy'].present?
 server settings['hostname'], user: settings['user'], roles: %w{web app db}, ssh_options: ssh_options
 set :deploy_to, settings['path']
 

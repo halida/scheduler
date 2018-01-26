@@ -1,0 +1,9 @@
+staging:
+  hostname: "scheduler-staging.yourdomain.com"
+  path: "/home/ubuntu/staging/scheduler"
+  user: "ubuntu"
+production:
+  hostname: "scheduler.yourdomain.com"
+  path: "/home/ubuntu/apps/scheduler"
+  user: "ubuntu"
+

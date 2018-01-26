@@ -1,0 +1,26 @@
+development:
+  host: scheduler.dev
+  protocol: http
+
+  cas_base_url: "http://sso.dev"
+  cas_destination_url: "http://sso.dev"
+  devise_secret_key: 'key'
+  redis:
+    host: localhost
+    port: 6379
+    cache_db: 1
+    session_db: 2
+  sidekiq:
+    host: "localhost"
+    port: "6379"
+    db: 3
+
+  mail_from: 'Support <support@scheduler.dev>'
+  smtp_settings:
+    address: "smtp.scheduler.dev"
+    port: "587"
+    domain: "scheduler.dev"
+    user_name: "username"
+    password: "password"
+    authentication: "login"
+    enable_starttls_auto: true
