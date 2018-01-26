@@ -39,7 +39,6 @@ class PlansController < SimpleController
     params.require(:item).permit(
       :title, :description,
       :execution_method_id, :parameters_text, :waiting, :enabled,
-      :result_template,
     )
   end
 

@@ -9,7 +9,6 @@ class CreateScheduler < ActiveRecord::Migration[5.1]
       t.integer :waiting, default: 60*3
 
       t.string :token
-      t.text :result_template, limit: 262143
 
       t.boolean :enabled, default: true
       t.timestamps null: false
