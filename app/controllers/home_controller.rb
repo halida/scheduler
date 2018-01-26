@@ -1,5 +1,22 @@
 class HomeController < ApplicationController
 
+  CONTROLS = {
+    execution: {
+      check: "Similar with background routine check",
+      run: "Only run current executions",
+      expend: "Only expand execution by current plan routine",
+      verify: "Only verify running executions",
+    },
+    report: {
+      export: "Export configuration as json file",
+    },
+    testing: {
+      send_email: "Testing if email will send correctly",
+      error: "Testing if error will get reported",
+      worker: "Testing background worker is running",
+    },
+  }
+
   def index
     set_tab :dashboard, :nav
     self.check_during([Date.today, Date.today])
@@ -9,11 +26,17 @@ class HomeController < ApplicationController
 
   def op
     case params[:type]
-    when "check", "run_executions", "expend_executions", "verify_executions"
+    when 'execution_check', 'execution_run', 'execution_expand', 'execution_verify'
       @now = Time.now
-      @result = Scheduler::Runner.send(params[:type], @now)
+      type = {
+        'execution_check' => 'check',
+        'execution_run' => 'run_executions',
+        'execution_expand' => 'expand_executions',
+        'execution_verify' => 'verify_executions',
+      }[params[:type]]
+      @result = Scheduler::Runner.send(type, @now)
       render "check_result"
-    when "export"
+    when "report_export"
       data = Plan.all.preload(:routines).map do |plan|
         d = plan.as_json
         d.delete('execution_method_id')
@@ -22,11 +45,14 @@ class HomeController < ApplicationController
         d
       end
       render json: JSON.pretty_generate(data)
-    when "error"
+    when "testing_error"
       raise "test raising error"
-    when "test_email"
+    when "testing_send_email"
       UserMailer.test_email(current_user).deliver_now
       redirect_to :root, notice: "Email sent."
+    when "testing_worker"
+      @result = TestWorker.verify
+      redirect_to :root, notice: (@result ? 'validate_worker_ok' : 'validate_worker_failed')
     end
   end
 

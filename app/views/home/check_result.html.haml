@@ -1,7 +1,7 @@
 .p
   Runs at #{@now}
 
-- if params[:type] != 'check'
+- if params[:type] != 'execution_check'
   - @result = {params[:type].to_sym => @result}
 - @result.each do |type, executions|
   %h3= type.to_s.humanize
