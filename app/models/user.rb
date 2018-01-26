@@ -3,7 +3,11 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   #  devise :database_authenticatable
   # :registerable, :recoverable, :rememberable, :trackable, :validatable
-  devise :cas_authenticatable, :lockable, :trackable
+  if Settings['cas_base_url'].present?
+    devise :cas_authenticatable, :lockable, :trackable
+  else
+    devise :database_authenticatable, :lockable, :trackable
+  end
 
   extend Enumerize
   enumerize :timezone, in: Scheduler::Lib::TIMEZONES

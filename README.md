@@ -14,9 +14,14 @@ Scheduler is such a tool.
 
 ## Install
 
-- Requirement: Rails, Mysql, Redis, [RubyCAS Server](https://github.com/rubycas)
+- Requirement: Rails, Mysql, Redis
 - Goto config, copy *.yml.example to *.yml, and update configuration.
-- Create database
-- Create a [RubyCAS Server](https://github.com/rubycas) and link to your user authentication database. (TODO: need a standalone user authentication method)
-
-
+    - If you have [RubyCAS Server](https://github.com/rubycas), you can set it in `application.yml`, otherwise delete those cas_* settings.
+- Create Mysql database.
+    - Then run `bundle exec rake db:migrate` to create schema.
+- Create users manually:
+    - Run `make`
+    - `User.create(username: "Bob Steven", email: "bob@scheduler.dev", password: "password")`
+- Run server:
+    - `make run`
+    - Goto http://localhost:8080
