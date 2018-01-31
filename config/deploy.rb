@@ -1,7 +1,7 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.10.1"
 
-set :rvm_ruby_version, '2.4.2'
+set :rvm_ruby_version, '2.5.0'
 set :rvm_type, :user
 
 set :application, "scheduler"
