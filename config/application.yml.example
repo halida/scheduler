@@ -24,3 +24,17 @@ development:
     password: "password"
     authentication: "login"
     enable_starttls_auto: true
+
+  # GET http://scheduler.dev/api/op/testing_worker?token=token to see if worker is working
+  # Leave it empty to disable checking(return 403)
+  # Please don't check this very often because it will block server request
+  op:
+    testing_worker:
+      token: ""
+
+  # uncomment it if you have airbrake server
+  # airbrake:
+  #   project_id: 1
+  #   project_key: 'key'
+  #   host: 'errbit.dev'
+  #   port: 443

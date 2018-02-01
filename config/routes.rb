@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   root "home#index"
   resource :home, controller: "home" do
-    post :op
+    match :op, via: [:get, :post]
     post :notify
     get :sidekiq
     get :info
@@ -10,6 +10,10 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
+    resource :op, controller: "op" do
+      get :ping
+      get :testing_worker
+    end
     resources :plans do
       post :notify
     end
