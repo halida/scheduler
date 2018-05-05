@@ -21,7 +21,7 @@ class Scheduler::Lib
 
       # create next 2 week execution when near 1 week
       return if last > now + 7.days
-      to = last + 14.days
+      to = [last, now].max + 14.days
 
       schedules = self.routine_get_schedules_during(routine, last, to)
       schedules.map do |schedule|
