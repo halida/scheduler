@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
   root "home#index"
+  get "/live-ping" => "home#live_ping"
+  
   resource :home, controller: "home" do
     match :op, via: [:get, :post]
     post :notify

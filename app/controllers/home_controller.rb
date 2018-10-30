@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:live_ping]
 
   CONTROLS = {
     execution: {
@@ -22,6 +23,10 @@ class HomeController < ApplicationController
     self.check_during([Date.today, Date.today])
     params[:display_as] ||= 'day'
     @executions = self.search_executions(Execution.all)
+  end
+
+  def live_ping
+    render plain: "ok"
   end
 
   def op
