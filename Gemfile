@@ -82,6 +82,9 @@ begin
   gem 'paper_trail'
 
   gem 'premailer-rails'
+
+  # fix security issue
+  gem "loofah", '>= 2.2.3'
 end
 
 # for scheduler
