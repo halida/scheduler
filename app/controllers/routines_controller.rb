@@ -16,6 +16,6 @@ class RoutinesController < SimpleController
   end
 
   def resource_params
-    params.require(:item).permit(:plan_id, :config, :timezone, :enabled)
+    params.require(:item).permit(:plan_id, :config, :timezone, :enabled, :modify)
   end
 end
