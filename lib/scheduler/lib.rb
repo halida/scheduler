@@ -23,11 +23,13 @@ class Scheduler::Lib
       return if last > now + 7.days
       to = [last, now].max + 14.days
 
+      status = routine.plan.review_only ? :succeeded : :initialize
       schedules = self.routine_get_schedules_during(routine, last, to)
       schedules.map do |schedule|
         routine.executions.find_or_create_by!(
           plan_id: routine.plan.id,
           scheduled_at: schedule,
+          status: status,
         )
       end
     end

@@ -6,6 +6,7 @@
     = f.input :parameters_text, as: :text
     = f.input :waiting, label: "Waiting in seconds"
     = f.input :enabled
+    = f.input :review_only, hint: "This plan is only for review, execution will auto mark as succeed."
   
     .margin-bottom
       = f.submit "Submit", class: 'btn btn-success'
