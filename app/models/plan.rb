@@ -6,6 +6,7 @@ class Plan < ActiveRecord::Base
   has_many :routines, dependent: :destroy
   has_many :executions, dependent: :destroy
 
+  after_create :assign_token
   after_save :update_executions
 
   def update_executions
