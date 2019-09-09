@@ -10,7 +10,7 @@
     %th Status
     - schedules.each do |schedule|
       %tr
-        %td{rowspan: schedule.executions.count}
+        %td{rowspan: [schedule.executions.count, 1].max}
           = format_time schedule.at
           = render partial: "schedule_execution", locals: {e: schedule.executions.first}
       - if schedule.executions.present?
