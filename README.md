@@ -39,3 +39,8 @@ Scheduler is such a tool.
     - If Scheduler receive a API request for this execution, the status will change to succeeded.
     - If reach timeout, the status will change to timeout, and send email to notify user.
 - If you want to send Notify about the result, goto your worker project, use [SchedulerApi](https://github.com/halida/scheduler/blob/master/lib/scheduler_api.rb) to send execution result.
+
+## TODO
+
+- API Token toggle auto assigned
+- API Token dialog shows how to trigger callback
