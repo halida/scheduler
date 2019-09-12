@@ -47,11 +47,12 @@ class Scheduler::Lib
     def get_schedules_during(schedule, timezone, from, to, opt={})
       cron_parser = self.parse_schedule(schedule)
       out = []
-      next_t = from - 1.second
+      next_t = from
 
       tz = ActiveSupport::TimeZone.new(timezone)
       # convert time to timezone format
       next_t = tz.at(next_t)
+      next_t -= opt[:modify].seconds if opt[:modify]
 
       ts = "%Y-%m-%d %H:%M:%S"
       # limit max count
