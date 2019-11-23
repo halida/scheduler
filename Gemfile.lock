@@ -264,9 +264,9 @@ GEM
     sidekiq-client-cli (0.1.7)
       cli
       sidekiq (>= 2.15)
-    simple_form (3.5.0)
-      actionpack (> 4, < 5.2)
-      activemodel (> 4, < 5.2)
+    simple_form (5.0.0)
+      actionpack (>= 5.0)
+      activemodel (>= 5.0)
     sprockets (3.7.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
