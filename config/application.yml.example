@@ -32,6 +32,10 @@ development:
     testing_worker:
       token: ""
 
+  sentry:
+    dsn: https://fake/
+    environment: production
+
   # uncomment it if you have airbrake server
   # airbrake:
   #   project_id: 1

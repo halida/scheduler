@@ -6,6 +6,8 @@ class TestWorker
     when 'validate'
       id = args.first
       Rails.cache.write("validate_worker_#{id}", 'ok', expires_in: 1.day)
+    when 'error'
+      raise 'check worker error'
     else
       raise "action unknown: #{action}"
     end

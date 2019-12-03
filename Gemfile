@@ -75,7 +75,7 @@ begin
   gem "settingslogic"
   gem "rest-client"
 
-  gem 'airbrake', '~> 5.0'
+  gem 'sentry-raven'
 
   gem 'whenever', require: false
   # version

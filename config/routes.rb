@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   root "home#index"
   get "/live-ping" => "home#live_ping"
+  get "/check" => "home#check"
   
   resource :home, controller: "home" do
     match :op, via: [:get, :post]

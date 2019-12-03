@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :authenticate_user!
+  before_action :set_raven_context
 
   protected
 
@@ -39,6 +40,13 @@ class ApplicationController < ActionController::Base
   def add_breadcrumb(name, url, options={})
     @breadcrumbs ||= []
     @breadcrumbs << {name: name, url: url, options: options}
+  end
+
+  def set_raven_context
+    if Settings[:sentry]
+      Raven.user_context(id: current_user.id, email: current_user.email) if current_user
+      Raven.extra_context(params: params.except(:action, :controller))
+    end
   end
 
 end

@@ -29,6 +29,18 @@ class HomeController < ApplicationController
     render plain: "ok"
   end
 
+  def check
+    case params[:kind]
+    when 'error'
+      raise "check error"
+    when 'worker_error'
+      TestWorker.perform_async('error')
+      render json: {status: "queue worker error"}
+    else
+      render json: {status: "ok"}
+    end
+  end
+
   def op
     case params[:type]
     when 'execution_check', 'execution_run', 'execution_expand', 'execution_verify'
