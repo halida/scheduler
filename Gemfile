@@ -18,7 +18,7 @@ end
 
 # stylesheet
 begin
-  gem 'bootstrap-sass', '~> 3.3.7'
+  gem 'bootstrap-sass', '~> 3.4.1'
   gem 'bootstrap-datepicker-rails'
   gem "font-awesome-rails"
 end
