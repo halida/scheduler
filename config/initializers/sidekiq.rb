@@ -13,6 +13,8 @@ Sidekiq.configure_server do |config|
     namespace: sidekiq_config.namespace,
   }
 
+  Sidekiq.options[:max_retries] = 0
+
   # if defined? Airbrake
   #   Airbrake.configure do |config|
   #     # Airbrake should not ignore any exceptions in sidekiq
