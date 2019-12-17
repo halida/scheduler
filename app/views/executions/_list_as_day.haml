@@ -30,9 +30,12 @@
               %ul.list-unstyled
                 - hour_executions.each do |e|
                   %li
-                    %span.glyphicon.glyphicon-cog.execution-status{class: "status-#{e.status}", title: e.status }
-                    = link_to e do
-                      - t = e.scheduled_at ? "Scheduled" : "Started"
-                      %span{class: ("muted" if t == 'Scheduled'), title: "#{t} at #{format_time e.time}"}= format_time(e.time).strftime("%H:%M")
-                    = e.plan.title
-
+                    .pull-left
+                      %span.glyphicon.glyphicon-cog.execution-status{class: "status-#{e.status}", title: e.status }
+                      = link_to e do
+                        - t = e.scheduled_at ? "Scheduled" : "Started"
+                        %span{class: ("muted" if t == 'Scheduled'), title: "#{t} at #{format_time e.time}"}= format_time(e.time).strftime("%H:%M")
+                    .pull-left{style: "margin-left: 10px"}
+                      .p= e.plan.title
+                      .p.muted= simple_format e.plan.description
+                    .clearfix
