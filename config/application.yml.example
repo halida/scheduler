@@ -42,3 +42,13 @@ development:
   #   project_key: 'key'
   #   host: 'errbit.dev'
   #   port: 443
+
+  oidc:
+    create_user: true
+    create_user_domain: "yourdomain.com"
+    identifier:   scheduler
+    callback_url: http://scheduler.yourdomain.com/users/callback
+    host:         sso.yourdomain.com
+    signoff_url:  https://sso.yourdomain.com/connect/endsession
+    scope: ['openid', 'profile']
+

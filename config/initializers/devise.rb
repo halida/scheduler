@@ -1,14 +1,6 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
-  if Settings['cas_base_url'].present?
-    config.cas_username_column = :email
-    config.cas_base_url = Settings.cas_base_url
-    config.cas_enable_single_sign_out = true
-    config.cas_destination_url = Settings.cas_destination_url
-    config.cas_logout_url_param = "destination"
-    config.cas_create_user = false
-  end
 
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing

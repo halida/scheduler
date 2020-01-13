@@ -25,7 +25,12 @@ Rails.application.routes.draw do
     end
   end
 
-  devise_for :users
+  devise_for :users, controllers: {}, skip: [:sessions]
+  scope :users, controller: 'users/sessions' do
+    get  :sign_in,  action: :new,     as: :new_user_session
+    match :callback,  via: [:get, :post]
+    match :sign_off,  via: [:get, :delete], action: :destroy,  as: :destroy_user_session
+  end
 
   resources :plans do
     member do
