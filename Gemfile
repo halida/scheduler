@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
-ruby "2.5.0"
+ruby "2.5.7"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.6.2'
+gem 'rails', '~> 5.1.7'
 
 gem 'mysql2'
 
@@ -18,7 +18,7 @@ end
 
 # stylesheet
 begin
-  gem 'bootstrap-sass', '~> 3.3.7'
+  gem 'bootstrap-sass', '~> 3.4.1'
   gem 'bootstrap-datepicker-rails'
   gem "font-awesome-rails"
 end
