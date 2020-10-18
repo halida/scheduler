@@ -12,6 +12,10 @@ worker:
 run:
 	bundle exec rails s -p 8080
 
+
+test_prepare:
+	RAILS_ENV=test bundle exec rake db:migrate
+
 .PHONY: test
 test:
 	bin/rails test ./test/models/scheduler_test.rb
