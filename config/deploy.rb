@@ -2,7 +2,8 @@
 lock "~> 3.14.1"
 
 set :rvm_ruby_version, '2.5.8'
-set :rvm_type, :user
+set :rvm_type, :system
+set :rvm_custom_path, "/usr/share/rvm/"
 
 set :application, "scheduler"
 set :repo_url, "https://github.com/halida/scheduler.git"
