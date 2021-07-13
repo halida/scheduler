@@ -54,7 +54,7 @@ GEM
     autoprefixer-rails (10.0.1.0)
       execjs
     bcrypt (3.1.16)
-    bindata (2.4.8)
+    bindata (2.4.10)
     bindex (0.8.1)
     bootstrap-datepicker-rails (1.9.0.1)
       railties (>= 3.0)
