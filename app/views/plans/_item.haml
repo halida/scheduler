@@ -50,7 +50,7 @@
       %button.btn.btn-default.btn-xs.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
         %span.caret
       %ul.dropdown-menu
-        - [:execute, :expand, :assign_token].each do |name|
+        - [:execute, :expand, :assign_token, :delete_future_executions].each do |name|
           %li= link_to name.to_s.humanize, [:op, item, type: name], method: :post, data: {confirm: "Are you sure to #{name.to_s.humanize}?"}
         %li.divider{:role => "separator"}
         %li= link_to "Edit", [:edit, item]
