@@ -7,7 +7,10 @@ class ApplicationsController < SimpleController
   end
 
   def show
-    @items = @item.plans.paginate(page: params[:page])
+    @items = \
+    @item.plans.
+      preload(:execution_method, :routines, :application).
+      paginate(page: params[:page])
   end
 
   private

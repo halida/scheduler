@@ -3,9 +3,10 @@ class PlansController < SimpleController
 
   def index
     @items = @items.where("title like ?", "%#{params[:keyword]}%") if params[:keyword].present?
-    @items = @items.
-               preload(:execution_method, :routines).
-               paginate(page: params[:page])
+    @items = \
+    @items.
+      preload(:execution_method, :routines, :application).
+      paginate(page: params[:page])
   end
 
   def show
