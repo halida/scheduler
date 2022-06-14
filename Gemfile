@@ -86,6 +86,8 @@ begin
 
   # fix security issue
   gem "loofah", '>= 2.2.3'
+
+  gem 'silencer', require: false
 end
 
 # for scheduler

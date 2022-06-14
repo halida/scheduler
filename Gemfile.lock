@@ -313,6 +313,7 @@ GEM
     sidekiq-client-cli (0.1.7)
       cli
       sidekiq (>= 2.15)
+    silencer (2.0.0)
     simple_form (5.0.3)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
@@ -421,6 +422,7 @@ DEPENDENCIES
   settingslogic
   sidekiq (~> 5.2)
   sidekiq-client-cli
+  silencer
   simple_form
   tabs_on_rails
   thin

@@ -7,7 +7,6 @@ require 'rails/all'
 Bundler.require(*Rails.groups)
 
 load File.join(File.dirname(__FILE__), './initializers/settings.rb')
-require File.dirname(__FILE__) + '/../lib/silent_logger.rb'
 
 module Scheduler
   class Application < Rails::Application
@@ -27,6 +26,5 @@ module Scheduler
     config.action_controller.asset_host = Settings.host
     config.action_mailer.default_url_options = { protocol: Settings.protocol, host: Settings.host }
 
-    config.middleware.swap Rails::Rack::Logger, SilentLogger, silence: ['/heartbeat', '/live-ping', %r'^/assets/']
   end
 end
