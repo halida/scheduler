@@ -1,5 +1,6 @@
 .form-block
   = simple_form_for @item, as: :item do |f|
+    .p.alert= f.object.errors.full_messages
     = f.input :title
     = f.input :description
     = f.input :execution_method_id, collection: ExecutionMethod.where(enabled: true).pluck(:title, :id)
