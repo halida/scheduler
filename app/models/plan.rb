@@ -2,6 +2,7 @@ class Plan < ActiveRecord::Base
   include HasParameters
   include HasEnabled
 
+  belongs_to :application
   belongs_to :execution_method
   has_many :routines, dependent: :destroy
   has_many :executions, dependent: :destroy
