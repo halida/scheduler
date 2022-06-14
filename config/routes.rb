@@ -17,6 +17,9 @@ Rails.application.routes.draw do
       get :ping
       get :testing_worker
     end
+    resources :applications do
+      post :notify_plan
+    end
     resources :plans do
       post :notify
     end
