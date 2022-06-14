@@ -38,7 +38,8 @@ class PlansController < SimpleController
   def resource_params
     params.require(:item).permit(
       :title, :description,
-      :execution_method_id, :parameters_text, :waiting, :enabled, :review_only
+      :application_id, :execution_method_id,
+      :parameters_text, :waiting, :enabled, :review_only
     )
   end
 

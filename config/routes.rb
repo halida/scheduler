@@ -32,6 +32,9 @@ Rails.application.routes.draw do
     match :sign_off,  via: [:get, :delete], action: :destroy,  as: :destroy_user_session
   end
 
+  resources :applications do
+  end
+
   resources :plans do
     member do
       get :executions

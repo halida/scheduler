@@ -5,6 +5,8 @@
   %td
     .p
       %strong= item.title
+      - if item.application_id
+        .p= link_to item.application.name, item.application
     .p= simple_format item.description
   %td
     - em = item.execution_method

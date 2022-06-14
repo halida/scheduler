@@ -3,6 +3,7 @@
     = f.input :title
     = f.input :description
     = f.input :execution_method_id, collection: ExecutionMethod.where(enabled: true).pluck(:title, :id)
+    = f.input :application_id, collection: Application.where(enabled: true).pluck(:name, :id)
     = f.input :parameters_text, as: :text
     = f.input :waiting, label: "Waiting in seconds"
     = f.input :enabled

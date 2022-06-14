@@ -1,0 +1,9 @@
+.form-block
+  = simple_form_for @item, as: :item do |f|
+    = f.input :name
+    = f.input :description
+    = f.input :enabled
+
+    .margin-bottom
+      = f.submit "Submit", class: 'btn btn-success'
+      = link_to "Cancel", :plans, class: 'btn btn-default'
