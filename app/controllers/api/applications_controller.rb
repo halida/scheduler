@@ -6,7 +6,7 @@ class Api::ApplicationsController < ApiController
     return render json: {status: :error, message: "no such application"}, status: 404 unless @item
 
     @plan = @item.plans.where(enabled: true, title: params[:plan_title]).first
-    return render json: {status: :error, message: "no such plan"}, status: 404 unless @plan
+    return render json: {status: :error, message: "no such plan"} unless @plan
 
     @execution = @plan.executions.where(status: :calling).first
     return render json: {status: :error, message: "no current execution"} unless @execution
