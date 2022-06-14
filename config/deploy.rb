@@ -25,7 +25,7 @@ ssh_options[:proxy] = Net::SSH::Proxy::Command.new("ssh #{settings['ssh_proxy']}
 server settings['hostname'], user: settings['user'], roles: %w{web app db}, ssh_options: ssh_options
 set :deploy_to, settings['path']
 
-set :branch, 'openid'
+set :branch, 'master'
 
 set :linked_files, %w{config/application.yml config/database.yml config/thin.yml config/secrets.yml config/sidekiq.yml}
 
