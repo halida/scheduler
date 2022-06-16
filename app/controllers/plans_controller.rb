@@ -33,7 +33,7 @@ class PlansController < SimpleController
       @item.assign_token
       redirect_to @item, notice: "Token assigned."
     when "delete_future_executions"
-      @item.executions.where("scheduled_at > ?", Time.now).delete_all
+      @item.executions.scheduled_after(Time.now).where(status: :initialize).delete_all
       redirect_to @item, notice: "Deleted."
     end
   end

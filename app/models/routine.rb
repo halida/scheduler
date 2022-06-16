@@ -16,10 +16,10 @@ class Routine < ActiveRecord::Base
   end
 
   def update_executions
-    if (self.config_changed? or
+    if (self.saved_changes.has_key?('config') or
         self.timezone_changed? or
         self.enabled == false)
-      self.executions.where(status: :initialize).delete_all
+      self.executions.scheduled_after(Time.now).where(status: :initialize).delete_all
     end
   end
 

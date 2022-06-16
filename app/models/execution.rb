@@ -10,9 +10,15 @@ class Execution < ActiveRecord::Base
   belongs_to :plan
 
   def self.scheduled_during(from, to)
-    self.
-      where_if(from, "scheduled_at >= ?", from).
-      where_if(to, "scheduled_at < ?", to)
+    self.scheduled_after(from).scheduled_before(to)
+  end
+
+  def self.scheduled_after(t)
+    self.where_if(t, "scheduled_at >= ?", t)
+  end
+
+  def self.scheduled_before(t)
+    self.where_if(t, "scheduled_at < ?", t)
   end
 
   def self.runs_during(from, to)
