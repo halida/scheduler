@@ -123,7 +123,7 @@ GEM
       temple (>= 0.8.2)
       thor
       tilt
-    hashie (4.1.0)
+    hashie (5.0.0)
     htmlentities (4.3.4)
     http-accept (1.7.0)
     http-cookie (1.0.3)
@@ -180,7 +180,7 @@ GEM
     nokogiri (1.12.5)
       mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
-    omniauth (1.9.1)
+    omniauth (1.9.2)
       hashie (>= 3.4.6)
       rack (>= 1.6.2, < 3)
     omniauth_openid_connect (0.3.5)
