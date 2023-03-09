@@ -216,7 +216,7 @@ GEM
       pry (>= 0.10.4)
     public_suffix (4.0.6)
     racc (1.5.2)
-    rack (2.2.6.2)
+    rack (2.2.6.3)
     rack-oauth2 (1.16.0)
       activesupport
       attr_required
