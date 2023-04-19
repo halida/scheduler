@@ -2,6 +2,9 @@ require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+  if host = Settings["host"].presence
+    config.hosts << host
+  end
 
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development

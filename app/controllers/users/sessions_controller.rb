@@ -5,7 +5,7 @@ class Users::SessionsController < ApplicationController
 
   skip_before_action :authenticate_user!, :only => [:new, :callback]
   def new
-    redirect_to authorization_uri
+    redirect_to authorization_uri, allow_other_host: true
   end
 
   def callback
