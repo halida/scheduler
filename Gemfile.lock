@@ -488,6 +488,7 @@ DEPENDENCIES
   premailer-rails
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
+  redis (~> 4.0)
   redis-namespace
   redis-rails
   rest-client
