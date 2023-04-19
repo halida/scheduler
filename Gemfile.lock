@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/brlo/settingslogic.git
+  revision: ed074b2bd1d08b10ec6fa6e4669d2067fe2380bd
+  specs:
+    settingslogic (2.0.9)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -365,7 +371,6 @@ GEM
       websocket (~> 1.0)
     sentry-raven (3.1.2)
       faraday (>= 1.0)
-    settingslogic (2.0.9)
     sidekiq (5.2.7)
       connection_pool (~> 2.2, >= 2.2.2)
       rack (>= 1.5.0)
@@ -491,7 +496,7 @@ DEPENDENCIES
   select2-rails
   selenium-webdriver
   sentry-raven
-  settingslogic
+  settingslogic!
   sidekiq (~> 5.2)
   sidekiq-client-cli
   silencer
