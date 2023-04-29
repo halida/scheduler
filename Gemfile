@@ -50,7 +50,7 @@ end
 
 # stylesheet
 begin
-  gem 'bootstrap-sass', '~> 3.4.1'
+  gem 'bootstrap-sass'
   gem 'bootstrap-datepicker-rails'
   gem "font-awesome-rails"
 end

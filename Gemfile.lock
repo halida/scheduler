@@ -456,7 +456,7 @@ DEPENDENCIES
   acts_as_list
   bootsnap
   bootstrap-datepicker-rails
-  bootstrap-sass (~> 3.4.1)
+  bootstrap-sass
   cancancan
   capistrano
   capistrano-bundler
