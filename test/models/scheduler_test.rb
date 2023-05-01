@@ -5,7 +5,7 @@ class SchedulerTest < ActiveSupport::TestCase
   def create_plan(opt)
     plan = Plan.find_or_create_by(title: opt[:title])
     schedule = opt.delete(:schedule)
-    timezone = opt.delete(:timezone)
+    timezone = opt.delete(:timezone).presence || "UTC"
     opt[:execution_method_id] = opt.delete(:em).id
     plan.update!(opt)
 
@@ -118,6 +118,9 @@ class SchedulerTest < ActiveSupport::TestCase
 
     e.timeout_at -= 5.minutes
     e.save!
+
+    user = User.find_or_create_by(email: "test@test.com")
+    user.update!(email_notify: true)
     Scheduler::Runner.verify_executions(Time.now)
     assert_equal e.reload.status, "timeout"
   end
