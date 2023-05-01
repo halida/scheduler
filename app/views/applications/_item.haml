@@ -20,4 +20,4 @@
       %ul.dropdown-menu
         %li.divider{:role => "separator"}
         %li= link_to "Edit", [:edit, item]
-        %li= link_to "Delete", item, method: :delete, data: {confirm: "Are you sure to delete ##{item.name}?"}
+        %li= link_to "Delete", item, data: {turbo_method: :delete, turbo_confirm: "Are you sure to delete ##{item.name}?"}

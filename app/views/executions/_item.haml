@@ -44,7 +44,7 @@
       %button.btn.btn-default.btn-xs.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
         %span.caret
       %ul.dropdown-menu
-        %li= link_to "Perform", [:op, item, type: :perform], method: :post, data: {confirm: "Are you sure to perform this?"}
-        %li= link_to "Close", [:op, item, type: :close], method: :post, data: {confirm: "Are you sure to close this?"}
+        %li= link_to "Perform", [:op, item, type: :perform], data: {turbo_method: :post, turbo_confirm: "Are you sure to perform this?"}
+        %li= link_to "Close", [:op, item, type: :close], data: {turbo_method: :post, turbo_confirm: "Are you sure to close this?"}
         %li.divider{:role => "separator"}
-        %li= link_to "Delete", item, method: :delete, data: {confirm: "Are you sure to delete this?"}
+        %li= link_to "Delete", item, data: {turbo_method: :delete, turbo_confirm: "Are you sure to delete this?"}

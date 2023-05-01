@@ -41,7 +41,7 @@
               - if routine.modify != 0
                 #{routine.modify} seconds
           .pull-right
-            = link_to routine, method: :delete, data: {confirm: "Are you sure to delete this?"} do
+            = link_to routine, data: {turbo_method: :delete, turbo_confirm: "Are you sure to delete this?"} do
               %span.glyphicon.glyphicon-trash.muted
       %li
         = link_to [:new, :routine, {item: {plan_id: item.id}}], title: "New Routine" do
@@ -53,7 +53,7 @@
         %span.caret
       %ul.dropdown-menu
         - [:execute, :expand, :assign_token, :delete_future_executions].each do |name|
-          %li= link_to name.to_s.humanize, [:op, item, type: name], method: :post, data: {confirm: "Are you sure to #{name.to_s.humanize}?"}
+          %li= link_to name.to_s.humanize, [:op, item, type: name], data: {turbo_method: :post, turbo_confirm: "Are you sure to #{name.to_s.humanize}?"}
         %li.divider{:role => "separator"}
         %li= link_to "Edit", [:edit, item]
-        %li= link_to "Delete", item, method: :delete, data: {confirm: "Are you sure to delete ##{item.title}?"}
+        %li= link_to "Delete", item, data: {turbo_method: :delete, turbo_confirm: "Are you sure to delete ##{item.title}?"}
