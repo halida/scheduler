@@ -18,6 +18,7 @@ class Scheduler::Lib
     
     def routine_expend_executions(routine, now)
       last = routine.executions.order(scheduled_at: :desc).first.try(:scheduled_at) || now
+      last = now if last < now
 
       # create next 2 week execution when near 1 week
       return if last > now + 7.days
