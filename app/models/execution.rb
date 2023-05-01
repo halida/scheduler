@@ -57,7 +57,7 @@ class Execution < ActiveRecord::Base
 
   def close(status=:succeeded, result=nil)
     now = Time.now
-    self.update_attributes!(status: status, result: result, finished_at: now)
+    self.update!(status: status, result: result, finished_at: now)
   end
 
   def result_data

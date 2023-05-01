@@ -25,7 +25,7 @@ class SimpleController < ApplicationController
   end
 
   def update
-    if @item.update_attributes(resource_params)
+    if @item.update(resource_params)
       redirect_to @item, notice: "##{self.class_title}: ##{@item.id} #{@item.title} Updated!"
     else
       render :edit

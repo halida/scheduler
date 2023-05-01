@@ -7,7 +7,7 @@ class SchedulerTest < ActiveSupport::TestCase
     schedule = opt.delete(:schedule)
     timezone = opt.delete(:timezone)
     opt[:execution_method_id] = opt.delete(:em).id
-    plan.update_attributes!(opt)
+    plan.update!(opt)
 
     routine = plan.routines.find_or_create_by!(config: schedule, timezone: timezone)
     plan
@@ -15,7 +15,7 @@ class SchedulerTest < ActiveSupport::TestCase
 
   def create_em(opt)
     em = ExecutionMethod.find_or_create_by(title: opt[:title])
-    em.update_attributes!(opt)
+    em.update!(opt)
     em
   end
 

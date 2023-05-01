@@ -17,7 +17,7 @@ class DailyReportWorker
         error_count: executions.errors.count,
       )
 
-      u.update_attributes(email_daily_report_checked_at: runs_at)
+      u.update(email_daily_report_checked_at: runs_at)
       UserMailer.daily_report(u, data).deliver_now
     end
   end

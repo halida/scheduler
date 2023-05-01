@@ -16,6 +16,6 @@ class Plan < ActiveRecord::Base
   end
 
   def assign_token
-    update_attributes!(token: Scheduler::Lib.get_token)
+    update!(token: Scheduler::Lib.get_token)
   end
 end

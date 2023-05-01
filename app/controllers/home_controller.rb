@@ -105,7 +105,7 @@ class HomeController < ApplicationController
 
   def profile
     if (request.post? and
-        current_user.update_attributes(
+        current_user.update(
           params.require(:item).permit(
             :timezone, :email_notify,
             :email_daily_report, :email_daily_report_time,
