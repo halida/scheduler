@@ -1,7 +1,7 @@
 # config valid for current version and patch releases of Capistrano
-lock "~> 3.14.1"
+lock "~> 3.17.2"
 
-set :rvm_ruby_version, '2.5.8'
+set :rvm_ruby_version, '3.2.2'
 set :rvm_type, :system
 set :rvm_custom_path, "/usr/share/rvm/"
 
