@@ -27,7 +27,7 @@ set :deploy_to, settings['path']
 
 set :branch, 'master'
 
-set :linked_files, %w{config/application.yml config/database.yml config/thin.yml config/secrets.yml config/sidekiq.yml}
+set :linked_files, %w{config/application.yml config/database.yml config/thin.yml config/secrets.yml config/sidekiq.yml config/storage.yml}
 
 set :linked_dirs, %w{log tmp uploads}
 
