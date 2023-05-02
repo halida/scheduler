@@ -96,7 +96,7 @@ end
 begin
   gem 'redis-namespace'
   gem "redis-rails"
-  gem 'sidekiq', '~> 5.2'
+  gem 'sidekiq', '~> 5.2.10'
   # for sidekiq deployment
   gem 'sidekiq-client-cli'
 end
