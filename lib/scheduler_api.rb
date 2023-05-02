@@ -40,7 +40,7 @@ class SchedulerApi
         finished_at: Time.now,
         result: result,
       }
-      SchedulerApi.notify_plan(token, status, result)
+      self.notify_plan(token, status, result)
     end
   end
 end
