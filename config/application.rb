@@ -16,7 +16,7 @@ module Scheduler
     config.autoload_paths += %W(#{config.root}/lib)
     config.eager_load_paths += %W(#{config.root}/lib)
 
-    config.cache_store = :redis_store,
+    config.cache_store = :redis_cache_store,
       "redis://#{ Settings.redis.host }:#{ Settings.redis.port }/#{ Settings.redis.cache_db }/cache",
       { expires_in: 1.day }
 
