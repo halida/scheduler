@@ -20,7 +20,7 @@ class SchedulerTest < ActiveSupport::TestCase
   end
 
   def execute_plan(plan)
-    Scheduler::Lib.plan_expend_executions(plan, Time.now)
+    Scheduler::Lib.plan_expand_executions(plan, Time.now)
 
     e = plan.executions.first
     e.perform
@@ -40,7 +40,7 @@ class SchedulerTest < ActiveSupport::TestCase
       em: em_ruby_ok, schedule: "31 2 * * *")
     # create another routine
     routine = plan.routines.find_or_create_by(config: "24 8 * * *")
-    Scheduler::Lib.routine_expend_executions(routine, Time.now)
+    Scheduler::Lib.routine_expand_executions(routine, Time.now)
     
     e = execute_plan(plan)
     assert_equal e.status, 'succeeded'

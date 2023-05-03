@@ -27,7 +27,7 @@ class PlansController < SimpleController
       e.perform
       redirect_to e, notice: "Executing: ##{e.id}."
     when "expand"
-      Scheduler::Lib.plan_expend_executions(@item, Time.now)
+      Scheduler::Lib.plan_expand_executions(@item, Time.now)
       redirect_to @item, notice: "Expanded."
     when "assign_token"
       @item.assign_token

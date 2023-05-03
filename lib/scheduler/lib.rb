@@ -16,7 +16,7 @@ class Scheduler::Lib
       Cronex::ExpressionDescriptor.new(schedule).description
     end
     
-    def routine_expend_executions(routine, now)
+    def routine_expand_executions(routine, now)
       last = routine.executions.order(scheduled_at: :desc).first.try(:scheduled_at) || now
       last = now if last < now
 
@@ -35,9 +35,9 @@ class Scheduler::Lib
       end
     end
 
-    def plan_expend_executions(plan, now)
+    def plan_expand_executions(plan, now)
       plan.routines.where(enabled: true).map do |routine|
-        self.routine_expend_executions(routine, now)
+        self.routine_expand_executions(routine, now)
       end.flatten
     end
 

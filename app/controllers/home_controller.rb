@@ -5,7 +5,7 @@ class HomeController < ApplicationController
     execution: {
       check: "Similar with background routine check",
       run: "Only run current executions",
-      expend: "Only expand execution by current plan routine",
+      expand: "Only expand execution by current plan routine",
       verify: "Only verify running executions",
     },
     report: {
