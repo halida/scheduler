@@ -1,6 +1,6 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 import "@hotwired/turbo-rails";
-import "./jquery-global.js";
+import "jquery-global";
 import "bootstrap";
 import "select2";
 import "magnific-popup";

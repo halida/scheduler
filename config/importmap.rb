@@ -13,3 +13,5 @@ pin "bootstrap", to: "https://ga.jspm.io/npm:bootstrap@3.4.1/dist/js/npm.js"
 pin "bootstrap-datepicker", to: "https://ga.jspm.io/npm:bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.js"
 
 pin_all_from "app/javascript/modules", under: "modules"
+pin "jquery-global", to: "jquery-global.js"
+
