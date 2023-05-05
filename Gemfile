@@ -96,8 +96,7 @@ begin
   gem 'redis-namespace'
   gem "redis-rails"
   gem 'sidekiq', '~> 5.2.10'
-  # for sidekiq deployment
-  gem 'sidekiq-client-cli'
+  gem 'sidekiq-client-cli', git: "https://github.com/halida/sidekiq-client-cli.git", branch: 'support-passing-job-arguments-per-job', require: false
 end
 
 # library

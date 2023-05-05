@@ -4,6 +4,15 @@ GIT
   specs:
     settingslogic (2.0.9)
 
+GIT
+  remote: https://github.com/halida/sidekiq-client-cli.git
+  revision: b739f32cc25f73c5ed6fee6335da326086eb5c39
+  branch: support-passing-job-arguments-per-job
+  specs:
+    sidekiq-client-cli (0.1.7)
+      cli
+      sidekiq (>= 2.15)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -370,9 +379,6 @@ GEM
       rack (~> 2.0)
       rack-protection (>= 1.5.0)
       redis (~> 4.5, < 4.6.0)
-    sidekiq-client-cli (0.1.7)
-      cli
-      sidekiq (>= 2.15)
     silencer (2.0.0)
     simple_form (5.2.0)
       actionpack (>= 5.2)
@@ -495,7 +501,7 @@ DEPENDENCIES
   sentry-raven
   settingslogic!
   sidekiq (~> 5.2.10)
-  sidekiq-client-cli
+  sidekiq-client-cli!
   silencer
   simple_form
   sprockets-rails
