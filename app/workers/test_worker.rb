@@ -16,7 +16,7 @@ class TestWorker
   def self.verify
     id = SecureRandom.uuid
     self.perform_async("validate", id)
-    (1..5).each do
+    (1..10).each do
       result = Rails.cache.read("validate_worker_#{id}")
       return true if result == 'ok'
       sleep(1)
