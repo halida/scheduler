@@ -32,8 +32,9 @@ class Scheduler::Runner
                      where("timeout_at <= ?", now)
       return [] if executions.blank?
 
-      executions.update_all(status: :timeout, finished_at: now)
-      executions.map(&:reload)
+      executions.each do |e|
+        e.update!(status: :timeout, finished_at: now)
+      end
       UserMailer.timeout(User.where(email_notify: true), executions).deliver_now
       executions
     end
