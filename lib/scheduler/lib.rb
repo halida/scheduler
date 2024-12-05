@@ -5,7 +5,7 @@ class Scheduler::Lib
     :"Central Time (US & Canada)",
     :"Asia/Shanghai",
   ]
-  
+
   class << self
 
     def parse_schedule(schedule)
@@ -15,7 +15,7 @@ class Scheduler::Lib
     def schedule_description(schedule)
       Cronex::ExpressionDescriptor.new(schedule).description
     end
-    
+
     def routine_expand_executions(routine, now)
       last = routine.executions.order(scheduled_at: :desc).first.try(:scheduled_at) || now
       last = now if last < now
@@ -105,6 +105,42 @@ class Scheduler::Lib
     def read_cache(key)
       blob = Rails.cache.read("scheduler_#{key}")
       Marshal.load(blob) rescue nil
+    end
+
+    def import(name, list)
+      app = Application.find_by(name: name)
+
+      exists = app.plans.where(title: list.map(&:last)).pluck(:title)
+      missing = list.reject{|cfg, script| exists.include?(script)}
+
+      missing.each do |cfg, plan_name|
+        create_plan(name, 'Central Time (US & Canada)', plan_name, cfg)
+      end
+    end
+
+    def create_plan(app_name, tz, plan_name, cfg)
+      app = Application.find_by(name: app_name)
+
+      em_cron = create_item(
+        ExecutionMethod, {title: "mapping for crontab"},
+        execution_type: :none,
+      )
+      plan = create_item(
+        Plan, {title: plan_name, execution_method_id: em_cron.id},
+        waiting: 600, application_id: app.id,
+      )
+      routine = create_item(
+        Routine, {plan_id: plan.id},
+        config: cfg, timezone: tz, modify: -120,
+      )
+      plan.reload
+      Scheduler::Lib.plan_expand_executions(plan, Time.now)
+    end
+
+    def create_item(klass, keys, parameters)
+      item = klass.find_or_create_by!(keys)
+      item.update!(parameters)
+      item
     end
 
   end
