@@ -13,9 +13,10 @@ jobs:
 test_prepare:
 	RAILS_ENV=test $(SET_ENV) bin/rake db:migrate
 
+# FILE=./test/models/scheduler_test.rb make test
 .PHONY: test
 test:
-	$(SET_ENV) bin/rails test ./test/models/scheduler_test.rb
+	$(SET_ENV) bin/rails test $(FILE)
 
 prepare_database:
 	mysql <<-EOF
