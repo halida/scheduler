@@ -1,64 +1,52 @@
 source "https://rubygems.org"
-git_source(:github) { |repo| "https://github.com/#{repo}.git" }
-
-ruby "3.2.2"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.0.4", ">= 7.0.4.3"
-
-# The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem "sprockets-rails"
-
-gem 'mysql2'
-
-gem "thin"
-
-# Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
-gem "importmap-rails"
-
+gem "rails", "~> 8.0.1"
+# The modern asset pipeline for Rails [https://github.com/rails/propshaft]
+gem "propshaft"
+# Use mysql as the database for Active Record
+gem "mysql2", "~> 0.5"
+# Use the Puma web server [https://github.com/puma/puma]
+gem "puma", ">= 5.0"
+# Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
+gem "jsbundling-rails"
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem "turbo-rails"
-
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"
-
+# Bundle and process CSS [https://github.com/rails/cssbundling-rails]
+gem "cssbundling-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
-
-# Use Redis adapter to run Action Cable in production
-gem "redis", "~> 4.0"
-
-# Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
-# gem "kredis"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
+gem "tzinfo-data", platforms: %i[ windows jruby ]
+
+# Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
+gem "solid_cache"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
-# template engines
+# Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
+gem "kamal", require: false
+
+# Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
+gem "thruster", require: false
+
+# Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
+# gem "image_processing", "~> 1.2"
+
+# template
 begin
-  gem 'sass-rails', '~> 5.0'
-  gem 'coffee-rails', '~> 4.2'
   gem 'hamlit'
-end
 
-# stylesheet
-begin
-  gem 'bootstrap-sass'
-  gem 'bootstrap-datepicker-rails'
-  gem "font-awesome-rails"
-end
-
-# javascript
-begin
-  gem 'uglifier', '>= 1.3.0'
-  gem 'magnific-popup-rails'
-  gem "select2-rails"
+  # gem "haml-rails"
+  # gem "html2haml"
+  # rails haml:erb2haml
 end
 
 # ui helper
@@ -80,43 +68,35 @@ begin
   gem 'omniauth_openid_connect'
 end
 
-# model
-begin
-  gem 'enumerize'
-end
-
 # form
 begin
   gem 'simple_form'
   gem "nested_form"
 end
 
-# background job
+# jobs
 begin
-  gem 'redis-namespace'
-  gem "redis-rails"
-  gem 'sidekiq', '~> 5.2.10'
-  gem 'sidekiq-client-cli', git: "https://github.com/halida/sidekiq-client-cli.git", branch: 'support-passing-job-arguments-per-job', require: false
+  gem "solid_queue"
+  gem "mission_control-jobs"
 end
 
 # library
 begin
   # fix ruby 3.1: https://github.com/settingslogic/settingslogic/pull/23
   gem "settingslogic", git: "https://github.com/brlo/settingslogic.git"
-  gem "rest-client"
 
-  gem 'sentry-raven'
+  # todo
+  # gem "rest-client"
 
-  gem 'whenever', require: false
-  # version
-  gem 'paper_trail'
+  # gem 'sentry-raven'
 
-  gem 'premailer-rails'
+  # gem 'whenever', require: false
+  # # version
+  # gem 'paper_trail'
 
-  # fix security issue
-  gem "loofah", '>= 2.2.3'
+  # gem 'premailer-rails'
 
-  gem 'silencer', require: false
+  # gem 'silencer', require: false
 end
 
 # for scheduler
@@ -125,44 +105,24 @@ begin
   gem 'parse-cron'
 end
 
-
-# Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
-
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+
+  # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
+  gem "brakeman", require: false
+
+  # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
+  gem "rubocop-rails-omakase", require: false
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
-
-  # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
-  # gem "rack-mini-profiler"
-
-  # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
-  # gem "spring"
-
-  # email debug
-  gem 'letter_opener'
-
-  # deploy
-  begin
-    gem 'capistrano'
-    gem 'capistrano-rvm'
-    gem 'capistrano-bundler'
-    gem 'capistrano-rails'
-    gem 'capistrano-sidekiq'
-  end
 end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
-  gem "webdrivers"
 end
-
-gem 'rexml'
-

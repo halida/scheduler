@@ -1,8 +1,7 @@
 class Execution < ActiveRecord::Base
-  include Enumerize
   include Reportable
 
-  enumerize :status, in: Reportable::STATUSES + [:calling, :timeout]
+  enum :status, (Reportable::STATUSES + [:calling, :timeout]).map(&:to_s).index_by(&:itself)
 
   ERROR_STATUS = [:timeout, :error]
 

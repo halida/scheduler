@@ -1,7 +1,0 @@
----
-:verbose: true
-:pidfile: tmp/sidekiq.pid
-:concurrency: 1
-:queues:
-  - default
-  - mailers

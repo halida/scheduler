@@ -1,14 +1,17 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception
+  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
+  allow_browser versions: :modern
+
   before_action :authenticate_user!
-  before_action :set_raven_context
+  # todo
+  # before_action :set_raven_context
 
   protected
 
   def check_during(default)
     default.map!{|v| v.in_time_zone(current_user.timezone)}
 
-    tz = ActiveSupport::TimeZone.new(current_user.timezone)
+    tz = ActiveSupport::TimeZone.new(current_user.timezone.presence || Scheduler::Lib::TIMEZONES.first.to_s)
     @begin_date = (params[:begin_date].present? and (tz.strptime(params[:begin_date], "%Y-%m-%d") rescue nil)) || default[0]
     @finish_date = (params[:finish_date].present? and (tz.strptime(params[:finish_date], "%Y-%m-%d") rescue nil)) || default[1]
   end

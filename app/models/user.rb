@@ -5,8 +5,7 @@ class User < ApplicationRecord
   # :registerable, :recoverable, :rememberable, :trackable, :validatable
   devise :database_authenticatable, :lockable, :trackable
 
-  extend Enumerize
-  enumerize :timezone, in: Scheduler::Lib::TIMEZONES
+  enum :timezone, Scheduler::Lib::TIMEZONES.map(&:to_s).index_by(&:itself)
 
   def cas_extra_attributes=(extra_attributes)
     extra_attributes.each do |name, value|
@@ -43,11 +42,11 @@ class User < ApplicationRecord
   def lock!
     self.update_without_password(:locked_at => Time.now)
   end
-  
+
   def unlock!
     self.update_without_password(:locked_at => nil)
   end
-  
+
   def locked?
     self.locked_at?
   end

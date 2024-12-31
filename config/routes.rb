@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   root "home#index"
   get "/live-ping" => "home#live_ping"
   get "/check" => "home#check"
-  
+
+  get "up" => "rails/health#show", as: :rails_health_check
+
   resource :home, controller: "home" do
     match :op, via: [:get, :post]
     post :notify
@@ -54,8 +56,7 @@ Rails.application.routes.draw do
 
   resources :users
 
-  require 'sidekiq/web'
   authenticate :user, lambda { |u| u.admin? } do
-    mount Sidekiq::Web => '/sidekiq'
+    mount MissionControl::Jobs::Engine, at: "/jobs"
   end
 end

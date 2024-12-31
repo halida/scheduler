@@ -1,7 +1,7 @@
 module Reportable
   include Loggable
 
-  STATUSES = [:initialize, :generating, :succeeded, :error]
+  STATUSES = [:init, :generating, :succeeded, :error]
 
   def on_perform(opt={})
     # save first to get a id, so records can link with it

@@ -1,23 +1,25 @@
 module ApplicationHelper
 
   class BootTabBuilder < TabsOnRails::Tabs::TabsBuilder
-    
+
     def tab_for(tab, name, hash_or_url, item_options = {})
-      item_options[:class] = item_options[:class].to_s.split(" ").push("active").join(" ") if current_tab?(tab)
-      
-      content = @context.link_to(name, hash_or_url, item_options.delete(:link_html))
+      html = item_options.delete(:link_html) || {}
+      html[:class] ||= ""
+      html[:class] += " dropdown-item"
+      html[:class] += " active" if current_tab?(tab)
+      content = @context.link_to(name, hash_or_url, html)
       @context.content_tag(:li, content, item_options)
     end
-    
+
     def open_tabs(options = {})
       @context.tag("ul", options, open = true)
     end
 
     def close_tabs(options = {})
       "</ul>".html_safe
-    end        
+    end
   end
-  
+
   def bootstrap_tabs_tag(options = {}, &block)
     options.reverse_merge!(builder: BootTabBuilder)
     tabs_tag(options, &block)
@@ -44,10 +46,10 @@ module ApplicationHelper
 
       Array(message).each do |msg|
         inner = [
-          content_tag(:button, raw("&times;"), class: "close", "data-dismiss" => "alert"),
+          '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>'.html_safe,
           msg.html_safe,
         ].join("").html_safe
-        text = content_tag(:div, inner, class: "alert fade in alert-#{type}")
+        text = content_tag(:div, inner, class: "alert alert-dismissible fade show alert-#{type}")
         flash_messages << text if msg
       end
     end
@@ -74,7 +76,7 @@ module ApplicationHelper
     @breadcrumbs.each do |breadcrumb|
       list << link_to(breadcrumb[:name], breadcrumb[:url], breadcrumb[:options])
     end
-    content_tag(:div, list.join(sep).html_safe, class: 'breadcrumbs')
+    content_tag(:div, list.join(sep).html_safe, class: 'breadcrumbs mb-1')
   end
 
   def render_enabled(enabled)

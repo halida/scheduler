@@ -1,0 +1,30 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title= content_for(:title) || "Scheduler"
+    %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
+    %meta{:content => "yes", :name => "apple-mobile-web-app-capable"}/
+    %meta{:content => "yes", :name => "mobile-web-app-capable"}/
+    = csrf_meta_tags
+    = csp_meta_tag
+    = yield :head
+    %link{:href => "/icon.png", :rel => "icon", :type => "image/png"}/
+    %link{:href => "/icon.svg", :rel => "icon", :type => "image/svg+xml"}/
+    %link{:href => "/icon.png", :rel => "apple-touch-icon"}/
+    = stylesheet_link_tag :app, "data-turbo-track": "reload"
+    = javascript_include_tag "application", "data-turbo-track": "reload", type: "module"
+    = stylesheet_link_tag "application", "data-turbo-track": "reload"
+  %body
+    = render "layouts/nav_outter"
+
+    .container
+      .content.mt-1{style: "min-height: 600px"}
+        = render_breadcrumbs
+        = bootstrap_flash
+        = yield
+      %footer
+        %hr/
+        = link_to "Scheduler", "https://github.com/halida/scheduler", target: :_blank
+        developed by
+        \#{link_to "linjunhalida", "http://blog.linjunhalida.com/", target: :_blank}

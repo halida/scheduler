@@ -1,21 +1,31 @@
+TZ=/usr/share/zoneinfo/US/Central
+SET_ENV=dotenv -f .env.dev
+
 console:
-	TZ=/usr/share/zoneinfo/UTC bundle exec rails c
+	$(SET_ENV) bundle exec rails console
+dev:
+	$(SET_ENV) bin/dev
 server:
-	TZ=/usr/share/zoneinfo/UTC bundle exec rails server -b 0.0.0.0 -p 3010
-
-deploy:
-	bundle exec cap staging deploy
-
-worker:
-	bundle exec sidekiq -e development -C ./config/sidekiq.yml
-
-run:
-	bundle exec rails s -p 8080
-
+	$(SET_ENV) bin/rails s -p 3010
+jobs:
+	$(SET_ENV) bin/jobs start
 
 test_prepare:
-	RAILS_ENV=test bundle exec rake db:migrate
+	RAILS_ENV=test $(SET_ENV) bin/rake db:migrate
 
 .PHONY: test
 test:
-	bin/rails test ./test/models/scheduler_test.rb
+	$(SET_ENV) bin/rails test ./test/models/scheduler_test.rb
+
+prepare_database:
+	mysql <<-EOF
+	create database scheduler_development;
+	grant all privileges on scheduler_development.* to 'user'@'%';
+	create database scheduler_development_cache;
+	grant all privileges on scheduler_development_cache.* to 'user'@'%';
+	create database scheduler_development_queue;
+	grant all privileges on scheduler_development_queue.* to 'user'@'%';
+	create database scheduler_test;
+	grant all privileges on scheduler_test.* to 'user'@'%';
+	EOF
+	$(SET_ENV) bin/rake db:prepare

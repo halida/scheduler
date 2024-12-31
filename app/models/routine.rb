@@ -4,8 +4,7 @@ class Routine < ActiveRecord::Base
   belongs_to :plan
   has_many :executions
 
-  extend Enumerize
-  enumerize :timezone, in: Scheduler::Lib::TIMEZONES
+  enum :timezone, Scheduler::Lib::TIMEZONES.map(&:to_s).index_by(&:itself)
 
   validate :validate_data
 
@@ -30,7 +29,7 @@ class Routine < ActiveRecord::Base
         errors.add :config, "is not valid."
         return
       end
-      
+
       f = parser.next(DateTime.now)
       n = parser.next(f)
       if (n - f) < 10.minutes

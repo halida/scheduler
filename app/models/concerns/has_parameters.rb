@@ -1,8 +1,8 @@
 module HasParameters
   extend ActiveSupport::Concern
-  
+
   included do
-    serialize :parameters, Hash
+    serialize :parameters, type: Hash, coder: YAML
     attr_accessor :parameters_text
 
     validate :validate_parameters_text

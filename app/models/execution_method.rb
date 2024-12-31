@@ -1,8 +1,8 @@
 class ExecutionMethod < ActiveRecord::Base
   include HasParameters
   include HasEnabled
-  include Enumerize
-  enumerize :execution_type, in: [:none, :ruby, :sidekiq, :http]
+
+  enum :execution_type, [:none, :ruby, :sidekiq, :http].map(&:to_s).index_by(&:itself)
 
   has_many :plans
 

@@ -111,6 +111,7 @@ class HomeController < ApplicationController
             :email_daily_report, :email_daily_report_time,
           )))
       flash[:notice] = "Updated."
+      redirect_to profile_home_path, status: :see_other
     end
   end
 

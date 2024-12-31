@@ -1,6 +1,6 @@
 .p{style: "float: left; margin-bottom: 10px"}
   = form_for url_for, method: :get, html: {id: "search-executions"} do |f|
-    
+
     .margin-bottom
       Display as
       .btn-group{:role => "group"}
@@ -11,7 +11,7 @@
           - ExecutionsController::DISPLAY_AS.each do |name, title|
             - next if name == @display_as
             %li= link_to title, url_for(params.permit!.merge(display_as: name))
-      
+
       Search
       = text_field_tag :keyword, params[:keyword], placeholder: "Plan Title", class: "form-control", style: "display: inline; width: 190px"
       Exclude
@@ -26,8 +26,8 @@
       = link_to (error_count > 0 ? error_count : "None"), url_for(status: Execution::ERROR_STATUS), style: 'margin-right: 10px', class: ('btn btn-danger' if error_count > 0)
 
       %span Status
-      = select_tag :status, options_for_select(Execution.status.values - ['initialize'], params[:status]), include_blank: true, style: "width: 440px; margin: 0; vertical-align: top", multiple: true, class: "select2"
-      = link_to "Exclude Initialize", url_for(params.permit!.merge(status: (params[:status] || Execution.status.values) - ['initialize']))
+      = select_tag :status, options_for_select(Execution.statuses.keys - ['initialize', 'init'], params[:status]), include_blank: true, style: "width: 440px; margin: 0; vertical-align: top", multiple: true, class: "select2"
+      = link_to "Exclude Initialize", url_for(params.permit!.merge(status: (params[:status] || Execution.statuses.keys) - ['initialize', 'init']))
 
     .margin-bottom
       - if @display_as == 'list'
