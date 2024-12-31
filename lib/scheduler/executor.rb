@@ -19,7 +19,7 @@ class Scheduler::Executor
       execution.save!
     end
 
-    def execute_none(execution)
+    def execute_no(execution)
       self.running(execution, :calling){}
     end
 
@@ -52,7 +52,7 @@ class Scheduler::Executor
         opt[:token] = execution.token
         hash[:args] << opt
         hash = hash.stringify_keys
-        
+
         redis_client = Redis.new(method.parameters.slice(:host, :port, :db))
         sidekiq_client = Sidekiq::Client.new(ConnectionPool.new { redis_client })
         sidekiq_client.push(hash)

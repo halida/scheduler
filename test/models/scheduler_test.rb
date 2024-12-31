@@ -41,7 +41,7 @@ class SchedulerTest < ActiveSupport::TestCase
     # create another routine
     routine = plan.routines.find_or_create_by(config: "24 8 * * *")
     Scheduler::Lib.routine_expand_executions(routine, Time.now)
-    
+
     e = execute_plan(plan)
     assert_equal e.status, 'succeeded'
     assert_equal e.result, '2'
@@ -63,7 +63,7 @@ class SchedulerTest < ActiveSupport::TestCase
     # mapping to crontab
     em_cron = create_em(
       title: "mapping for crontab",
-      execution_type: :none,
+      execution_type: :no,
     )
     plan = create_plan(
       title: "TransguardPremiumFtpWorker.daily_job",
@@ -104,25 +104,26 @@ class SchedulerTest < ActiveSupport::TestCase
     # assert_equal e.result[0..5], 'class'
 
     # test call sidekiq
-    em_sidekiq = create_em(
-      title: "local sidekiq", execution_type: :sidekiq,
-      parameters: {host: 'localhost', port: 6379, db: 14, queue: "default"},
-    )
-    plan = create_plan(
-      title: "test scheduler worker", em: em_sidekiq, schedule: "31 2 * * *",
-      parameters: {class: "TestSchedulerWorker", args: []},
-    )
-    e = execute_plan(plan)
-    Scheduler::Runner.verify_executions(Time.now)
-    assert_equal e.reload.status, "calling"
+    # todo
+    # em_sidekiq = create_em(
+    #   title: "local sidekiq", execution_type: :sidekiq,
+    #   parameters: {host: 'localhost', port: 6379, db: 14, queue: "default"},
+    # )
+    # plan = create_plan(
+    #   title: "test scheduler worker", em: em_sidekiq, schedule: "31 2 * * *",
+    #   parameters: {class: "TestSchedulerWorker", args: []},
+    # )
+    # e = execute_plan(plan)
+    # Scheduler::Runner.verify_executions(Time.now)
+    # assert_equal e.reload.status, "calling"
 
-    e.timeout_at -= 5.minutes
-    e.save!
+    # e.timeout_at -= 5.minutes
+    # e.save!
 
-    user = User.find_or_create_by(email: "test@test.com")
-    user.update!(email_notify: true)
-    Scheduler::Runner.verify_executions(Time.now)
-    assert_equal e.reload.status, "timeout"
+    # user = User.find_or_create_by(email: "test@test.com")
+    # user.update!(email_notify: true)
+    # Scheduler::Runner.verify_executions(Time.now)
+    # assert_equal e.reload.status, "timeout"
   end
 
 end

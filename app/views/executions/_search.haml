@@ -26,8 +26,8 @@
       = link_to (error_count > 0 ? error_count : "None"), url_for(status: Execution::ERROR_STATUS), style: 'margin-right: 10px', class: ('btn btn-danger' if error_count > 0)
 
       %span Status
-      = select_tag :status, options_for_select(Execution.statuses.keys - ['initialize', 'init'], params[:status]), include_blank: true, style: "width: 440px; margin: 0; vertical-align: top", multiple: true, class: "select2"
-      = link_to "Exclude Initialize", url_for(params.permit!.merge(status: (params[:status] || Execution.statuses.keys) - ['initialize', 'init']))
+      = select_tag :status, options_for_select(Execution.statuses.keys - ['init'], params[:status]), include_blank: true, style: "width: 440px; margin: 0; vertical-align: top", multiple: true, class: "select2"
+      = link_to "Exclude Init", url_for(params.permit!.merge(status: (params[:status] || Execution.statuses.keys) - ['init']))
 
     .margin-bottom
       - if @display_as == 'list'

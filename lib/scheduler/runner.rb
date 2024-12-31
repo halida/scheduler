@@ -15,7 +15,7 @@ class Scheduler::Runner
     protected
 
     def run_executions(now)
-      executions = Execution.where(status: :initialize).
+      executions = Execution.where(status: :init).
                     where("scheduled_at <= ?", now)
       executions.map(&:perform)
       executions

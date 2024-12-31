@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2022_06_14_073130) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_31_025117) do
   create_table "applications", charset: "latin1", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -33,7 +33,7 @@ ActiveRecord::Schema[8.0].define(version: 2022_06_14_073130) do
     t.integer "plan_id"
     t.integer "routine_id"
     t.string "token"
-    t.string "status", default: "initialize"
+    t.string "status", default: "init"
     t.text "log", size: :medium
     t.text "result", size: :medium
     t.datetime "scheduled_at", precision: nil

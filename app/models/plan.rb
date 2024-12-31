@@ -12,7 +12,7 @@ class Plan < ActiveRecord::Base
 
   def update_executions
     return if self.enabled
-    self.executions.where(status: :initialize).delete_all
+    self.executions.where(status: :init).delete_all
   end
 
   def assign_token
