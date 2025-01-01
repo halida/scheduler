@@ -1,16 +1,15 @@
-.p{style: "float: left; margin-bottom: 10px"}
+.mb-2.float-start
   = form_for url_for, method: :get, html: {id: "search-executions"} do |f|
 
-    .margin-bottom
+    .mb-2
       Display as
-      .btn-group{:role => "group"}
-        %button.btn.btn-default.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+      .btn-group.btn-group-sm{role: "group"}
+        %button.btn.btn-light.btn-sm.dropdown-toggle{type: :button, data: {bs: {toggle: :dropdown}}}
           = ExecutionsController::DISPLAY_AS[@display_as]
-          %span.caret
         %ul.dropdown-menu
           - ExecutionsController::DISPLAY_AS.each do |name, title|
             - next if name == @display_as
-            %li= link_to title, url_for(params.permit!.merge(display_as: name))
+            %li= link_to title, url_for(params.permit!.merge(display_as: name)), class: "dropdown-item"
 
       Search
       = text_field_tag :keyword, params[:keyword], placeholder: "Plan Title", class: "form-control", style: "display: inline; width: 190px"
@@ -19,8 +18,8 @@
 
       = text_field_tag :exclude, params[:exclude], placeholder: "Plan Title", class: "form-control", style: "display: inline; width: 190px"
 
-      = submit_tag "Reload", class: 'btn btn-default'
-    .margin-bottom
+      = submit_tag "Reload", class: 'btn btn-outline-success'
+    .mb-2
       Errors:
       - error_count = items.where(status: Execution::ERROR_STATUS).count
       = link_to (error_count > 0 ? error_count : "None"), url_for(status: Execution::ERROR_STATUS), style: 'margin-right: 10px', class: ('btn btn-danger' if error_count > 0)
@@ -29,11 +28,11 @@
       = select_tag :status, options_for_select(Execution.statuses.keys - ['init'], params[:status]), include_blank: true, style: "width: 440px; margin: 0; vertical-align: top", multiple: true, class: "select2"
       = link_to "Exclude Init", url_for(params.permit!.merge(status: (params[:status] || Execution.statuses.keys) - ['init']))
 
-    .margin-bottom
+    .mb-2
       - if @display_as == 'list'
         = select_tag :during, options_for_select([['During', '1'], ['All', '0']], (@during ? '1' : '0')), class: 'form-control', style: "width: 100px; display: inline", onchange: "$('#during-block').toggle()"
         %span#during-block{class: ("collapse" unless @during)}
-          = render partial: "shared/during"
+          = render "shared/during"
           Or
           = link_to "Today", url_for(begin_date: Date.today.strftime("%Y-%m-%d"), finish_date: Date.today.strftime("%Y-%m-%d"))
           ,

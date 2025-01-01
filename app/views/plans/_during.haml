@@ -1,8 +1,8 @@
-.p{style: 'margin-bottom: 10px'}
+.mb-2
   = form_for url_for, method: :get do |f|
-    = render partial: "shared/during"
+    = render "shared/during"
     Or
     = link_to "This week", url_for(begin_date: Date.today.beginning_of_week.strftime("%Y-%m-%d"), finish_date: Date.today.end_of_week.strftime("%Y-%m-%d"))
     ,
     = link_to "Today", url_for(begin_date: Date.today.strftime("%Y-%m-%d"), finish_date: Date.today.strftime("%Y-%m-%d"))
-    = submit_tag "Search", class: 'btn btn-default'
+    = submit_tag "Search", class: 'btn btn-outline-success'

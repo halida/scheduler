@@ -1,7 +1,7 @@
 %tr
   %td
     = link_to "##{item.id}", item
-    .pull-right= render_enabled(item.enabled)
+    .float-end= render_enabled(item.enabled)
   %td
     .p
       %strong= item.title
@@ -10,24 +10,18 @@
     .p= simple_format item.description
   %td
     - em = item.execution_method
-    .pull-right{title: "Execution Type"}
+    .float-end{title: "Execution Type"}
       = em.execution_type
     .p
       %strong= link_to em.title, em
-    = render partial: "execution_methods/detail", locals: {em: em}
+    = render "execution_methods/detail", em: em
 
     - if item.parameters.present?
-      .p= link_to "Plan Parameters", "#parameters-#{item.id}", class: "toggle-popup"
-      .hide
-        .popup{id: "parameters-#{item.id}"}
-          = hash_as_table item.parameters
+      = render "shared/dialog_data", id: "item-parameters-#{item.id}", name: :Parameters, data: hash_as_table(item.parameters)
     - if item.token.present?
-      = link_to "API Token", "#plan-#{item.id}-token", class: 'toggle-popup', style: "margin-right: 10px"
-      .hide
-        .popup{id: "plan-#{item.id}-token"}
-          %pre= item.token
+      %button.btn.btn-link.ps-0.btn-sm{type: :button, data: {bs: {content: item.token, toggle: :popover, placement: :bottom}}} API Token
 
-    .muted
+    .text-muted
       Waiting for #{item.waiting} seconds
   %td
     %ul.list-unstyled
@@ -40,20 +34,22 @@
               = Scheduler::Lib.schedule_description(routine.config)
               - if routine.modify != 0
                 #{routine.modify} seconds
-          .pull-right
+          .float-end
             = link_to routine, data: {turbo_method: :delete, turbo_confirm: "Are you sure to delete this?"} do
-              %span.glyphicon.glyphicon-trash.muted
+              %i.bi.bi-x-square
+
       %li
         = link_to [:new, :routine, {item: {plan_id: item.id}}], title: "New Routine" do
-          %span.glyphicon.glyphicon-plus
+          %i.bi.bi-plus-square
 
   %td
-    .btn-group.pull-right{:role => "group"}
-      %button.btn.btn-default.btn-xs.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
-        %span.caret
+    .btn-group.btn-group-sm.float-end{role: "group"}
+      %button.btn.btn-light.btn-sm.dropdown-toggle{type: :button, data: {bs: {toggle: :dropdown}}}
+
       %ul.dropdown-menu
         - [:execute, :expand, :assign_token, :delete_future_executions].each do |name|
-          %li= link_to name.to_s.humanize, [:op, item, type: name], data: {turbo_method: :post, turbo_confirm: "Are you sure to #{name.to_s.humanize}?"}
-        %li.divider{:role => "separator"}
-        %li= link_to "Edit", [:edit, item]
-        %li= link_to "Delete", item, data: {turbo_method: :delete, turbo_confirm: "Are you sure to delete ##{item.title}?"}
+          %li= link_to name.to_s.humanize, [:op, item, type: name], class: "dropdown-item", data: {turbo_method: :post, turbo_confirm: "Are you sure to #{name.to_s.humanize}?"}
+        %li
+          %hr.dropdown-divider
+        %li= link_to "Edit", [:edit, item], class: "dropdown-item"
+        %li= link_to "Delete", item, class: "dropdown-item", data: {turbo_method: :delete, turbo_confirm: "Are you sure to delete ##{item.title}?"}

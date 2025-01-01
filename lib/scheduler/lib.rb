@@ -1,3 +1,5 @@
+require 'ostruct'
+
 class Scheduler::Lib
   TIMEZONES = [
     :"UTC",

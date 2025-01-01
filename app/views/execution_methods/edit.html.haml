@@ -1,12 +1,12 @@
 .form-block
   = simple_form_for @item, as: :item do |f|
+    = form_errors(f)
+
     = f.input :title
-    = f.input :execution_type
+    = f.input :execution_type, collection: @item.class.execution_types.keys
     = f.input :parameters_text, as: :text
     = f.input :enabled
 
-    .margin-bottom
+    .mb-2
       = f.submit "Submit", class: 'btn btn-success'
-      = link_to "Cancel", :execution_methods, class: 'btn btn-default'
-
-
+      = link_to "Cancel", :execution_methods, class: 'btn btn-outline-success'

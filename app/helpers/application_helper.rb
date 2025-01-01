@@ -56,9 +56,18 @@ module ApplicationHelper
     flash_messages.join("\n").html_safe
   end
 
+  def form_errors(f)
+    list = [f.error_notification]
+    if f.object.errors[:base].present?
+      list << \
+      f.error_notification(message: f.object.errors[:base].to_sentence)
+    end
+    list.join("<br/>").html_safe
+  end
+
   def hash_as_table(data)
     return unless data.present?
-    render partial: "shared/hash_as_table", locals: {data: data}
+    render "shared/hash_as_table", data: data
   end
 
   def inline_hash(hash)

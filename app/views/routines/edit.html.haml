@@ -1,11 +1,13 @@
 .form-block
   = simple_form_for @item, as: :item do |f|
+    = form_errors(f)
+
     = f.input :plan_id, collection: Plan.enabled.pluck(:title, :id)
     = f.input :config
     = f.input :modify
     = f.input :timezone
     = f.input :enabled
-  
-    .margin-bottom
+
+    .mb-2
       = f.submit "Submit", class: 'btn btn-success'
-      = link_to "Cancel", :back, class: 'btn btn-default'
+      = link_to "Cancel", :back, class: 'btn btn-outline-success'

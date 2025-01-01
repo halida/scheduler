@@ -2,8 +2,8 @@
 .clearfix
 
 - if items.present?
-  %table.table.table-bordered.table-condensed
-    = render partial: "executions/list_header"
+  %table.table.table-bordered.table-sm
+    = render "executions/list_header"
     = render partial: "executions/item", collection: items
 - else
   .well.align-center

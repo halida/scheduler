@@ -2,18 +2,18 @@
 
 .row
   .col-md-8
-    = render partial: "executions/search", locals: {items: @executions}
-    = render partial: "executions/list", locals: {items: @executions}
+    = render "executions/search", items: @executions
+    = render "executions/list", items: @executions
 
   .col-md-4
-    %table.table.table-bordered.table-condensed
+    %table.table.table-bordered.table-sm
       %tr
         %th Last checked at
         %th Next check create executions
       %tr
         %td= format_time Scheduler::Lib.read_cache(:checked_at)
         %td= format_time Scheduler::Lib.read_cache(:expired_create_executions)
-    %table.table.table-bordered.table-condensed
+    %table.table.table-bordered.table-sm
       %tr
         %th{colspan: 2} Controls
       - HomeController::CONTROLS.each do |category, items|
@@ -21,5 +21,4 @@
           %th= category.to_s.humanize
           %td
             - items.each do |name, desc|
-              = link_to name.to_s.humanize, [:op, :home, type: "#{category}_#{name}"], title: desc, data: {turbo_method: :post, turbo_confirm: "Run #{category.to_s.humanize} #{name.to_s.humanize}? #{desc}"}, class: 'btn btn-default', style: "margin-bottom: 5px"
-
+              = link_to name.to_s.humanize, [:op, :home, type: "#{category}_#{name}"], title: desc, data: {turbo_method: :post, turbo_confirm: "Run #{category.to_s.humanize} #{name.to_s.humanize}? #{desc}"}, class: 'btn btn-outline-success', style: "mb-2: 5px"

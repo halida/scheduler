@@ -1,7 +1,7 @@
 = bootstrap_will_paginate items
 
-%table.table.table-bordered.table-condensed
-  = render partial: "users/list_header"
+%table.table.table-bordered.table-sm
+  = render "users/list_header"
   = render partial: "users/item", collection: items
 
 = bootstrap_will_paginate items

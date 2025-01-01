@@ -1,8 +1,8 @@
 %h3 User Profile
 .form-block
   = simple_form_for current_user, url: url_for, method: :post, as: :item do |f|
-    = render partial: "users/profile", locals: {f: f}
+    = render "users/profile", f: f
 
-    .margin-bottom
+    .mb-2
       = f.submit "Submit", class: 'btn btn-success'
-      = link_to "Cancel", :users, class: 'btn btn-default'
+      = link_to "Cancel", :users, class: 'btn btn-outline-success'

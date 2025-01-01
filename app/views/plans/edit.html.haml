@@ -1,6 +1,7 @@
 .form-block
   = simple_form_for @item, as: :item do |f|
-    .p.alert= f.object.errors.full_messages
+    = form_errors(f)
+
     = f.input :title
     = f.input :description
     = f.input :execution_method_id, collection: ExecutionMethod.where(enabled: true).pluck(:title, :id)
@@ -9,7 +10,7 @@
     = f.input :waiting, label: "Waiting in seconds"
     = f.input :enabled
     = f.input :review_only, hint: "This plan is only for review, execution will auto mark as succeed."
-  
-    .margin-bottom
+
+    .mb-2
       = f.submit "Submit", class: 'btn btn-success'
-      = link_to "Cancel", :plans, class: 'btn btn-default'
+      = link_to "Cancel", :plans, class: 'btn btn-outline-success'

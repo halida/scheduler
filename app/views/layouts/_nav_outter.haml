@@ -11,5 +11,5 @@
       %ul.navbar-nav.mb-2.mb-lg-0
         %li.nav-item.dropdown
           %a.nav-link.dropdown-toggle{"aria-expanded" => "false", "data-bs-toggle" => "dropdown", :href => "#", :role => "button"} Admin
-          = render partial: "layouts/nav"
-      = render partial: "layouts/user_nav" if current_user
+          = render "layouts/nav"
+      = render "layouts/user_nav" if current_user

@@ -1,7 +1,7 @@
-.p= render partial: "during"
+.p= render "during"
 
 - schedules = Scheduler::Lib.get_schedules_with_execution_during(@item, @begin_date, @finish_date+1.day)
-%table.table.table-bordered.table-condensed
+%table.table.table-bordered.table-sm
   %tr
     %th Scheduled Time
     %th Execution
@@ -12,7 +12,7 @@
       %tr
         %td{rowspan: [schedule.executions.count, 1].max}
           = format_time schedule.at
-          = render partial: "schedule_execution", locals: {e: schedule.executions.first}
+          = render "schedule_execution", e: schedule.executions.first
       - if schedule.executions.present?
         - schedule.executions[1..-1].each do |e|
-          %tr= render partial: "schedule_execution", locals: {e: e}
+          %tr= render "schedule_execution", e: e

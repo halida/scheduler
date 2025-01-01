@@ -3,11 +3,11 @@
   %td
     .p= link_to item.plan.title, item.plan
     - if item.routine
-      .muted= Scheduler::Lib.schedule_description(item.routine.config)
+      .text-muted= Scheduler::Lib.schedule_description(item.routine.config)
   %td= format_time item.scheduled_at
   %td
     - if item.timeout_at
-      .muted.pull-right.cursor-pointer
+      .text-muted.float-end.cursor-pointer
         %icon.glyphicon.glyphicon-hourglass{title: "Timeout at #{format_time item.timeout_at}"}
     .p= format_time item.started_at
     - if item.done? and item.finished_at.present?
@@ -16,35 +16,28 @@
     = execution_status(item)
   %td
     - if item.token.present?
-      = link_to "Token", "#token-#{item.id}", class: "toggle-popup"
-      .hide
-        .popup{id: "token-#{item.id}"}
-          %pre= item.token
+      %button.btn.btn-link.ps-0.btn-sm{type: :button, data: {bs: {content: item.token, toggle: :popover, placement: :bottom}}} Token
+
     - else
-      %span.muted Token
+      %span.text-muted No Token
     \/
     - if item.result.present?
-      = link_to "Result", "#result-#{item.id}", class: "toggle-popup"
-      .hide
-        .popup{id: "result-#{item.id}"}
-          %pre= JSON.pretty_generate(item.result_data)
+      = render "shared/dialog_data", id: "item-result-#{item.id}", name: :Result, data: JSON.pretty_generate(item.result_data)
     - else
-      %span.muted Result
+      %span.text-muted No Result
     \/
     - if item.log.present?
-      = link_to "Log", "#log-#{item.id}", class: "toggle-popup"
-      .hide
-        .popup{id: "log-#{item.id}"}
-          %pre= item.log
+      = render "shared/dialog_data", id: "item-log-#{item.id}", name: :Log, data: item.log
     - else
-      %span.muted Log
-  
+      %span.text-muted No Log
+
   %td
-    .btn-group.pull-right{:role => "group"}
-      %button.btn.btn-default.btn-xs.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
-        %span.caret
+    .btn-group.btn-group-sm.float-end{role: "group"}
+      %button.btn.btn-light.btn-sm.dropdown-toggle{type: :button, data: {bs: {toggle: :dropdown}}}
+
       %ul.dropdown-menu
-        %li= link_to "Perform", [:op, item, type: :perform], data: {turbo_method: :post, turbo_confirm: "Are you sure to perform this?"}
-        %li= link_to "Close", [:op, item, type: :close], data: {turbo_method: :post, turbo_confirm: "Are you sure to close this?"}
-        %li.divider{:role => "separator"}
-        %li= link_to "Delete", item, data: {turbo_method: :delete, turbo_confirm: "Are you sure to delete this?"}
+        %li= link_to "Perform", [:op, item, type: :perform], class: "dropdown-item", data: {turbo_method: :post, turbo_confirm: "Are you sure to perform this?"}
+        %li= link_to "Close", [:op, item, type: :close], class: "dropdown-item", data: {turbo_method: :post, turbo_confirm: "Are you sure to close this?"}
+        %li
+          %hr.dropdown-divider
+        %li= link_to "Delete", item, class: "dropdown-item", data: {turbo_method: :delete, turbo_confirm: "Are you sure to delete this?"}

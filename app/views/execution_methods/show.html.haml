@@ -1,8 +1,8 @@
 %h3 Execution Method
 
-%table.table.table-bordered.table-condensed
-  = render partial: "list_header"
-  = render partial: "item", locals: {item: @item}
+%table.table.table-bordered.table-sm
+  = render "list_header"
+  = render "item", item: @item
 
 %h3 Plans
-= render partial: "plans/list", locals: {items: @item.plans.paginate(page: params[:page])}
+= render "plans/list", items: @item.plans.paginate(page: params[:page])

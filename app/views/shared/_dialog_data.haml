@@ -1,0 +1,8 @@
+%button.btn.btn-link.p-0{type: :button, data: {bs: {target: "##{id}", toggle: :modal}}}= name
+.modal.fade{id: id, tabindex: "-1", aria: {hidden: true, labelledby: id}}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.btn-close{"aria-label" => "Close", "data-bs-dismiss" => "modal", :type => "button"}
+      .modal-body
+        %pre= data

@@ -1,16 +1,16 @@
 %tr
   %td
     = link_to "##{item.id}", item
-    .pull-right= render_enabled(item.enabled)
+    .float-end= render_enabled(item.enabled)
   %td
     %strong= item.title
   %td= item.execution_type
-  %td= render partial: "execution_methods/detail", locals: {em: item}
+  %td= render "execution_methods/detail", em: item
   %td
-    .btn-group.pull-right{:role => "group"}
-      %button.btn.btn-default.btn-xs.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
-        %span.caret
+    .btn-group.btn-group-sm.float-end{role: "group"}
+      %button.btn.btn-light.btn-sm.dropdown-toggle{"data-bs-toggle" => "dropdown", type: "button"}
       %ul.dropdown-menu
-        %li.divider{:role => "separator"}
-        %li= link_to "Edit", [:edit, item]
-        %li= link_to "Delete", item, data: {turbo_method: :delete, turbo_confirm: "Are you sure to delete ##{item.title}?"}
+        %li= link_to "Edit", [:edit, item], class: "dropdown-item"
+        %li
+          %hr.dropdown-divider
+        %li= link_to "Delete", item, data: {turbo_method: :delete, turbo_confirm: "Are you sure to delete ##{item.title}?"}, class: "dropdown-item"

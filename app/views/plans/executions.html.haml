@@ -1,4 +1,3 @@
-= render partial: "show_header"
-= render partial: "executions/search", locals: {items: @executions}
-= render partial: "executions/list", locals: {items: @executions}
-
+= render "show_header"
+= render "executions/search", items: @executions
+= render "executions/list", items: @executions
