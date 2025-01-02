@@ -3,8 +3,8 @@
 
     .mb-2
       Display as
-      .btn-group.btn-group-sm{role: "group"}
-        %button.btn.btn-light.btn-sm.dropdown-toggle{type: :button, data: {bs: {toggle: :dropdown}}}
+      .btn-group{role: "group"}
+        %button.btn.btn-light.dropdown-toggle{type: :button, data: {bs: {toggle: :dropdown}}}
           = ExecutionsController::DISPLAY_AS[@display_as]
         %ul.dropdown-menu
           - ExecutionsController::DISPLAY_AS.each do |name, title|
@@ -40,9 +40,9 @@
 
       - if @display_as == 'day'
         = link_to url_for(params.merge(begin_date: (@begin_date - 1.day).strftime("%Y-%m-%d"))), title: "-1 day" do
-          %span.glyphicon.glyphicon-arrow-left
-        = text_field_tag :begin_date, @begin_date.strftime("%Y-%m-%d"), data: {"date-format" => "yyyy-mm-dd"}, style: 'display: inline; width: 100px; margin: 0', class: "date-picker form-control", onchange: "$('form#search-executions').submit();"
+          %i.bi.bi-arrow-left
+        = text_field_tag :begin_date, @begin_date.strftime("%Y-%m-%d"), data: {"date-format" => "yyyy-mm-dd"}, style: 'display: inline; width: 110px; margin: 0', class: "date-picker form-control", onchange: "$('form#search-executions').submit();"
         = link_to url_for(params.merge(begin_date: (@begin_date + 1.day).strftime("%Y-%m-%d"))), title: "+1 day" do
-          %span.glyphicon.glyphicon-arrow-right
+          %i.bi.bi-arrow-right
         \/
         = link_to "Detail", [:executions, {begin_date: @begin_date.strftime("%Y-%m-%d"), finish_date: @begin_date.strftime("%Y-%m-%d")}]

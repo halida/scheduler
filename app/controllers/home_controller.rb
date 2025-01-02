@@ -47,7 +47,7 @@ class HomeController < ApplicationController
         'execution_verify' => 'verify_executions',
       }[params[:type]]
       @result = Scheduler::Runner.send(type, @now)
-      render "check_result"
+      render "check_result", status: :see_other
     when "report_export"
       data = Plan.all.preload(:routines).map do |plan|
         d = plan.as_json
