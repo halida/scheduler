@@ -1,8 +1,7 @@
-table.plan-list
-  tr
-    td:nth-child(2), td:nth-child(3), td:nth-child(4)
-      max-width: 240px
-      word-wrap: break-word
+a, .btn-link
+  text-decoration: none
+  &:hover
+    text-decoration: underline
 
 .execution-status
   &.status-init
@@ -17,23 +16,3 @@ table.plan-list
     color: #a00
   &.status-timeout
     color: #ea9102
-
-.breadcrumbs
-  a, .sep
-    color: #aaa
-  margin-bottom: 10px
-
-.form-block
-  max-width: 400px
-
-.label-disabled
-  background: #aaa
-
-.navbar-brand
-  img
-    display: inline-block
-    vertical-align: top
-
-footer
-  color: #aaa
-  margin: 0 0 20px

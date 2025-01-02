@@ -1,6 +1,6 @@
 .mb-2.float-start
   = form_tag url_for, method: :get do
-    = link_to "New", [:new, :application], class: 'btn btn-outline-success'
+    = link_to "New", [:new, :application], class: 'btn btn-outline-primary'
     %span.py-2
     = text_field_tag :keyword, params[:keyword], placeholder: "Title", class: "form-control", style: "display: inline; width: 200px"
     = submit_tag "Search", class: "btn btn-primary"

@@ -18,7 +18,7 @@
 
       = text_field_tag :exclude, params[:exclude], placeholder: "Plan Title", class: "form-control", style: "display: inline; width: 190px"
 
-      = submit_tag "Reload", class: 'btn btn-outline-success'
+      = submit_tag "Reload", class: 'btn btn-outline-primary'
     .mb-2
       Errors:
       - error_count = items.where(status: Execution::ERROR_STATUS).count

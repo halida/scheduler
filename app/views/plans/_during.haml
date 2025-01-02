@@ -5,4 +5,4 @@
     = link_to "This week", url_for(begin_date: Date.today.beginning_of_week.strftime("%Y-%m-%d"), finish_date: Date.today.end_of_week.strftime("%Y-%m-%d"))
     ,
     = link_to "Today", url_for(begin_date: Date.today.strftime("%Y-%m-%d"), finish_date: Date.today.strftime("%Y-%m-%d"))
-    = submit_tag "Search", class: 'btn btn-outline-success'
+    = submit_tag "Search", class: 'btn btn-outline-primary'

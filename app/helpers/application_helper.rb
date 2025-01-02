@@ -85,16 +85,19 @@ module ApplicationHelper
     sep = "<span class='sep'> / </span>"
     list = [nil]
     @breadcrumbs.each do |breadcrumb|
-      list << link_to(breadcrumb[:name], breadcrumb[:url], breadcrumb[:options])
+      options = breadcrumb[:options]
+      options[:class] ||= ""
+      options[:class] += " text-muted"
+      list << link_to(breadcrumb[:name], breadcrumb[:url], options)
     end
-    content_tag(:div, list.join(sep).html_safe, class: 'breadcrumbs mb-1 text-muted')
+    content_tag(:div, list.join(sep).html_safe, class: 'breadcrumbs mb-1')
   end
 
   def render_enabled(enabled)
     if enabled
-      content_tag(:span, "Enabled", class: "label label-success")
+      content_tag(:span, "Enabled", class: "badge text-bg-success")
     else
-      content_tag(:span, "Disabled", class: "label label-disabled")
+      content_tag(:span, "Disabled", class: "badge text-bg-muted")
     end
   end
 
