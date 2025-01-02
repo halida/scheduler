@@ -4,14 +4,34 @@ module ApplicationHelper
 
     def tab_for(tab, name, hash_or_url, item_options = {})
       html = item_options.delete(:link_html) || {}
+
       html[:class] ||= ""
-      html[:class] += " dropdown-item"
-      html[:class] += " active" if current_tab?(tab)
+      case @options[:kind]
+      when :nav
+        html[:class] += " dropdown-item"
+        html[:class] += " active" if current_tab?(tab)
+      when :tab
+        item_options[:class] ||= ""
+        item_options[:class] += " nav-item"
+        html[:class] ||= ""
+        html[:class] += " nav-link"
+        html[:class] += " active" if current_tab?(tab)
+      end
+
       content = @context.link_to(name, hash_or_url, html)
       @context.content_tag(:li, content, item_options)
     end
 
     def open_tabs(options = {})
+      options[:class] ||= ""
+
+      case @options[:kind]
+      when :nav
+        options[:class] += " dropdown-menu"
+      when :tab
+        options[:class] += " nav nav-tabs"
+      end
+
       @context.tag("ul", options, open = true)
     end
 
