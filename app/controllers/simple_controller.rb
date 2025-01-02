@@ -17,7 +17,7 @@ class SimpleController < ApplicationController
     if @item.save
       redirect_to @item, notice: "##{self.class_title}: ##{@item.id} #{@item.title} Created!"
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -28,7 +28,7 @@ class SimpleController < ApplicationController
     if @item.update(resource_params)
       redirect_to @item, notice: "##{self.class_title}: ##{@item.id} #{@item.title} Updated!"
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
