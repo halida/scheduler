@@ -5,7 +5,7 @@
     = f.input :plan_id, collection: Plan.enabled.pluck(:title, :id)
     = f.input :config
     = f.input :modify
-    = f.input :timezone
+    = f.input :timezone, collection: User.timezones.keys
     = f.input :enabled
 
     .mb-2

@@ -29,7 +29,7 @@
                 .collapse.hour-executions{class: "hour-executions-#{hour}"}
                   .p
                     .float-start
-                      = link_to e, class: "link-underline link-underline-opacity-0" do
+                      = link_to e, target: :_blank do
                         - t = e.scheduled_at ? "Scheduled" : "Started"
                         %span{class: ("text-muted" if t == 'Scheduled'), title: "#{t} at #{format_time e.time}"}= format_time(e.time).strftime("%H:%M")
                     .float-start.ms-1

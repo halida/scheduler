@@ -1,4 +1,3 @@
-TZ=/usr/share/zoneinfo/US/Central
 SET_ENV=dotenv -f .env.dev
 
 console:
