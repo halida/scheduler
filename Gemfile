@@ -53,7 +53,7 @@ end
 begin
   gem 'tabs_on_rails'
   gem 'will_paginate'
-  gem 'will_paginate-bootstrap'
+  gem 'will_paginate-bootstrap-style'
   gem 'acts_as_list'
   gem 'nestive'
 end

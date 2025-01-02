@@ -26,7 +26,9 @@ module ApplicationHelper
   end
 
   def bootstrap_will_paginate(items)
-    will_paginate(items, renderer: BootstrapPagination::Rails)
+    content_tag(:span, class: "float-end") do
+      will_paginate(items, renderer: WillPaginate::ActionView::BootstrapLinkRenderer)
+    end
   end
 
   def execution_status(e)
