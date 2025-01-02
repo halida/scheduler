@@ -4,18 +4,18 @@ class Api::OpController < ApiController
     render plain: "pong"
   end
 
-  def testing_worker
+  def testing_job
     token = \
     begin
-      Settings.op.testing_worker.token
+      Settings.op.testing_job.token
     rescue Settingslogic::MissingSetting
     end
     return render status: :forbidden unless token.present?
 
     return render status: :unauthorized if params[:token] != token
 
-    @result = TestWorker.verify
-    render json: {testing_worker: @result}
+    @result = TestJob.verify
+    render json: {testing_job: @result}
   end
 
 end

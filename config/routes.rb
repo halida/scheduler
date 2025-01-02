@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
 
   root "home#index"
-  get "/live-ping" => "home#live_ping"
   get "/check" => "home#check"
 
   get "up" => "rails/health#show", as: :rails_health_check
@@ -9,7 +8,7 @@ Rails.application.routes.draw do
   resource :home, controller: "home" do
     match :op, via: [:get, :post]
     post :notify
-    get :sidekiq
+    get :jobs
     get :info
     match :profile, via: [:get, :post]
   end
@@ -17,7 +16,7 @@ Rails.application.routes.draw do
   namespace :api do
     resource :op, controller: "op" do
       get :ping
-      get :testing_worker
+      get :testing_job
     end
     resources :applications do
       post :notify_plan

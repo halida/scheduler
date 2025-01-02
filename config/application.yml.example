@@ -25,11 +25,11 @@ development:
     authentication: "login"
     enable_starttls_auto: true
 
-  # GET http://scheduler.dev/api/op/testing_worker?token=token to see if worker is working
+  # GET http://scheduler.dev/api/op/testing_job?token=token to see if job is working
   # Leave it empty to disable checking(return 403)
   # Please don't check this very often because it will block server request
   op:
-    testing_worker:
+    testing_job:
       token: ""
 
   sentry:
@@ -51,4 +51,3 @@ development:
     host:         sso.yourdomain.com
     signoff_url:  https://sso.yourdomain.com/connect/endsession
     scope: ['openid', 'profile']
-

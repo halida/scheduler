@@ -1,5 +1,4 @@
 class HomeController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:live_ping]
 
   CONTROLS = {
     execution: {
@@ -14,7 +13,7 @@ class HomeController < ApplicationController
     testing: {
       send_email: "Testing if email will send correctly",
       error: "Testing if error will get reported",
-      worker: "Testing background worker is running",
+      job: "Testing background job is running",
     },
   }
 
@@ -25,17 +24,13 @@ class HomeController < ApplicationController
     @executions = self.search_executions(Execution.all).preload(plan: :application)
   end
 
-  def live_ping
-    render plain: "ok"
-  end
-
   def check
     case params[:kind]
     when 'error'
       raise "check error"
-    when 'worker_error'
-      TestWorker.perform_async('error')
-      render json: {status: "queue worker error"}
+    when 'job_error'
+      TestJob.perform_later('error')
+      render json: {status: "queue job error"}
     else
       render json: {status: "ok"}
     end
@@ -67,14 +62,10 @@ class HomeController < ApplicationController
     when "testing_send_email"
       UserMailer.test_email(current_user).deliver_now
       redirect_to :root, notice: "Email sent."
-    when "testing_worker"
-      @result = TestWorker.verify
-      redirect_to :root, notice: (@result ? 'validate_worker_ok' : 'validate_worker_failed')
+    when "testing_job"
+      @result = TestJob.verify
+      redirect_to :root, notice: (@result ? 'validate_job_ok' : 'validate_job_failed')
     end
-  end
-
-  def sidekiq
-    set_tab :sidekiq, :nav
   end
 
   def info
@@ -101,6 +92,9 @@ class HomeController < ApplicationController
         }
       },
     }
+  end
+
+  def jobs
   end
 
   def profile
