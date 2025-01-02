@@ -5,8 +5,8 @@
       %th{style: 'width: 100%'}
         Executions
         .float-end
-          %a.cursor-pointer{onclick: "toggle_list_by_day();"}
-            Toggle Detail
+          %button.btn.btn-sm.btn-light{type: :button, data: {bs: {toggle: :collapse, target: ".hour-executions"}}}
+            All Detail
 
     - (0..23).each do |hour|
       - hour_executions = items.select{|e| e.time.in_time_zone(current_user.timezone).hour == hour}.sort_by(&:time)
@@ -20,24 +20,21 @@
             = hour
           %td
             .hour-executions-header{id: "hour-executions-header-#{hour}"}
-              %a.float-end.muted.cursor-pointer{onclick: "toggle_list_by_day(#{hour});"} Detail
-              - hour_executions.each do |e|
-                %a.cursor-pointer{onclick: "toggle_list_by_day(#{hour});"}
-                  %span.glyphicon.glyphicon-cog.execution-status{class: "status-#{e.status}", title: e.plan.title }
+              %button.btn.btn-sm.btn-light.text-muted.float-end{type: :button, data: {bs: {toggle: :collapse, target: ".hour-executions-#{hour}"}}} Detail
 
-            .collapse.hour-executions{id: "hour-executions-#{hour}"}
-              %a.float-end.muted.cursor-pointer{onclick: "toggle_list_by_day(#{hour});"} Hide
-              %ul.list-unstyled
-                - hour_executions.each do |e|
-                  %li
+              - hour_executions.each do |e|
+                %button.btn.btn-sm.btn-link.float-start.p-0.me-1{type: :button, data: {bs: {toggle: :collapse, target: ".hour-executions-#{hour}"}}}
+                  %i.bi.bi-gear.execution-status{class: "status-#{e.status}", title: e.plan.title }
+
+                .collapse.hour-executions{class: "hour-executions-#{hour}"}
+                  .p
                     .float-start
-                      %span.glyphicon.glyphicon-cog.execution-status{class: "status-#{e.status}", title: e.status }
-                      = link_to e do
+                      = link_to e, class: "link-underline link-underline-opacity-0" do
                         - t = e.scheduled_at ? "Scheduled" : "Started"
-                        %span{class: ("muted" if t == 'Scheduled'), title: "#{t} at #{format_time e.time}"}= format_time(e.time).strftime("%H:%M")
-                    .float-start{style: "margin-left: 10px"}
+                        %span{class: ("text-muted" if t == 'Scheduled'), title: "#{t} at #{format_time e.time}"}= format_time(e.time).strftime("%H:%M")
+                    .float-start.ms-1
                       .p
-                        %span.muted= e.plan.application.name if e.plan.application_id
+                        %span.text-muted= e.plan.application.name if e.plan.application_id
                         = e.plan.title
-                      .p.muted= simple_format e.plan.description
+                      .p.text-muted= simple_format e.plan.description
                     .clearfix

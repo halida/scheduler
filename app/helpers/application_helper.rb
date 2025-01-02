@@ -85,7 +85,7 @@ module ApplicationHelper
     @breadcrumbs.each do |breadcrumb|
       list << link_to(breadcrumb[:name], breadcrumb[:url], breadcrumb[:options])
     end
-    content_tag(:div, list.join(sep).html_safe, class: 'breadcrumbs mb-1')
+    content_tag(:div, list.join(sep).html_safe, class: 'breadcrumbs mb-1 text-muted')
   end
 
   def render_enabled(enabled)
