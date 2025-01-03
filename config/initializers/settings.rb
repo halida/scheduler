@@ -12,7 +12,19 @@ class Settings < Settingslogic
   namespace ENV['RAILS_ENV'] || 'development'
 end
 
-Rails.application.config.hosts << Settings.host
+config = Rails.application.config
+config.hosts << Settings.host
+config.action_mailer.default_url_options = \
+{ host: Settings.host, protocol: Settings.protocol }
+
+if smtp_config = Settings[:smtp_settings]
+  config.action_mailer.smtp_settings = smtp_config.symbolize_keys
+  # can disable email delivery in config, like:
+  #   send_email: false
+  if smtp_config[:send_email]
+    config.action_mailer.perform_deliveries = smtp_config[:send_email]
+  end
+end
 
 
 if Settings[:sentry] and setry_config = Settings.sentry

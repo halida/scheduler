@@ -1,7 +1,7 @@
 class UserMailer < ApplicationMailer
   helper ApplicationHelper
 
-  def test_email(user)
+  def test(user)
     mail(to: user.email, subject: "scheduler test email") do |format|
       format.html { render }
     end
