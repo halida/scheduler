@@ -6,8 +6,14 @@ dev:
 	$(SET_ENV) bin/dev
 server:
 	$(SET_ENV) bin/rails s -p 3010
+
 jobs:
 	$(SET_ENV) bin/jobs start
+
+# job=DailyReportJob make enqueue
+enqueue:
+	$(SET_ENV) bin/rake jobs:enqueue
+
 
 test_prepare:
 	RAILS_ENV=test $(SET_ENV) bin/rake db:migrate

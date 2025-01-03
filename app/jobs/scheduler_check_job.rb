@@ -1,4 +1,4 @@
-class SchedulerCheckJob
+class SchedulerCheckJob < ApplicationJob
   queue_as :default
 
   def perform
