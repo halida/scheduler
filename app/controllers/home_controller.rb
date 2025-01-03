@@ -16,12 +16,14 @@ class HomeController < ApplicationController
     when 'report_export'
       render json: JSON.pretty_generate(@result), status: :see_other
     else
-      redirect_to :root, notice: @result[:msg], status: :see_other
+      redirect_to [:controls, :home], notice: @result[:msg], status: :see_other
     end
   end
 
   def info
     @info = Scheduler::Info.get
+  end
+  def controls
   end
 
   def jobs

@@ -6,4 +6,8 @@
     - h.each do |k, v|
       %tr
         %td= k
-        %td= v
+        %td
+          - if v.kind_of?(Hash)
+            %pre= JSON.pretty_generate(v)
+          - else
+            = v

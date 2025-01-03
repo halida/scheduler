@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   root "home#index"
   resource :home, controller: "home" do
     match :op, via: [:get, :post]
-    get :info, :jobs
+    get :info, :controls, :jobs
     match :profile, via: [:get, :post]
   end
 

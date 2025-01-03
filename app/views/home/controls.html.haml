@@ -1,0 +1,13 @@
+%h1 Controls
+
+.row
+  .col-md-8
+    %table.table.table-bordered.table-sm
+      %tr
+        %th{colspan: 2} Controls
+      - Scheduler::Controls::KINDS.each do |category, items|
+        %tr
+          %th= category.to_s.humanize
+          %td
+            - items.each do |name, desc|
+              = link_to name.to_s.humanize, [:op, :home, type: "#{category}_#{name}"], title: desc, data: {turbo_method: :post, turbo_confirm: "Run #{category.to_s.humanize} #{name.to_s.humanize}? #{desc}"}, class: 'btn btn-outline-primary mb-1'

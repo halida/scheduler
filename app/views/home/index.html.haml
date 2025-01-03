@@ -13,12 +13,3 @@
       %tr
         %td= format_time Scheduler::Lib.read_cache(:checked_at)
         %td= format_time Scheduler::Lib.read_cache(:expired_create_executions)
-    %table.table.table-bordered.table-sm
-      %tr
-        %th{colspan: 2} Controls
-      - Scheduler::Controls::KINDS.each do |category, items|
-        %tr
-          %th= category.to_s.humanize
-          %td
-            - items.each do |name, desc|
-              = link_to name.to_s.humanize, [:op, :home, type: "#{category}_#{name}"], title: desc, data: {turbo_method: :post, turbo_confirm: "Run #{category.to_s.humanize} #{name.to_s.humanize}? #{desc}"}, class: 'btn btn-outline-primary mb-1'
