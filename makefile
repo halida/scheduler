@@ -14,6 +14,8 @@ jobs:
 enqueue:
 	$(SET_ENV) bin/rake jobs:enqueue
 
+whenever:
+	whenever
 
 test_prepare:
 	RAILS_ENV=test $(SET_ENV) bin/rake db:migrate

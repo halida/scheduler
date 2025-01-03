@@ -1,8 +1,8 @@
-job_type :sidekiq,  'cd :path && RAILS_ENV=:environment bundle exec sidekiq-client push :task :output'
+job_type :enqueue, "bin/rake job=:task jobs:enqueue"
 
 every 1.minutes do
-  sidekiq "SchedulerCheckWorker"
+  enqueue "SchedulerCheckJob"
 end
 every "2 * * * *" do
-  sidekiq "DailyReportWorker"
+  enqueue "DailyReportJob"
 end
