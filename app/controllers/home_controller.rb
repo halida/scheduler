@@ -21,8 +21,9 @@ class HomeController < ApplicationController
   end
 
   def info
-    @info = Scheduler::Info.get
+    @info = Scheduler::Info.get(current_user)
   end
+
   def controls
   end
 

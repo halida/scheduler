@@ -1,7 +1,7 @@
 class Scheduler::Info
   class << self
 
-    def get
+    def get(user)
       {environment: {
          rails: Rails.env,
        },
@@ -19,8 +19,8 @@ class Scheduler::Info
            zone: Time.zone.to_s,
          },
          user: {
-           time: Time.now.in_time_zone(current_user.timezone),
-           zone: current_user.timezone,
+           time: Time.now.in_time_zone(user.timezone),
+           zone: user.timezone,
          }
        },
       }
