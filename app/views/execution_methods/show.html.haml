@@ -4,5 +4,5 @@
   = render "list_header"
   = render "item", item: @item
 
-%h3 Plans
+%h4 Plans
 = render "plans/list", items: @item.plans.paginate(page: params[:page])

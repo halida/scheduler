@@ -1,15 +1,11 @@
 Rails.application.routes.draw do
 
-  root "home#index"
-  get "/check" => "home#check"
-
   get "up" => "rails/health#show", as: :rails_health_check
 
+  root "home#index"
   resource :home, controller: "home" do
     match :op, via: [:get, :post]
-    post :notify
-    get :jobs
-    get :info
+    get :info, :jobs
     match :profile, via: [:get, :post]
   end
 
@@ -36,8 +32,7 @@ Rails.application.routes.draw do
     match :sign_off,  via: [:get, :delete], action: :destroy,  as: :destroy_user_session
   end
 
-  resources :applications do
-  end
+  resources :applications
 
   resources :plans do
     member do

@@ -1,22 +1,5 @@
 class HomeController < ApplicationController
 
-  CONTROLS = {
-    execution: {
-      check: "Similar with background routine check",
-      run: "Only run current executions",
-      expand: "Only expand execution by current plan routine",
-      verify: "Only verify running executions",
-    },
-    report: {
-      export: "Export configuration as json file",
-    },
-    testing: {
-      send_email: "Testing if email will send correctly",
-      error: "Testing if error will get reported",
-      job: "Testing background job is running",
-    },
-  }
-
   def index
     set_tab :dashboard, :nav
     self.check_during([Date.today, Date.today])
@@ -24,74 +7,21 @@ class HomeController < ApplicationController
     @executions = self.search_executions(Execution.all).preload(plan: :application)
   end
 
-  def check
-    case params[:kind]
-    when 'error'
-      raise "check error"
-    when 'job_error'
-      TestJob.perform_later('error')
-      render json: {status: "queue job error"}
-    else
-      render json: {status: "ok"}
-    end
-  end
-
   def op
-    case params[:type]
+    @type = params[:type]
+    @result = Scheduler::Controls.run(@type, user: current_user)
+    case @type
     when 'execution_check', 'execution_run', 'execution_expand', 'execution_verify'
-      @now = Time.now
-      type = {
-        'execution_check' => 'check',
-        'execution_run' => 'run_executions',
-        'execution_expand' => 'expand_executions',
-        'execution_verify' => 'verify_executions',
-      }[params[:type]]
-      @result = Scheduler::Runner.send(type, @now)
       render "check_result", status: :see_other
-    when "report_export"
-      data = Plan.all.preload(:routines).map do |plan|
-        d = plan.as_json
-        d.delete('execution_method_id')
-        d[:execution_method] = plan.execution_method.as_json
-        d[:routines] = plan.routines.map(&:as_json)
-        d
-      end
-      render json: JSON.pretty_generate(data)
-    when "testing_error"
-      raise "test raising error"
-    when "testing_send_email"
-      UserMailer.test_email(current_user).deliver_now
-      redirect_to :root, notice: "Email sent."
-    when "testing_job"
-      @result = TestJob.verify
-      redirect_to :root, notice: (@result ? 'validate_job_ok' : 'validate_job_failed')
+    when 'report_export'
+      render json: JSON.pretty_generate(@result), status: :see_other
+    else
+      redirect_to :root, notice: @result[:msg], status: :see_other
     end
   end
 
   def info
-    @info = {
-      environment: {
-        rails: Rails.env,
-      },
-      version: {
-        ruby: RUBY_VERSION,
-        rails: Rails::VERSION::STRING,
-      },
-      time: {
-        system: {
-          time: Time.now.to_s,
-          zone: Time.now.zone,
-        },
-        rails: {
-          time: Time.zone.now,
-          zone: Time.zone.to_s,
-        },
-        user: {
-          time: Time.now.in_time_zone(current_user.timezone),
-          zone: current_user.timezone,
-        }
-      },
-    }
+    @info = Scheduler::Info.get
   end
 
   def jobs
