@@ -1,4 +1,4 @@
-class Execution < ActiveRecord::Base
+class Execution < ApplicationRecord
   include Reportable
 
   enum :status, (Reportable::STATUSES + [:calling, :timeout]).map(&:to_s).index_by(&:itself)

@@ -1,4 +1,4 @@
-class Routine < ActiveRecord::Base
+class Routine < ApplicationRecord
   include HasEnabled
 
   belongs_to :plan

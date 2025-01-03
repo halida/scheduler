@@ -1,4 +1,4 @@
-class ExecutionMethod < ActiveRecord::Base
+class ExecutionMethod < ApplicationRecord
   include HasParameters
   include HasEnabled
 
