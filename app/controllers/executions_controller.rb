@@ -1,11 +1,6 @@
 class ExecutionsController < SimpleController
   set_tab :executions, :nav
 
-  DISPLAY_AS = {
-    'list' => "List",
-    'day' => "One day",
-  }
-
   def index
     self.check_during([Date.today - 1.day, Date.today + 4.day])
     @items = self.search_executions(@items)

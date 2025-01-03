@@ -1,6 +1,10 @@
 class ExecutionMethodsController < SimpleController
   set_tab :execution_methods, :nav
 
+  def show
+    @items = Scheduler::Searcher.plans(@item.plans, params)
+  end
+
   private
 
   def resource_params

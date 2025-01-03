@@ -11,33 +11,22 @@ class ApplicationController < ActionController::Base
   def check_during(default)
     default.map!{|v| v.in_time_zone(current_user.timezone)}
 
-    tz = ActiveSupport::TimeZone.new(current_user.timezone.presence || Scheduler::Lib::TIMEZONES.first.to_s)
-    @begin_date = (params[:begin_date].present? and (tz.strptime(params[:begin_date], "%Y-%m-%d") rescue nil)) || default[0]
-    @finish_date = (params[:finish_date].present? and (tz.strptime(params[:finish_date], "%Y-%m-%d") rescue nil)) || default[1]
+    tz_string = current_user.timezone.presence || Scheduler::Lib::TIMEZONES.first.to_s
+    tz = ActiveSupport::TimeZone.new(tz_string)
+
+    @begin_date = (params[:begin_date].present? and
+                   (tz.strptime(params[:begin_date], "%Y-%m-%d") rescue nil)
+                  ) || default[0]
+    @finish_date = (params[:finish_date].present? and
+                    (tz.strptime(params[:finish_date], "%Y-%m-%d") rescue nil)
+                   ) || default[1]
   end
 
   def search_executions(executions)
     @during = (params[:during] != '0')
-    @display_as = ExecutionsController::DISPLAY_AS.keys.include?(params[:display_as]) ? params[:display_as] : 'list'
-    case @display_as
-    when 'list'
-      executions = executions.during(@begin_date, @finish_date+1.day) if @during
-      executions = executions.paginate(page: params[:page])
-    when 'day'
-      executions = executions.during(@begin_date, @begin_date+1.day)
-    end
-
-    if params[:exclude]
-      executions = executions.joins(:plan)
-      params[:exclude].split(",").each do |e|
-        executions = executions.where.not("plans.title like ?", "%#{e}%")
-      end
-    end
-    executions = executions.joins(:plan).where("plans.title like ?", "%#{params[:keyword]}%") if params[:keyword]
-
-    executions.preload(:plan, :routine).
-      where_if(params[:status].present?, status: params[:status]).
-      order(scheduled_at: :asc)
+    s = Scheduler::Searcher
+    @display_as = s.execution_display_as(params[:display_as])
+    s.executions(executions, @display_as, @begin_date, @finish_date, @during, params)
   end
 
   def add_breadcrumb(name, url, options={})

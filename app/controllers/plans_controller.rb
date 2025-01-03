@@ -2,11 +2,7 @@ class PlansController < SimpleController
   set_tab :plans, :nav
 
   def index
-    @items = @items.where("title like ?", "%#{params[:keyword]}%") if params[:keyword].present?
-    @items = \
-    @items.
-      preload(:execution_method, :routines, :application).
-      paginate(page: params[:page])
+    @items = Scheduler::Searcher.plans(@items, params)
   end
 
   def show

@@ -5,9 +5,9 @@
       Display as
       .btn-group{role: "group"}
         %button.btn.btn-light.dropdown-toggle{type: :button, data: {bs: {toggle: :dropdown}}}
-          = ExecutionsController::DISPLAY_AS[@display_as]
+          = Scheduler::Searcher::EXECUTION_DISPLAY_AS[@display_as]
         %ul.dropdown-menu
-          - ExecutionsController::DISPLAY_AS.each do |name, title|
+          - Scheduler::Searcher::EXECUTION_DISPLAY_AS.each do |name, title|
             - next if name == @display_as
             %li= link_to title, url_for(params.permit!.merge(display_as: name)), class: "dropdown-item"
 
