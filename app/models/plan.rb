@@ -1,13 +1,13 @@
 class Plan < ActiveRecord::Base
   include HasParameters
   include HasEnabled
+  include HasToken
 
   belongs_to :application, optional: true
   belongs_to :execution_method
   has_many :routines, dependent: :destroy
   has_many :executions, dependent: :destroy
 
-  after_create :assign_token
   after_save :update_executions
 
   def update_executions
@@ -15,7 +15,4 @@ class Plan < ActiveRecord::Base
     self.executions.where(status: :init).delete_all
   end
 
-  def assign_token
-    update!(token: Scheduler::Lib.get_token)
-  end
 end

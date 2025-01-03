@@ -1,14 +1,8 @@
 class Application < ApplicationRecord
+  include HasToken
 
   has_many :plans
 
-  after_create :assign_token
+  alias_attribute :title, :name
 
-  def title
-    name
-  end
-
-  def assign_token
-    update!(token: Scheduler::Lib.get_token)
-  end
 end

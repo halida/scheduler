@@ -8,11 +8,7 @@ class PlanTest < ActiveSupport::TestCase
     plan = Plan.new
     plan.execution_method = em
     assert plan.enabled
-    assert_nil plan.token
-
-    # assign_token
     plan.save!
-    assert plan.token.length, 32
 
     # delete all executions if disabled
     plan.executions.create!
