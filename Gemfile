@@ -85,8 +85,8 @@ begin
   # fix ruby 3.1: https://github.com/settingslogic/settingslogic/pull/23
   gem "settingslogic", git: "https://github.com/brlo/settingslogic.git"
 
-  # todo
-  # gem "rest-client"
+  # for SchedulerApi
+  gem "rest-client", require: false
 
   # gem 'sentry-raven'
 
