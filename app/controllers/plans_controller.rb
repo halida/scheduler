@@ -22,12 +22,15 @@ class PlansController < SimpleController
       e = @item.executions.create!
       e.perform
       redirect_to e, notice: "Executing: ##{e.id}."
+
     when "expand"
-      Scheduler::Lib.plan_expand_executions(@item, Time.now)
+      @item.workflow.expand_executions(Time.now)
       redirect_to @item, notice: "Expanded."
+
     when "assign_token"
       @item.assign_token
       redirect_to @item, notice: "Token assigned."
+
     when "delete_future_executions"
       @item.executions.scheduled_after(Time.now).where(status: :init).delete_all
       redirect_to @item, notice: "Deleted."

@@ -18,35 +18,6 @@ class Scheduler::Lib
       Cronex::ExpressionDescriptor.new(schedule).description
     end
 
-    def routine_expand_executions(routine, now)
-      last = routine.executions.order(scheduled_at: :desc).first.try(:scheduled_at) || now
-      last = now if last < now
-
-      # create next 2 week execution when near 1 week
-      return if last > now + 7.days
-      to = [last, now].max + 14.days
-
-      status = routine.plan.review_only ? :succeeded : :init
-      schedules = self.routine_get_schedules_during(routine, last, to)
-      schedules.map do |schedule|
-        routine.executions.find_or_create_by!(
-          plan_id: routine.plan.id,
-          scheduled_at: schedule,
-          status: status,
-        )
-      end
-    end
-
-    def plan_expand_executions(plan, now)
-      plan.routines.where(enabled: true).map do |routine|
-        self.routine_expand_executions(routine, now)
-      end.flatten
-    end
-
-    def routine_get_schedules_during(routine, from, to)
-      self.get_schedules_during(routine.config, routine.timezone, from, to, modify: routine.modify)
-    end
-
     def get_schedules_during(schedule, timezone, from, to, opt={})
       cron_parser = self.parse_schedule(schedule)
       out = []
@@ -136,7 +107,7 @@ class Scheduler::Lib
         config: cfg, timezone: tz, modify: -120,
       )
       plan.reload
-      Scheduler::Lib.plan_expand_executions(plan, Time.now)
+      plan.workflow.expand_executions(Time.now)
     end
 
     def create_item(klass, keys, parameters)
