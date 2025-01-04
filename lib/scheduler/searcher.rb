@@ -48,9 +48,12 @@ class Scheduler::Searcher
         items = items.joins(:plan).where("plans.title like ?", "%#{params[:keyword]}%")
       end
 
-      items.preload(:plan, :routine).
-        where_if(params[:status].present?, status: params[:status]).
-        order(scheduled_at: :asc)
+      if status = params[:status].presence and
+        status = status.select(&:present?).presence
+        items = items.where(status: status)
+      end
+
+      items.preload(:plan, :routine).order(scheduled_at: :asc)
     end
 
   end

@@ -3,7 +3,7 @@
     = form_errors(f)
 
     = f.input :plan_id, collection: Plan.enabled.pluck(:title, :id)
-    = f.input :config
+    = f.input :config, hint: link_to("Document", "https://devhints.io/cron", target: :_blank)
     = f.input :modify
     = f.input :timezone, collection: User.timezones.keys
     = f.input :enabled

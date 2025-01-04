@@ -1,4 +1,4 @@
-.mb-2.float-start
+.mb-2
   = form_for url_for, method: :get, html: {id: "search-executions"} do |f|
 
     .mb-2
@@ -12,26 +12,29 @@
             %li= link_to title, url_for(params.permit!.merge(display_as: name)), class: "dropdown-item"
 
       Search
-      = text_field_tag :keyword, params[:keyword], placeholder: "Plan Title", class: "form-control", style: "display: inline; width: 190px"
+      = text_field_tag :keyword, params[:keyword], placeholder: "Plan Title", class: "form-control", style: "display: inline; width: 130px"
       Exclude
       %icon.glyphicon.glyphicon-question-sign.cursor-pointer{title: "Seperate by ','"}
 
-      = text_field_tag :exclude, params[:exclude], placeholder: "Plan Title", class: "form-control", style: "display: inline; width: 190px"
-
+      = text_field_tag :exclude, params[:exclude], placeholder: "Plan Title", class: "form-control", style: "display: inline; width: 130px"
+      %button.btn.btn-light.text-muted.ms-1{type: :button, data: {bs: {toggle: :collapse, target: ".search-more"}}} More
       = submit_tag "Reload", class: 'btn btn-outline-primary'
-    .mb-2
-      Errors:
+
+
+    - search_more = (params[:status] || []).any?(&:present?)
+    .search-more.mb-2.collapse{class: ("show" if search_more)}
+      = link_to "Errors:", url_for(status: Execution::ERROR_STATUS)
       - error_count = items.where(status: Execution::ERROR_STATUS).count
-      = link_to (error_count > 0 ? error_count : "None"), url_for(status: Execution::ERROR_STATUS), style: 'margin-right: 10px', class: ('btn btn-danger' if error_count > 0)
+      %span.me-1{class: ('text-danger' if error_count > 0)}= (error_count > 0 ? error_count : "None")
 
       %span Status
-      = select_tag :status, options_for_select(Execution.statuses.keys - ['init'], params[:status]), include_blank: true, style: "width: 440px; margin: 0; vertical-align: top", multiple: true, class: "select2"
-      = link_to "Exclude Init", url_for(params.permit!.merge(status: (params[:status] || Execution.statuses.keys) - ['init']))
+      = select_tag :status, options_for_select(Execution.statuses.keys, params[:status]), include_blank: true, style: "width: 440px; margin: 0; vertical-align: top", multiple: true
+      = link_to "Exclude Init", url_for(params.permit!.merge(status: (params[:status].presence || Execution.statuses.keys) - ['init']))
 
     .mb-2
       - if @display_as == 'list'
-        = select_tag :during, options_for_select([['During', '1'], ['All', '0']], (@during ? '1' : '0')), class: 'form-control', style: "width: 100px; display: inline", onchange: "$('#during-block').toggle()"
-        %span#during-block{class: ("collapse" unless @during)}
+        = select_tag :during, options_for_select([['During', '1'], ['All', '0']], (@during ? '1' : '0')), class: 'form-control', style: "width: 100px; display: inline", onchange: "$('#during-block').collapse('toggle')"
+        %span#during-block.collapse{class: ("show" if @during)}
           = render "shared/during"
           Or
           = link_to "Today", url_for(begin_date: Date.today.strftime("%Y-%m-%d"), finish_date: Date.today.strftime("%Y-%m-%d"))
