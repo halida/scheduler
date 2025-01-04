@@ -1,4 +1,4 @@
-class DirectBill::Workflow::Base
+class Scheduler::Workflow::Base
 
   def initialize(item)
     @item = item

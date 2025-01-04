@@ -3,7 +3,7 @@
   %td
     .p= link_to item.plan.title, item.plan
     - if item.routine
-      .text-muted= Scheduler::Lib.schedule_description(item.routine.config)
+      .text-muted= Scheduler::Schedule.description(item.routine.config)
   %td= format_time item.scheduled_at
   %td
     - if item.timeout_at

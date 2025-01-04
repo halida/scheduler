@@ -12,7 +12,7 @@ class Scheduler::Workflow::Application < Scheduler::Workflow::Base
     return {status: :error, message: "no current execution"} unless @execution
 
     @execution.close(params[:status], params[:result])
-    render {status: :succeeded, id: @item.id, plan_id: @plan.id,
+    return {status: :succeeded, id: @item.id, plan_id: @plan.id,
             execution_id: @execution.id}
   end
 

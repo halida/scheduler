@@ -31,7 +31,7 @@
           = routine.timezone
           %span{title: routine.config}
             = link_to [:edit, routine] do
-              = Scheduler::Lib.schedule_description(routine.config)
+              = Scheduler::Schedule.description(routine.config)
               - if routine.modify != 0
                 #{routine.modify} seconds
           .float-end

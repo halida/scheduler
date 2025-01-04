@@ -6,6 +6,6 @@ module HasToken
   end
 
   def assign_token
-    update!(token: Scheduler::Lib.get_token)
+    update!(token: Scheduler::Lib.get_token) if token.blank?
   end
 end

@@ -1,6 +1,5 @@
-require 'ostruct'
-
 class Scheduler::Lib
+
   TIMEZONES = [
     :"UTC",
     :"Etc/GMT-6",
@@ -9,63 +8,6 @@ class Scheduler::Lib
   ]
 
   class << self
-
-    def parse_schedule(schedule)
-      CronParser.new(schedule)
-    end
-
-    def schedule_description(schedule)
-      Cronex::ExpressionDescriptor.new(schedule).description
-    end
-
-    def get_schedules_during(schedule, timezone, from, to, opt={})
-      cron_parser = self.parse_schedule(schedule)
-      out = []
-      next_t = from
-
-      tz = ActiveSupport::TimeZone.new(timezone)
-      # convert time to timezone format
-      next_t = tz.at(next_t)
-      next_t -= opt[:modify].seconds if opt[:modify]
-
-      ts = "%Y-%m-%d %H:%M:%S"
-      # limit max count
-      (1..1000).each do |i|
-        # cron don't care about timezone
-        next_t = cron_parser.next(next_t)
-        # force convert timezone by value
-        next_t = tz.strptime(next_t.strftime(ts), ts)
-
-        break if next_t > to
-        out_t = next_t
-        out_t += opt[:modify].seconds if opt[:modify]
-        out << out_t
-      end
-      out
-    end
-
-    def get_schedules_with_execution_during(plan, from, to)
-      executions = plan.executions.during(from, to)
-      schedules = \
-      plan.routines.map do |routine|
-        self.routine_get_schedules_during(routine, from, to)
-      end.flatten.sort
-      self.put_executions_to_schedules_gap(executions, schedules)
-    end
-
-    def put_executions_to_schedules_gap(executions, schedules)
-      out = []
-      schedules.each_with_index do |s, i|
-        s_next = schedules[i+1]
-        es = executions.select do |e|
-          t = e.scheduled_at || e.started_at
-          ((!s or t >= s) and
-           (!s_next or t < s_next))
-        end
-        out << OpenStruct.new(at: s, executions: es)
-      end
-      out
-    end
 
     def get_token
       SecureRandom.uuid.gsub("-", "")
@@ -80,14 +22,14 @@ class Scheduler::Lib
       Marshal.load(blob) rescue nil
     end
 
-    def import(name, list)
+    def import(name, tz, list)
       app = Application.find_by(name: name)
 
       exists = app.plans.where(title: list.map(&:last)).pluck(:title)
       missing = list.reject{|cfg, script| exists.include?(script)}
 
       missing.each do |cfg, plan_name|
-        create_plan(name, 'Central Time (US & Canada)', plan_name, cfg)
+        create_plan(name, tz, plan_name, cfg)
       end
     end
 
@@ -108,6 +50,7 @@ class Scheduler::Lib
       )
       plan.reload
       plan.workflow.expand_executions(Time.now)
+      plan
     end
 
     def create_item(klass, keys, parameters)

@@ -12,7 +12,7 @@ class Scheduler::Workflow::Routine < Scheduler::Workflow::Base
     schedules = self.get_schedules_during(last, to)
     schedules.map do |schedule|
       @item.executions.find_or_create_by!(
-        plan_id: routine.plan.id,
+        plan_id: @item.plan_id,
         scheduled_at: schedule,
         status: status,
       )
@@ -20,7 +20,7 @@ class Scheduler::Workflow::Routine < Scheduler::Workflow::Base
   end
 
   def get_schedules_during(from, to)
-    Scheduler::Lib.get_schedules_during(
+    Scheduler::Schedule.during(
       @item.config, @item.timezone, from, to, modify: @item.modify)
   end
 

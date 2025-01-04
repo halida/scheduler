@@ -1,6 +1,6 @@
 .p= render "during"
 
-- schedules = Scheduler::Lib.get_schedules_with_execution_during(@item, @begin_date, @finish_date+1.day)
+- schedules = @item.workflow.get_schedules_with_execution_during(@begin_date, @finish_date+1.day)
 %table.table.table-bordered.table-sm
   %tr
     %th Scheduled Time

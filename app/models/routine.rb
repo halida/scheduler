@@ -11,7 +11,7 @@ class Routine < ApplicationRecord
   after_save :update_executions
 
   def title
-    Scheduler::Lib.schedule_description(self.config)
+    Scheduler::Schedule.description(self.config)
   end
 
   def update_executions
@@ -24,7 +24,7 @@ class Routine < ApplicationRecord
 
   def validate_data
     if self.config.present?
-      parser = Scheduler::Lib.parse_schedule(self.config) rescue nil
+      parser = Scheduler::Schedule.parse(self.config) rescue nil
       unless parser
         errors.add :config, "is not valid."
         return
