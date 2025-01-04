@@ -23,7 +23,7 @@ class Scheduler::Runner
 
     def expand_executions(now)
       Plan.enabled.map do |plan|
-        Scheduler::Lib.plan_expand_executions(plan, now)
+        plan.workflow.expand_executions(now)
       end.flatten.compact.sort_by(&:scheduled_at)
     end
 

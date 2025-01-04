@@ -15,7 +15,7 @@ class SimpleController < ApplicationController
 
   def create
     if @item.save
-      redirect_to @item, notice: "##{self.class_title}: ##{@item.id} #{@item.title} Created!"
+      redirect_to @item, notice: "#{self.class_title} ##{@item.id} #{@item.title} Created!"
     else
       render :edit, status: :unprocessable_entity
     end
@@ -26,7 +26,7 @@ class SimpleController < ApplicationController
 
   def update
     if @item.update(resource_params)
-      redirect_to @item, notice: "##{self.class_title}: ##{@item.id} #{@item.title} Updated!"
+      redirect_to @item, notice: "#{self.class_title} ##{@item.id} #{@item.title} Updated!"
     else
       render :edit, status: :unprocessable_entity
     end
@@ -34,17 +34,17 @@ class SimpleController < ApplicationController
 
   def destroy
     @item.destroy
-    redirect_to self.after_deploy_path, notice: "##{self.class_title}: ##{@item.id} #{@item.title} Deleted!"
+    redirect_to self.after_deploy_path, notice: "#{self.class_title} ##{@item.id} #{@item.title} Deleted!"
   end
 
   protected
 
   def after_deploy_path
-    [self.controller_name]
+    [self.controller_name.to_sym]
   end
 
   def class_title
-    self.controller_name.humanize.titleize
+    self.controller_name.singularize.humanize.titleize
   end
 
   def set_breadcrumbs
