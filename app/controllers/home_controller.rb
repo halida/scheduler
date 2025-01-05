@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
+  before_action :set_breadcrumbs
 
   def index
     set_tab :dashboard, :nav
@@ -40,6 +41,12 @@ class HomeController < ApplicationController
       flash[:notice] = "Updated."
       redirect_to profile_home_path, status: :see_other
     end
+  end
+
+  protected
+
+  def set_breadcrumbs
+    add_breadcrumb self.action_name, self.url_for
   end
 
 end
