@@ -25,6 +25,9 @@ class Scheduler::Controls
       job_error: "Test background job raise error"
     },
   }
+  KIND_LIST = KINDS.map do |category, h|
+    h.keys.map{ |n| [category, n].map(&:to_s).join("_") }
+  end.flatten
 
   EXECUTION_TYPES = {
     'execution_check' => 'check',
@@ -47,7 +50,11 @@ class Scheduler::Controls
         {msg: "Job: #{name} enqueued"}
 
       else
-        self.send(type, opt)
+        if KIND_LIST.include?(type)
+          self.send(type, opt)
+        else
+          {msg: "Uknown type: #{type}"}
+        end
       end
     end
 

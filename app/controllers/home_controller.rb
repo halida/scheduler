@@ -8,7 +8,13 @@ class HomeController < ApplicationController
     @executions = self.search_executions(Execution.all).preload(plan: :application)
   end
 
-  def op
+  def info
+    @info = Scheduler::Info.get(current_user)
+  end
+
+  def controls
+    return if request.get?
+
     @type = params[:type]
     @result = Scheduler::Controls.run(@type, user: current_user)
     case @type
@@ -19,13 +25,6 @@ class HomeController < ApplicationController
     else
       redirect_to [:controls, :home], notice: @result[:msg], status: :see_other
     end
-  end
-
-  def info
-    @info = Scheduler::Info.get(current_user)
-  end
-
-  def controls
   end
 
   def jobs
