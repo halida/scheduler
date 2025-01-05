@@ -17,6 +17,12 @@ enqueue:
 whenever:
 	whenever
 
+
+.ONESHELL:
+deploy:
+	export DEPLOY_REGISTRY_PASSWORD=`aws ecr get-login-password --profile docker`
+	dotenv -f .env.deploy.staging kamal deploy
+
 test_prepare:
 	RAILS_ENV=test $(SET_ENV) bin/rake db:migrate
 
