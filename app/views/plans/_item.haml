@@ -47,8 +47,8 @@
       %button.btn.btn-light.btn-sm.dropdown-toggle{type: :button, data: {bs: {toggle: :dropdown}}}
 
       %ul.dropdown-menu
-        - [:execute, :expand, :assign_token, :delete_future_executions].each do |name|
-          %li= link_to name.to_s.humanize, [:op, item, type: name], class: "dropdown-item", data: {turbo_method: :post, turbo_confirm: "Are you sure to #{name.to_s.humanize}?"}
+        - Scheduler::Workflow::Plan::OPS.each do |name, desc|
+          %li= link_to name.to_s.humanize, [:op, item, type: name], class: "dropdown-item", data: {turbo_method: :post, turbo_confirm: "#{name.to_s.humanize}: #{desc}"}
         %li
           %hr.dropdown-divider
         %li= link_to "Edit", [:edit, item], class: "dropdown-item"

@@ -36,8 +36,8 @@
       %button.btn.btn-light.btn-sm.dropdown-toggle{type: :button, data: {bs: {toggle: :dropdown}}}
 
       %ul.dropdown-menu
-        %li= link_to "Perform", [:op, item, type: :perform], class: "dropdown-item", data: {turbo_method: :post, turbo_confirm: "Are you sure to perform this?"}
-        %li= link_to "Close", [:op, item, type: :close], class: "dropdown-item", data: {turbo_method: :post, turbo_confirm: "Are you sure to close this?"}
+        - Scheduler::Workflow::Execution::OPS.each do |name, desc|
+          %li= link_to name.to_s.humanize, [:op, item, type: name], class: "dropdown-item", data: {turbo_method: :post, turbo_confirm: "#{name.to_s.humanize}: #{desc}"}
         %li
           %hr.dropdown-divider
         %li= link_to "Delete", item, class: "dropdown-item", data: {turbo_method: :delete, turbo_confirm: "Are you sure to delete this?"}

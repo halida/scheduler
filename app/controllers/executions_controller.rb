@@ -7,15 +7,8 @@ class ExecutionsController < SimpleController
   end
 
   def op
-    case params[:type]
-    when "perform"
-      @item.perform
-      redirect_to @item, notice: "Finished."
-    when "close"
-      @item.started_at = Time.now
-      @item.close
-      redirect_to @item, notice: "Closed."
-    end
+    result = @item.workflow.op(params[:type])
+    redirect_to(result[:target], notice: result[:msg])
   end
 
   private
