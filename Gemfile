@@ -90,7 +90,6 @@ begin
 
   # gem 'sentry-raven'
 
-  gem 'whenever', require: false
   # # version
   # gem 'paper_trail'
 

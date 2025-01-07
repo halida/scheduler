@@ -12,9 +12,6 @@ jobs:
 enqueue:
 	bin/rake jobs:enqueue
 
-whenever:
-	whenever
-
 
 # config=.env.deploy.staging make deploy
 .ONESHELL:
