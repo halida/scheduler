@@ -500,6 +500,7 @@ DEPENDENCIES
   cssbundling-rails
   debug
   devise
+  dotenv
   hamlit
   jbuilder
   jsbundling-rails

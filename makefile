@@ -1,18 +1,16 @@
-SET_ENV=dotenv -f .env.dev
-
 console:
-	$(SET_ENV) bundle exec rails console
+	bundle exec rails console
 dev:
-	$(SET_ENV) bin/dev
+	bin/dev
 server:
-	$(SET_ENV) bin/rails s -p 3010
+	bin/rails s -p 3010
 
 jobs:
-	$(SET_ENV) bin/jobs start
+	bin/jobs start
 
 # job=DailyReportJob make enqueue
 enqueue:
-	$(SET_ENV) bin/rake jobs:enqueue
+	bin/rake jobs:enqueue
 
 whenever:
 	whenever
@@ -33,12 +31,12 @@ deploy_upload_config:
 
 
 test_prepare:
-	RAILS_ENV=test $(SET_ENV) bin/rake db:migrate
+	RAILS_ENV=test bin/rake db:migrate
 
 # file=./test/models/scheduler_test.rb make test
 .PHONY: test
 test:
-	$(SET_ENV) bin/rails test $(file)
+	bin/rails test $(file)
 
 prepare_database:
 	mysql <<-EOF
@@ -51,4 +49,4 @@ prepare_database:
 	create database scheduler_test;
 	grant all privileges on scheduler_test.* to 'user'@'%';
 	EOF
-	$(SET_ENV) bin/rake db:prepare
+	bin/rake db:prepare
