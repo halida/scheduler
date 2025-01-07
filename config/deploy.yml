@@ -19,8 +19,7 @@ servers:
 # Note: If using Cloudflare, set encryption mode in SSL/TLS setting to "Full" to enable CF-to-app encryption.
 proxy:
   ssl: false
-  host: <%= ENV.fetch("DEPLOY_SERVER") %>
-  app_port: <%= ENV.fetch("DEPLOY_SERVER_PORT") %>
+  host: <%= ENV.fetch("DEPLOY_HOST") %>
 
 # Credentials for your image host.
 registry:
@@ -37,7 +36,6 @@ registry:
 # Inject ENV variables into containers (secrets come from .kamal/secrets).
 env:
   secret:
-    - RAILS_MASTER_KEY
     - SECRET_KEY_BASE
     - SCHEDULER_DATABASE
     - SCHEDULER_DATABASE_CACHE

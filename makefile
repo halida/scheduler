@@ -18,14 +18,19 @@ whenever:
 	whenever
 
 
+# config=.env.deploy.staging make deploy
 .ONESHELL:
 deploy:
 	export DEPLOY_REGISTRY_PASSWORD=`aws ecr get-login-password --profile docker`
-	dotenv -f .env.deploy.staging kamal deploy
+	dotenv -f $(config) kamal deploy
 
-deploy_config:
-	dotenv -f .env.deploy.staging scp application.yml $DEPLOY_SERVER:/tmp/
-	ssh /var/lib/docker/volumes/scheduler_storage/_data
+# config=.env.deploy.staging make deploy_upload_config
+.ONESHELL:
+deploy_upload_config:
+	dotenv -f $(config) -- sh -c 'echo $$CONFIG_FILE'
+	dotenv -f $(config) -- sh -c 'scp $$CONFIG_FILE $$DEPLOY_USER@$$DEPLOY_SERVER:/tmp/'
+	dotenv -f $(config) -- sh -c 'ssh $$DEPLOY_USER@$$DEPLOY_SERVER "sudo cp /tmp/application.yml /var/lib/docker/volumes/scheduler_storage/_data/"'
+
 
 test_prepare:
 	RAILS_ENV=test $(SET_ENV) bin/rake db:migrate
