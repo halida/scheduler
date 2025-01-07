@@ -23,6 +23,10 @@ deploy:
 	export DEPLOY_REGISTRY_PASSWORD=`aws ecr get-login-password --profile docker`
 	dotenv -f .env.deploy.staging kamal deploy
 
+deploy_config:
+	dotenv -f .env.deploy.staging scp application.yml $DEPLOY_SERVER:/tmp/
+	ssh /var/lib/docker/volumes/scheduler_storage/_data
+
 test_prepare:
 	RAILS_ENV=test $(SET_ENV) bin/rake db:migrate
 
