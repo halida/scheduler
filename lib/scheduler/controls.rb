@@ -21,6 +21,7 @@ class Scheduler::Controls
     test: {
       ok: "Just show ok",
       error: "Test error will get reported",
+      sentry_error: "Test can trigger sentry error",
       job: "Test background job is running",
       job_error: "Test background job raise error"
     },
@@ -89,6 +90,12 @@ class Scheduler::Controls
 
     def test_error(opt)
       raise "test raising error"
+    end
+
+    def test_sentry_error(opt)
+      Raven.capture do
+        raise "catch sentry error"
+      end
     end
 
     def test_job(opt)
