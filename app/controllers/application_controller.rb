@@ -3,8 +3,7 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   before_action :authenticate_user!
-  # todo
-  # before_action :set_raven_context
+  before_action :set_sentry_context
 
   protected
 
@@ -34,10 +33,10 @@ class ApplicationController < ActionController::Base
     @breadcrumbs << {name: name, url: url, options: options}
   end
 
-  def set_raven_context
-    if defined?(Raven)
-      Raven.user_context(id: current_user.id, email: current_user.email) if current_user
-      Raven.extra_context(params: params.except(:action, :controller))
+  def set_sentry_context
+    if defined?(Sentry)
+      Sentry.set_user(id: current_user.id, email: current_user.email) if current_user
+      Sentry.set_extras(params: params.except(:action, :controller))
     end
   end
 

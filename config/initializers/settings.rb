@@ -21,8 +21,8 @@ end
 
 
 if dsn = ENV["SENTRY_DSN"]
-  Raven.configure do |config|
+  Sentry.init do |config|
     config.dsn = dsn
-    config.current_environment = ENV["SENTRY_ENV"]
+    config.environment = ENV["SENTRY_ENV"]
   end
 end

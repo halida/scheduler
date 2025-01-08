@@ -85,7 +85,9 @@ begin
   # for SchedulerApi
   gem "rest-client", require: false
 
-  # gem 'sentry-raven'
+  gem "stackprof"
+  gem "sentry-ruby"
+  gem "sentry-rails"
 
   # # version
   # gem 'paper_trail'
