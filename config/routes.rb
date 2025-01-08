@@ -10,10 +10,6 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
-    resource :op, controller: "op" do
-      get :ping
-      get :testing_job
-    end
     resources :applications do
       post :notify_plan
     end
