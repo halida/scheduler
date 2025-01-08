@@ -2,12 +2,18 @@ class Scheduler::Info
   class << self
 
     def get(user)
+      conn = ActiveRecord::Base.connection
+
       {environment: {
          rails: Rails.env,
        },
        version: {
          ruby: RUBY_VERSION,
          rails: Rails::VERSION::STRING,
+       },
+       database: {
+         version: conn.select_value("SELECT @@version"),
+         executions: Execution.count,
        },
        time: {
          system: {
