@@ -1,9 +1,3 @@
-GIT
-  remote: https://github.com/brlo/settingslogic.git
-  revision: ed074b2bd1d08b10ec6fa6e4669d2067fe2380bd
-  specs:
-    settingslogic (2.0.9)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -516,7 +510,6 @@ DEPENDENCIES
   rubocop-rails-omakase
   rubycas-client
   selenium-webdriver
-  settingslogic!
   simple_form
   solid_cache
   solid_queue

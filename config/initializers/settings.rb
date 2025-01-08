@@ -1,35 +1,28 @@
-class Settings < Settingslogic
-  path = File.dirname(__FILE__)
-
-  filename = File.join(path, "../../storage/application.yml")
-  unless File.exist?(filename)
-    dummy_filename = File.join(path, "../application.dummy.yml")
-    puts "cannot find #{filename}, use #{dummy_filename}"
-    filename = dummy_filename
-  end
-  source filename
-
-  namespace ENV['RAILS_ENV'] || 'development'
-end
-
 config = Rails.application.config
-config.hosts << Settings.host
+config.hosts << ENV["HOST"]
 config.action_mailer.default_url_options = \
-{ host: Settings.host, protocol: Settings.protocol }
+{ host: ENV["HOST"], protocol: ENV["PROTOCOL"] }
 
-if smtp_config = Settings[:smtp_settings]
-  config.action_mailer.smtp_settings = smtp_config.symbolize_keys
+if ENV["SMTP"] == 'true'
+  config.action_mailer.smtp_settings = {
+    address: ENV["SMTP_SETTINGS_ADDRESS"],
+    port: ENV["SMTP_SETTINGS_PORT"],
+    authentication: ENV["SMTP_SETTINGS_AUTHENTICATION"],
+    user_name: ENV["SMTP_SETTINGS_USER_NAME"],
+    password: ENV["SMTP_SETTINGS_PASSWORD"],
+    enable_starttls_auto: true,
+  }
   # can disable email delivery in config, like:
   #   send_email: false
-  if smtp_config[:send_email]
-    config.action_mailer.perform_deliveries = smtp_config[:send_email]
+  if ENV["SMTP_SEND_EMAIL"] == "false"
+    config.action_mailer.perform_deliveries = false
   end
 end
 
 
-if Settings[:sentry] and setry_config = Settings.sentry
+if dsn = ENV["SENTRY_DSN"]
   Raven.configure do |config|
-    config.dsn = setry_config.dsn
-    config.current_environment = setry_config.environment
+    config.dsn = dsn
+    config.current_environment = ENV["SENTRY_ENV"]
   end
 end

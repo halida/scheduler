@@ -3,12 +3,11 @@ module OidcHelper
   private
 
   def oidc_client
-    config = Settings.oidc
     @client ||= OpenIDConnect::Client.new(
-      identifier:     config.identifier,
+      identifier:     ENV["OIDC_IDENTIFIER"],
       secret:         'secret',
-      redirect_uri:   config.callback_url,
-      host:           config.host,
+      redirect_uri:   ENV["OIDC_CALLBACK_URL"],
+      host:           ENV["OIDC_HOST"],
       authorization_endpoint: '/connect/authorize',
       token_endpoint:         '/connect/token',
       userinfo_endpoint:      '/connect/userinfo',
@@ -31,7 +30,7 @@ module OidcHelper
   end
 
   def oidc_scope
-    Settings.oidc.scope
+    eval(ENV["OIDC_SCOPE"])
   end
 
   def oidc_user_info(_access_token)

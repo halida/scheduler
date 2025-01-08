@@ -4,7 +4,10 @@ class SchedulerApi
   class << self
 
     def config
-      Settings.scheduler_api
+      {domain: ENV["SCHEDULER_API_DOMAIN"],
+       protocol: ENV["SCHEDULER_API_PROTOCOL"],
+       application_token: ENV["SCHEDULER_API_APPLICATION_TOKEN"],
+      }
     end
 
     def resource

@@ -18,7 +18,8 @@ class Users::SessionsController < ApplicationController
     Rails.logger.info("sso user email: #{email}")
     user  = User.find_by_email(email)
     if user.blank?
-      if Settings.oidc.create_user and email.end_with?("@#{ Settings.oidc.create_user_domain }")
+      if ENV["OIDC_CREATE_USER"] == 'true' and
+        email.end_with?('@' + ENV["OIDC_CREATE_USER_DOMAIN"])
         Rails.logger.info("create scheduler user for: #{email}")
         user = User.create(username: email, email: email)
       else
@@ -35,6 +36,6 @@ class Users::SessionsController < ApplicationController
 
   def destroy
     session.clear
-    redirect_to Settings.oidc.signoff_url
+    redirect_to ENV["OIDC_SIGNOFF_URL"], allow_other_host: true
   end
 end

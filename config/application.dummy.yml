@@ -1,6 +1,0 @@
-development:
-  host: localhost:3000
-  protocol: http
-production:
-  host: localhost:3000
-  protocol: http

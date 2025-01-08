@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_raven_context
-    if Settings[:sentry]
+    if defined?(Raven)
       Raven.user_context(id: current_user.id, email: current_user.email) if current_user
       Raven.extra_context(params: params.except(:action, :controller))
     end

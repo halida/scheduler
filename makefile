@@ -19,13 +19,6 @@ deploy:
 	export DEPLOY_REGISTRY_PASSWORD=`aws ecr get-login-password --profile docker`
 	dotenv -f $(config) kamal deploy
 
-# config=.env.deploy.staging make deploy_upload_config
-.ONESHELL:
-deploy_upload_config:
-	dotenv -f $(config) -- sh -c 'echo $$CONFIG_FILE'
-	dotenv -f $(config) -- sh -c 'scp $$CONFIG_FILE $$DEPLOY_USER@$$DEPLOY_SERVER:/tmp/'
-	dotenv -f $(config) -- sh -c 'ssh $$DEPLOY_USER@$$DEPLOY_SERVER "sudo cp /tmp/application.yml /var/lib/docker/volumes/scheduler_storage/_data/"'
-
 
 test_prepare:
 	RAILS_ENV=test bin/rake db:migrate
