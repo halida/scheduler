@@ -34,9 +34,9 @@ class ApplicationController < ActionController::Base
   end
 
   def set_sentry_context
-    if defined?(Sentry)
-      Sentry.set_user(id: current_user.id, email: current_user.email) if current_user
-      Sentry.set_extras(params: params.except(:action, :controller))
+    if defined?(Raven)
+      Raven.user_context(id: current_user.id, email: current_user.email) if current_user
+      Raven.extra_context(params: params.except(:action, :controller))
     end
   end
 
