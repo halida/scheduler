@@ -117,7 +117,7 @@ module ApplicationHelper
     if enabled
       content_tag(:span, "Enabled", class: "badge text-bg-success")
     else
-      content_tag(:span, "Disabled", class: "badge text-bg-muted")
+      content_tag(:span, "Disabled", class: "badge text-bg-secondary")
     end
   end
 
