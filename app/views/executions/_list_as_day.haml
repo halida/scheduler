@@ -24,7 +24,7 @@
 
               - hour_executions.each do |e|
                 %button.btn.btn-sm.btn-link.float-start.p-0.me-1{type: :button, data: {bs: {toggle: :collapse, target: ".hour-executions-#{hour}"}}}
-                  %i.bi.bi-gear.execution-status{class: "status-#{e.status}", title: "#{e.plan.title}, #{e.status.humanize}" }
+                  %i.bi.bi-gear-fill.execution-status{class: "status-#{e.status}", title: "#{e.plan.title}, #{e.status.humanize}" }
 
                 .collapse.hour-executions{class: "hour-executions-#{hour}"}
                   .p
