@@ -13,18 +13,20 @@ class HomeController < ApplicationController
   end
 
   def controls
-    return if request.get?
-
     @type = params[:type]
-    @result = Scheduler::Controls.run(@type, user: current_user)
-    case @type
-    when 'execution_check', 'execution_run', 'execution_expand', 'execution_verify'
-      render "check_result", status: :see_other
-    when 'report_export'
-      render json: JSON.pretty_generate(@result), status: :see_other
-    else
-      redirect_to [:controls, :home], notice: @result[:msg], status: :see_other
+
+    if @type.present?
+      @result = Scheduler::Controls.run(@type, user: current_user)
+      case @type
+      when 'execution_check', 'execution_run', 'execution_expand', 'execution_verify'
+        render "check_result", status: :see_other
+      when 'report_export'
+        render json: JSON.pretty_generate(@result), status: :see_other
+      else
+        redirect_to [:controls, :home], notice: @result[:msg], status: :see_other
+      end
     end
+
   end
 
   def jobs
