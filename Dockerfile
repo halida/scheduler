@@ -16,7 +16,7 @@ WORKDIR /rails
 
 # Install base packages
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl default-mysql-client libjemalloc2 libvips \
+    apt-get install --no-install-recommends -y curl default-mysql-client libjemalloc2 libvips libyaml-dev \
     vim && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
