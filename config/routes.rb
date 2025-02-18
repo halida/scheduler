@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     resources :applications do
+      post :executions
       post :notify_plan
     end
     resources :plans do
